@@ -1,0 +1,30 @@
+﻿conference_name,acronym,core_rank,core_score
+Neural Information Processing Systems,NeurIPS,A*,10
+International Conference on Machine Learning,ICML,A*,10
+International Conference on Learning Representations,ICLR,A*,10
+IEEE Conference on Computer Vision and Pattern Recognition,CVPR,A*,10
+International Conference on Computer Vision,ICCV,A*,10
+European Conference on Computer Vision,ECCV,A*,10
+ACM Conference on Computer and Communications Security,CCS,A*,10
+IEEE Symposium on Security and Privacy,IEEE S&P,A*,10
+USENIX Security Symposium,USENIX Security,A*,10
+Network and Distributed System Security Symposium,NDSS,A*,10
+AAAI Conference on Artificial Intelligence,AAAI,A*,10
+International Joint Conference on Artificial Intelligence,IJCAI,A*,10
+ACM SIGKDD Conference on Knowledge Discovery,KDD,A*,10
+IEEE International Conference on Data Engineering,ICDE,A*,10
+Very Large Data Bases,VLDB,A*,10
+ACM SIGMOD International Conference,SIGMOD,A*,10
+IEEE International Conference on Software Engineering,ICSE,A*,10
+ACM SIGCOMM,SIGCOMM,A*,10
+IEEE INFOCOM,INFOCOM,A,8
+International Conference on Parallel Processing,ICPP,A,8
+IEEE International Conference on Cloud Computing,CLOUD,A,8
+IEEE International Conference on Web Services,ICWS,A,8
+International Conference on Service Oriented Computing,ICSOC,A,8
+IEEE International Conference on Data Mining,ICDM,A,8
+Pacific-Asia Conference on Knowledge Discovery,PAKDD,B,5
+International Conference on Neural Information Processing,ICONIP,B,5
+IEEE International Conference on Tools with Artificial Intelligence,ICTAI,B,5
+International Conference on Intelligent Systems Design,ISDA,C,3
+International Conference on Computer Applications,ICCA,C,3
