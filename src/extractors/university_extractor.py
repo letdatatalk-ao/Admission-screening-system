@@ -120,3 +120,46 @@ def extract_university(text: str,
         confidence=round(best_score / 100, 2),
         degree_level=degree_level
     )
+
+def split_bsc_msc(education_text: str) -> dict:
+    """Sépare le texte EDUCATION en parties BSc et MSc."""
+    bsc_keywords = r'(?i)(bachelor|b\.sc|bsc|b\.s\.|undergraduate|licence)'
+    msc_keywords = r'(?i)(master|m\.sc|msc|m\.s\.|postgraduate)'
+
+    lines = education_text.split('\n')
+    bsc_lines, msc_lines = [], []
+    current = None
+
+    for line in lines:
+        if re.search(msc_keywords, line):
+            current = 'msc'
+        elif re.search(bsc_keywords, line):
+            current = 'bsc'
+        if current == 'bsc':
+            bsc_lines.append(line)
+        elif current == 'msc':
+            msc_lines.append(line)
+
+    return {
+        "bsc": '\n'.join(bsc_lines),
+        "msc": '\n'.join(msc_lines)
+    }
+
+def split_bsc_msc(education_text: str) -> dict:
+    """Sépare le texte EDUCATION en parties BSc et MSc."""
+    import re
+    bsc_keywords = r'(?i)(bachelor|b\.sc|bsc|b\.s\.|undergraduate|licence)'
+    msc_keywords = r'(?i)(master|m\.sc|msc|m\.s\.|postgraduate)'
+    lines = education_text.split('\n')
+    bsc_lines, msc_lines = [], []
+    current = None
+    for line in lines:
+        if re.search(msc_keywords, line):
+            current = 'msc'
+        elif re.search(bsc_keywords, line):
+            current = 'bsc'
+        if current == 'bsc':
+            bsc_lines.append(line)
+        elif current == 'msc':
+            msc_lines.append(line)
+    return {"bsc": '\n'.join(bsc_lines), "msc": '\n'.join(msc_lines)}
