@@ -1,152 +1,96 @@
 import streamlit as st
 import pandas as pd
 import time
-from utils.api_client import (
-    get_applicants, 
-    get_sessions, 
-    get_applicant_detail, 
-    update_applicant_metrics,
-    EXTERNAL_API_BASE_URL
-)
+from utils.api_client import get_applicants, get_sessions, get_applicant_detail, update_applicant_metrics, EXTERNAL_API_BASE_URL
 
-# Configuration de la page en mode large
-st.set_page_config(page_title="Review Tool - KU Screening", layout="wide")
-
-st.title("🧐 Complete Candidate Validation")
+st.set_page_config(page_title="Review Tool", layout="wide")
+st.title("Complete Candidate Validation")
 
 if "token" not in st.session_state:
-    st.error("🔒 Please login on the Home page first.")
+    st.error("Please login first.")
     st.stop()
 
-# --- 1. BARRE LATÉRALE : SÉLECTION DU CANDIDAT ---
+# --- Sidebar ---
 sessions = get_sessions(st.session_state.token)
 if not sessions:
-    st.warning("No active sessions found.")
+    st.warning("No active sessions.")
     st.stop()
 
-session_options = {s['name']: s['id'] for s in sessions}
-sel_session_name = st.sidebar.selectbox("Admission Session", list(session_options.keys()))
-session_id = session_options[sel_session_name]
+session_dict = {s['name']: s['id'] for s in sessions}
+session_id = st.sidebar.selectbox("Admission Session", list(session_dict.keys()))
+current_session_id = session_dict[session_id]
 
-# Récupération des candidats traités (processed) pour la session choisie
-_, applicants = get_applicants(session_id, st.session_state.token)
-processed_apps = [a for a in applicants if a['status'] == 'processed']
+_, applicants = get_applicants(current_session_id, st.session_state.token)
+processed = [a for a in applicants if a['status'] == 'processed']
 
-if not processed_apps:
-    st.info("No candidates ready for review. Ensure candidates are 'processed' by the AI first.")
+if not processed:
+    st.info("No candidates processed by AI yet.")
 else:
-    # Liste de sélection dans la sidebar
-    app_options = {f"{a['full_name']}": a['id'] for a in processed_apps}
-    selected_app_label = st.sidebar.selectbox("Select Candidate to Review", list(app_options.keys()))
-    applicant_id = app_options[selected_app_label]
+    app_map = {f"{a['full_name']} ({a['application_ref']})": a['id'] for a in processed}
+    selected_name = st.sidebar.selectbox("Select Candidate", list(app_map.keys()))
+    applicant_id = app_map[selected_name]
     
-    # Récupération des détails complets depuis l'API
     app_data = get_applicant_detail(applicant_id, st.session_state.token)
 
     if app_data:
         metrics = app_data.get('metrics') or {}
-        
-        # --- 2. LAYOUT : PDF À GAUCHE, FORMULAIRE À DROITE ---
-        col_pdf, col_data = st.columns([1, 1.2])
+        col_left, col_right = st.columns([1, 1.2])
 
-        with col_pdf:
-            st.subheader("📄 Document Viewer")
-            doc_type = st.radio("Display document:", ["CV", "Transcript"], horizontal=True)
-            
-            # On récupère l'ID du document à afficher
+        with col_left:
+            st.subheader("Document Viewer")
+            doc_type = st.radio("Display:", ["CV", "Transcript"], horizontal=True)
             doc_id = app_data['cv_document_id'] if doc_type == "CV" else app_data['transcript_document_id']
-            
             if doc_id:
-                # Utilisation de l'URL externe pour que le navigateur charge l'Iframe
-                file_url = f"{EXTERNAL_API_BASE_URL}/files/{doc_id}"
-                st.markdown(
-                    f'<iframe src="{file_url}" width="100%" height="850px" style="border: 1px solid #444; border-radius: 5px;"></iframe>', 
-                    unsafe_allow_html=True
-                )
+                st.markdown(f'<iframe src="{EXTERNAL_API_BASE_URL}/files/{doc_id}" width="100%" height="850px" style="border:1px solid #444;"></iframe>', unsafe_allow_html=True)
             else:
-                st.warning("Document file ID not found in database.")
+                st.warning("Document file not available.")
 
-        with col_data:
-            st.subheader("📝 Metric Validation")
-            
-            # Ce dictionnaire contiendra toutes les valeurs à envoyer au backend
-            updated_payload = {}
-
-            # Formulaire de révision
+        with col_right:
+            st.subheader("Review and Correction")
+            payload = {}
             with st.form("full_review_form"):
-                # CORRECTION : Unpacking des 4 onglets
-                tab_bsc, tab_msc, tab_pubs, tab_sys = st.tabs([
-                    "🎓 Bachelor", "🎓 Master", "📚 Publications", "⚙️ System"
-                ])
+                tab_id, tab_bsc, tab_msc, tab_pubs, tab_sys = st.tabs(["Identity", "Bachelor", "Master", "Publications", "System"])
                 
+                with tab_id:
+                    payload["full_name"] = st.text_input("Full Name", value=app_data['full_name'])
+                    payload["email"] = st.text_input("Email", value=app_data.get('email', ''))
+                    payload["nationality"] = st.text_input("Nationality", value=app_data.get('nationality', ''))
+
                 with tab_bsc:
-                    st.markdown("#### Bachelor Degree Information")
-                    updated_payload["bsc_uni_name"] = st.text_input("BSc University Name", value=metrics.get('bsc_uni_name', ''))
-                    
-                    c1, c2 = st.columns(2)
-                    with c1:
-                        updated_payload["bsc_gpa_normalised"] = st.number_input(
-                            "BSc GPA (Normalised /4.0)", 
-                            value=float(metrics.get('bsc_gpa_normalised') or 0.0), 
-                            step=0.01
-                        )
-                    with c2:
-                        st.write("") # Espace vertical
-                        updated_payload["bsc_gpa_normalised_done"] = st.checkbox(
-                            "Validated by Reviewer", 
-                            value=metrics.get('bsc_gpa_normalised_done', False)
-                        )
+                    payload["bsc_uni_name"] = st.text_input("BSc University", value=metrics.get('bsc_uni_name', ''))
+                    payload["bsc_qs_rank"] = st.number_input("BSc QS Rank", value=int(metrics.get('bsc_qs_rank') or 0))
+                    c1, c2, c3 = st.columns(3)
+                    payload["bsc_gpa_raw"] = c1.number_input("BSc GPA Raw", value=float(metrics.get('bsc_gpa_raw') or 0.0))
+                    payload["bsc_gpa_scale"] = c2.number_input("BSc GPA Scale", value=float(metrics.get('bsc_gpa_scale') or 4.0))
+                    payload["bsc_gpa_normalised"] = c3.number_input("BSc GPA Normalised", value=float(metrics.get('bsc_gpa_normalised') or 0.0), step=0.01)
 
                 with tab_msc:
-                    st.markdown("#### Master Degree Information")
-                    updated_payload["msc_absent"] = st.checkbox("No Master's Degree (MSc Absent)", value=metrics.get('msc_absent', False))
-                    
-                    if not updated_payload["msc_absent"]:
-                        updated_payload["msc_uni_name"] = st.text_input("MSc University Name", value=metrics.get('msc_uni_name', ''))
-                        updated_payload["msc_gpa_normalised"] = st.number_input(
-                            "MSc GPA (Normalised /4.0)", 
-                            value=float(metrics.get('msc_gpa_normalised') or 0.0), 
-                            step=0.01
-                        )
-                    else:
-                        st.info("Candidate will be ranked based on Bachelor data only.")
+                    payload["msc_absent"] = st.checkbox("MSc Degree Absent", value=metrics.get('msc_absent', False))
+                    if not payload["msc_absent"]:
+                        payload["msc_uni_name"] = st.text_input("MSc University", value=metrics.get('msc_uni_name', ''))
+                        payload["msc_qs_rank"] = st.number_input("MSc QS Rank", value=int(metrics.get('msc_qs_rank') or 0))
+                        payload["msc_gpa_normalised"] = st.number_input("MSc GPA Normalised (/4.0)", value=float(metrics.get('msc_gpa_normalised') or 0.0), step=0.01)
 
                 with tab_pubs:
-                    st.markdown("#### Research Publications")
                     pubs = app_data.get('publications', [])
                     if pubs:
-                        df_pubs = pd.DataFrame(pubs)
-                        # On affiche les colonnes clés
-                        st.dataframe(df_pubs[['pub_type', 'title', 'year', 'contribution_score']], use_container_width=True)
+                        st.dataframe(pd.DataFrame(pubs)[['title', 'year', 'pub_type', 'contribution_score']], use_container_width=True)
                     else:
-                        st.info("No research publications were extracted for this candidate.")
+                        st.info("No publications extracted.")
 
                 with tab_sys:
-                    st.markdown("#### AI System Insights")
-                    st.write(f"**LLM Extraction Used:** {'✅ Yes' if metrics.get('llm_used') else '❌ No'}")
-                    
-                    conf_score = float(metrics.get('global_confidence') or 0.0)
-                    st.metric("Global Confidence Score", f"{conf_score * 100:.1f}%")
-                    
-                    st.markdown("**Raw Extraction Details:**")
+                    st.write(f"LLM used: {metrics.get('llm_used', True)}")
+                    st.write(f"Confidence score: {metrics.get('global_confidence', 0.0)}")
                     st.json(metrics.get('extraction_source_detail', {}))
 
                 st.divider()
-                st.markdown("#### 🛡️ Validation & Audit")
-                reason = st.text_area("Reason for manual adjustments", placeholder="Mandatory for the audit trail...")
-                
-                # Le flag de révision forcée (visible sur le dashboard)
-                updated_payload["needs_human_review"] = st.checkbox("Keep 'Review Required' flag active", value=app_data.get('needs_human_review', False))
+                payload["needs_human_review"] = st.checkbox("Keep 'Review Required' flag", value=app_data['needs_human_review'])
+                reason = st.text_area("Adjustment Reason (Audit log)", placeholder="Required for any changes...")
 
-                # Bouton de soumission
-                if st.form_submit_button("💾 Save All Changes & Approve"):
-                    # On appelle la fonction de l'api_client
-                    success = update_applicant_metrics(applicant_id, updated_payload, st.session_state.token)
-                    
-                    if success:
-                        st.success(f"Successfully updated records for {app_data['full_name']}!")
-                        st.balloons()
+                if st.form_submit_button("Save All Changes and Validate"):
+                    if update_applicant_metrics(applicant_id, payload, st.session_state.token):
+                        st.success("Candidate records updated successfully")
                         time.sleep(1)
                         st.rerun()
                     else:
-                        st.error("Failed to update database. Please check the backend logs.")
+                        st.error("Failed to update server records.")
