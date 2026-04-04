@@ -31,7 +31,9 @@ services:
     restart: unless-stopped
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: pgars-backend
     ports:
       - "8000:8000"
@@ -40,30 +42,41 @@ services:
       - postgres
       - redis
     volumes:
-      - ./storage:/app/storage
-      - ./src:/app/src
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+    command: uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
     restart: unless-stopped
 
   celery_worker:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: pgars-celery
-    command: celery -A app.tasks worker --loglevel=info
+    command: celery -A backend.app.tasks worker --loglevel=info
     env_file: .env
     depends_on:
       - postgres
       - redis
     volumes:
+      - .:/app
       - ./storage:/app/storage
-      - ./src:/app/src
-    restart: unless-stopped
+      - ./data:/app/data  
 
+    environment:
+      - PYTHONPATH=/app
+
+    restart: unless-stopped
+    
   streamlit:
     build: ./streamlit_app
     container_name: pgars-streamlit
     ports:
       - "8501:8501"
     environment:
-      API_BASE_URL: http://backend:8000/api/v1
+      - API_BASE_URL=http://backend:8000/api/v1
+    volumes:
+      - ./streamlit_app:/app
     depends_on:
       - backend
     restart: unless-stopped

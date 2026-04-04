@@ -1,20 +1,14 @@
 from celery import Celery
-import os
 
-REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379")
+from src.pipeline.screening_pipeline import run_pipeline
 
 celery = Celery(
-    "pgars",
-    broker=REDIS_URL,
-    backend=REDIS_URL
+    "tasks",
+    broker="redis://redis:6379/0",
+    backend="redis://redis:6379/0"
 )
 
-celery.conf.update(
-    task_serializer="json",
-    result_serializer="json",
-    accept_content=["json"],
-)
 
 @celery.task
-def extract_task(cv_path: str, transcript_path: str, applicant_id: str):
-    return {"status": "stub", "applicant_id": applicant_id}
+def process_documents_task(applicant_id: str):
+    return run_pipeline(applicant_id)
