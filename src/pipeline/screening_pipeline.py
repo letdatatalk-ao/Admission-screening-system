@@ -4,80 +4,72 @@ import os
 import pandas as pd
 from uuid import UUID
 
-# Infrastructure DB
 from backend.app.db.database import SessionLocal
-from backend.app.db.repositories import (
-    applicant_repo, document_repo, publication_repo)
+from backend.app.db.repositories import applicant_repo, document_repo, publication_repo
 
-# Ingestion & Preprocessing
-from src.ingestion.pdf_reader    import PDFReader
-from src.preprocessing.cleaner   import DocumentCleaner
+from src.ingestion.pdf_reader import PDFReader
+from src.preprocessing.cleaner import DocumentCleaner
 from src.preprocessing.segmenter import DocumentSegmenter
-from src.ai.llm_service          import LLMOrchestrator
+from src.ai.llm_factory import get_llm_orchestrator
 from src.models.extraction_schemas import ExtractedCandidate
-
-# Extractors
-from src.extractors.university_extractor  import lookup_qs_rank
+from src.extractors.university_extractor import lookup_qs_rank
 from src.extractors.publication_extractor import enrich_publication
-
-# Scoring
 from src.scoring.normalizer import to_float, normalise_gpa_to_4
 
 logger = logging.getLogger(__name__)
 
-# ── Référentiels CSV chargés une seule fois au démarrage ───────────────────
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data")
 
 try:
-    # QS Rankings des universités
     df_qs = pd.read_csv(os.path.join(DATA_DIR, "qs_rankings_2025.csv"))
-    
-    # Scopus SJR - Version filtrée Computer Science (2,379 journaux)
     df_scopus = pd.read_csv(os.path.join(DATA_DIR, "scimagojr_2024_computer_science.csv"))
-    
-    # CORE Rankings des conférences
     df_core = pd.read_csv(os.path.join(DATA_DIR, "core_conferences_2026.csv"))
-    
-    # Nettoyer les noms d'universités pour enlever les parenthèses (ex: "MIT", "NYU")
     df_qs['university_name_clean'] = df_qs['university_name'].str.replace(r'\s*\([^)]*\)', '', regex=True).str.strip()
     qs_names = df_qs['university_name_clean'].tolist()
-    
-    logger.info(f"✅ Référentiels CSV chargés: QS({len(df_qs)}) Scopus({len(df_scopus)}) CORE({len(df_core)})")
+    logger.info(f"✅ CSV chargés: QS({len(df_qs)}) Scopus({len(df_scopus)}) CORE({len(df_core)})")
 except Exception as e:
-    logger.error(f"❌ Erreur chargement CSV : {e}")
+    logger.error(f"❌ Erreur CSV: {e}")
     df_qs = df_scopus = df_core = None
     qs_names = []
 
 
 def _compute_confidence(validated: ExtractedCandidate) -> float:
-    """Score de confiance global basé sur la présence des champs clés."""
     scores = [
-        0.9 if validated.bsc_uni                          else 0.1,
-        0.9 if validated.bsc_gpa.raw_value                else 0.1,
+        0.9 if validated.bsc_uni else 0.1,
+        0.9 if validated.bsc_gpa.raw_value else 0.1,
         0.9 if (validated.msc_uni or validated.msc_absent) else 0.1,
-        0.8 if validated.publications                      else 0.3,
+        0.8 if validated.publications else 0.3,
     ]
     return round(sum(scores) / len(scores), 3)
 
 
-async def run_pipeline_logic(applicant_id: str) -> bool:
+def _clean_publications(publications):
+    """Filtre les publications invalides (sans titre ou avec année invalide)."""
+    cleaned = []
+    for pub in publications:
+        if not pub.get('title') or pub.get('title') == "Untitled":
+            continue
+        if pub.get('year') and not isinstance(pub.get('year'), int):
+            pub['year'] = None
+        cleaned.append(pub)
+    return cleaned
 
+
+async def run_pipeline_logic(applicant_id: str) -> bool:
     async with SessionLocal() as db:
         app_uuid = UUID(applicant_id)
-        orchestrator = LLMOrchestrator()
+        orchestrator = get_llm_orchestrator()
 
         try:
             logger.info(f"🚀 [PIPELINE START] Applicant: {applicant_id}")
 
-            # ── STEP 1 : Récupération documents ──────────────────────────────
             docs = await document_repo.get_documents_for_applicant(db, app_uuid)
             cv_doc = next((d for d in docs if d.document_type == 'cv'), None)
             tr_doc = next((d for d in docs if d.document_type == 'transcript'), None)
 
             if not cv_doc or not tr_doc:
-                raise FileNotFoundError("Paire CV + Transcript incomplète en base.")
+                raise FileNotFoundError("CV ou Transcript manquant")
 
-            # ── STEP 2 : Ingestion ────────────────────────────────────────────
             reader = PDFReader()
             cleaner = DocumentCleaner()
             segmenter = DocumentSegmenter()
@@ -85,62 +77,37 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
             cv_extraction = reader.extract(cv_doc.storage_path)
             tr_extraction = reader.extract(tr_doc.storage_path)
 
-            # Logs OCR pour audit
-            for label, extraction in [("CV", cv_extraction), ("TR", tr_extraction)]:
-                if extraction.metadata.get("ocr_used"):
-                    logger.info(
-                        f"{label} OCR activé — "
-                        f"avg_chars/page: {extraction.metadata['avg_chars_per_page']}"
-                    )
-                if not extraction.metadata.get("ocr_available") and extraction.needs_ocr:
-                    logger.warning(
-                        f"{label} scanné mais Tesseract absent — "
-                        f"qualité d'extraction réduite"
-                    )
-
-            # Nettoyage
             cv_clean = cleaner.clean(cv_extraction.content)
             tr_clean = cleaner.clean(tr_extraction.content)
 
-            # Segmentation
             cv_chunks = segmenter.segment(cv_clean)
             tr_chunks = segmenter.segment(tr_clean)
 
-            # Texte académique = section éducation du transcript
             academic_text = tr_chunks.education or tr_clean
             if len(academic_text.strip()) < 50:
-                logger.warning("Transcript education vide — fallback sur texte brut TR")
                 academic_text = tr_clean
 
-            # ── STEP 3 : Extraction LLM parallèle ────────────────────────────
             raw_results = await orchestrator.extract_parallel(
                 cv_text=cv_clean,
                 tr_text=academic_text,
                 candidate_name=cv_doc.original_filename
             )
 
-            logger.info(f"LLM brut: bsc_uni={raw_results.get('bsc_uni')} "
-                        f"pubs={len(raw_results.get('publications', []))}")
+            # Nettoyer les publications avant validation
+            if 'publications' in raw_results:
+                raw_results['publications'] = _clean_publications(raw_results['publications'])
 
-            # ── STEP 4 : Validation Pydantic ──────────────────────────────────
             validated = ExtractedCandidate(**raw_results)
 
-            # ── STEP 5 : Enrichissement BSc ───────────────────────────────────
             bsc_rank = None
             bsc_gpa_norm = None
-
             if df_qs is not None and validated.bsc_uni:
                 bsc_rank = lookup_qs_rank(validated.bsc_uni, df_qs, qs_names)
-
             if validated.bsc_gpa.raw_value:
-                bsc_gpa_norm = normalise_gpa_to_4(
-                    validated.bsc_gpa.raw_value,
-                    validated.bsc_gpa.scale or 4.0
-                )
+                bsc_gpa_norm = normalise_gpa_to_4(validated.bsc_gpa.raw_value, validated.bsc_gpa.scale or 4.0)
 
             confidence = _compute_confidence(validated)
 
-            # Construction du payload des métriques (sans needs_human_review)
             metrics_payload = {
                 "bsc_uni_name": (validated.bsc_uni or "")[:250] or None,
                 "bsc_qs_rank": bsc_rank,
@@ -152,20 +119,13 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
                 "global_confidence": confidence,
             }
 
-            # ── STEP 5b : Enrichissement MSc ──────────────────────────────────
             if not validated.msc_absent and validated.msc_uni:
                 msc_rank = None
                 msc_gpa_norm = None
-
                 if df_qs is not None:
                     msc_rank = lookup_qs_rank(validated.msc_uni, df_qs, qs_names)
-
                 if validated.msc_gpa and validated.msc_gpa.raw_value:
-                    msc_gpa_norm = normalise_gpa_to_4(
-                        validated.msc_gpa.raw_value,
-                        validated.msc_gpa.scale or 4.0
-                    )
-
+                    msc_gpa_norm = normalise_gpa_to_4(validated.msc_gpa.raw_value, validated.msc_gpa.scale or 4.0)
                 metrics_payload.update({
                     "msc_uni_name": validated.msc_uni[:250],
                     "msc_qs_rank": msc_rank,
@@ -174,14 +134,12 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
                     "msc_gpa_normalised": msc_gpa_norm,
                 })
 
-            # ── STEP 6 : Publications ─────────────────────────────────────────
             pubs_to_save = []
-
             for idx, p in enumerate(validated.publications):
+                if not p.title or p.title == "Untitled":
+                    continue
                 if p.venue:
-                    pub_type, scopus_pct, core_rank, core_score = enrich_publication(
-                        {"venue": p.venue}, df_scopus, df_core
-                    )
+                    pub_type, scopus_pct, core_rank, core_score = enrich_publication({"venue": p.venue}, df_scopus, df_core)
                 else:
                     pub_type, scopus_pct, core_rank, core_score = "journal", None, None, None
 
@@ -191,11 +149,7 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
                 if pos == tot and tot > 1:
                     contrib = 0.85
 
-                venue_obj = await publication_repo.get_or_create_venue(
-                    db,
-                    venue_type=pub_type,
-                    name=(p.venue or "Unknown")[:250]
-                )
+                venue_obj = await publication_repo.get_or_create_venue(db, venue_type=pub_type, name=(p.venue or "Unknown")[:250])
 
                 pubs_to_save.append({
                     "title": (p.title or "Untitled")[:250],
@@ -213,22 +167,16 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
                     "position_in_cv": idx + 1,
                 })
 
-            # ── STEP 7 : Sauvegarde DB ───────────────────────────────────────
             await applicant_repo.update_applicant_status(db, app_uuid, "processing")
             await applicant_repo.upsert_extracted_metrics(db, app_uuid, metrics_payload)
 
             if pubs_to_save:
-                await publication_repo.save_publications_batch(
-                    db, app_uuid, pubs_to_save
-                )
+                await publication_repo.save_publications_batch(db, app_uuid, pubs_to_save)
 
             await applicant_repo.update_applicant_status(db, app_uuid, "processed")
             await db.commit()
 
-            logger.info(
-                f"✅ [PIPELINE SUCCESS] {applicant_id} — "
-                f"confidence={confidence} pubs={len(pubs_to_save)}"
-            )
+            logger.info(f"✅ [PIPELINE SUCCESS] {applicant_id} — confidence={confidence} pubs={len(pubs_to_save)}")
             return True
 
         except Exception as e:
@@ -246,5 +194,4 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
 
 
 def run_pipeline(applicant_id: str) -> bool:
-    """Bridge synchrone pour Celery."""
     return asyncio.run(run_pipeline_logic(applicant_id))

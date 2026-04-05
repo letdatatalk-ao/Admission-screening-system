@@ -2,6 +2,9 @@
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import List, Optional, Union
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class GPASchema(BaseModel):
@@ -33,78 +36,79 @@ class GPASchema(BaseModel):
 
 class PublicationSchema(BaseModel):
     title: Optional[str] = None
-    authors: Optional[Union[str, List[str]]] = None  # accepte les deux
-    year: Optional[int] = Field(None, ge=1990, le=2026)
+    authors: Optional[Union[str, List[str]]] = None
+    year: Optional[int] = None  # ← CORRIGÉ : plus de validation stricte
     venue: Optional[str] = None
-    author_position: Optional[Union[int, str]] = Field(1)  # accepte string sémantique
+    author_position: Optional[Union[int, str]] = Field(1)
     total_authors: Optional[int] = Field(1, ge=1)
 
     @field_validator('authors', mode='before')
     @classmethod
     def coerce_authors_to_string(cls, v):
-        """Le LLM renvoie parfois une liste — on la joint en string."""
         if v is None:
             return None
         if isinstance(v, list):
             return ', '.join(str(a) for a in v)
         return str(v)
 
+    @field_validator('year', mode='before')
+    @classmethod
+    def coerce_year(cls, v):
+        """Convertit l'année en entier, retourne None si non valide."""
+        if v is None:
+            return None
+        try:
+            year = int(v)
+            # Année plausible entre 1900 et 2030
+            if 1900 <= year <= 2030:
+                return year
+            return None
+        except (ValueError, TypeError):
+            logger.debug(f"Invalid year value: {v}, setting to None")
+            return None
+
     @field_validator('author_position', mode='before')
     @classmethod
     def coerce_author_position(cls, v):
-        """
-        Le LLM renvoie parfois 'Co-Author', 'First', 'Second', 'Last'...
-        On normalise en entier. En cas d'échec, on retourne 1 (valeur sûre).
-        """
         if v is None:
             return 1
         if isinstance(v, int):
             return v
         s = str(v).strip().lower()
-        # Mapping des labels sémantiques courants
         semantic_map = {
-            'first':      1,
-            '1st':        1,
-            'second':     2,
-            '2nd':        2,
-            'third':      3,
-            '3rd':        3,
-            'last':       None,   # résolu dans model_validator avec total_authors
-            'co-author':  2,      # position inconnue → on pose 2 par défaut
-            'co_author':  2,
-            'coauthor':   2,
+            'first': 1, '1st': 1, 'second': 2, '2nd': 2,
+            'third': 3, '3rd': 3, 'last': None,
+            'co-author': 2, 'co_author': 2, 'coauthor': 2,
             'corresponding': 1,
         }
         if s in semantic_map:
             result = semantic_map[s]
             return result if result is not None else 1
-        # Tentative de parsing numérique
         try:
             return int(float(s))
         except (ValueError, TypeError):
-            return 1  # fallback sûr
+            return 1
 
     @model_validator(mode='after')
     def check_position_logic(self):
-        # Résoudre 'last' maintenant qu'on connaît total_authors
         if self.author_position and self.total_authors:
             if self.author_position > self.total_authors:
-                self.author_position = self.total_authors  # 'last' → position réelle
+                self.author_position = self.total_authors
         return self
 
 
 class ExtractedCandidate(BaseModel):
-    bsc_uni:    Optional[str] = None
-    bsc_gpa:    GPASchema = Field(default_factory=GPASchema)
+    bsc_uni: Optional[str] = None
+    bsc_gpa: GPASchema = Field(default_factory=GPASchema)
 
     msc_absent: bool = False
-    msc_uni:    Optional[str] = None
-    msc_gpa:    Optional[GPASchema] = None
+    msc_uni: Optional[str] = None
+    msc_gpa: Optional[GPASchema] = None
 
     publications: List[PublicationSchema] = []
 
-    full_name:   Optional[str] = None
-    email:       Optional[str] = None
+    full_name: Optional[str] = None
+    email: Optional[str] = None
     nationality: Optional[str] = None
 
     @model_validator(mode='after')
