@@ -1,0 +1,2380 @@
+journal_name,sjr_score,sjr_quartile,scopus_pct,issn
+Foundations and Trends in Machine Learning,22.797,Q1,97.2,"19358245, 19358237"
+Nature Biomedical Engineering,10.105,Q1,97.7,2157846X
+Foundations and Trends in Signal Processing,7.305,Q1,97.8,"19328346, 19328354"
+IEEE Journal on Selected Areas in Communications,7.023,Q1,97.8,07338716
+International Journal of Information Management,6.260,Q1,97.8,02684012
+Proceedings of the IEEE,6.247,Q1,97.8,"15582256, 00189219"
+Journal of Service Research,6.011,Q1,97.8,"10946705, 15527379"
+Science Robotics,5.940,Q1,97.8,24709476
+Nature Machine Intelligence,5.876,Q1,97.8,25225839
+ACM Computing Surveys,5.797,Q1,97.8,"03600300, 15577341"
+PRX Quantum,5.341,Q1,97.8,26913399
+GigaScience,5.314,Q1,97.8,2047217X
+Computers and Education: Artificial Intelligence,5.217,Q1,97.8,2666920X
+Information Systems Research,4.850,Q1,97.8,"15265536, 10477047"
+Molecular Systems Biology,4.783,Q1,97.8,17444292
+Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition,4.718,-,29.7,10636919
+IEEE Transactions on Smart Grid,4.608,Q1,97.8,19493053
+Journal of Supply Chain Management,4.562,Q1,97.8,"15232409, 1745493X"
+Journal of Operations Management,4.520,Q1,97.8,"18731317, 02726963"
+Wiley Interdisciplinary Reviews: Computational Molecular Science,4.501,Q1,97.8,"17590876, 17590884"
+MIS Quarterly: Management Information Systems,4.486,Q1,97.9,"02767783, 21629730"
+IEEE Transactions on Wireless Communications,4.454,Q1,97.9,"15361276, 15582248"
+IEEE Transactions on Cybernetics,4.450,Q1,97.9,"21682275, 21682267"
+IEEE Wireless Communications,4.406,Q1,97.9,15361284
+npj Digital Medicine,4.164,Q1,97.9,23986352
+Information Fusion,4.128,Q1,97.9,"18726305, 15662535"
+IEEE Journal on Selected Topics in Signal Processing,4.120,Q1,97.9,19324553
+Internet of Things and Cyber-Physical Systems,3.952,Q1,97.9,26673452
+International Journal of Educational Technology in Higher Education,3.912,Q1,97.9,23659440
+IEEE Transactions on Pattern Analysis and Machine Intelligence,3.910,Q1,97.9,01628828
+IEEE/CAA Journal of Automatica Sinica,3.863,Q1,97.9,"23299266, 23299274"
+IEEE Transactions on Automatic Control,3.804,Q1,97.9,"00189286, 15582523"
+Journal of Strategic Information Systems,3.765,Q1,97.9,09638687
+"Annual Review of Control, Robotics, and Autonomous Systems",3.690,Q1,97.9,25735144
+IEEE Transactions on Neural Networks and Learning Systems,3.686,Q1,97.9,"2162237X, 21622388"
+IEEE Geoscience and Remote Sensing Magazine,3.662,Q1,97.9,"24732397, 21686831"
+Journal of Management Information Systems,3.652,Q1,97.9,"1557928X, 07421222"
+Journal of Manufacturing Systems,3.633,Q1,97.9,02786125
+IEEE Transactions on Fuzzy Systems,3.614,Q1,97.9,10636706
+Information Systems Journal,3.599,Q1,97.9,"13501917, 13652575"
+Proceedings of the IEEE International Conference on Computer Vision,3.544,-,29.8,15505499
+Computer Assisted Language Learning,3.513,Q1,97.9,"17443210, 09588221"
+IEEE Transactions on Evolutionary Computation,3.495,Q1,97.9,1089778X
+ISPRS Journal of Photogrammetry and Remote Sensing,3.480,Q1,97.9,09242716
+Nature Computational Science,3.472,Q1,97.9,26628457
+European Journal of Information Systems,3.459,Q1,97.9,"0960085X, 14769344"
+IEEE Transactions on Industrial Informatics,3.416,Q1,97.9,15513203
+Foundations and Trends in Robotics,3.370,Q1,97.9,"19358253, 19358261"
+Computers and Education,3.343,Q1,97.9,03601315
+Medical Image Analysis,3.289,Q1,97.9,"13618415, 13618423"
+IEEE Communications Magazine,3.281,Q1,97.9,01636804
+Computer Science Review,3.276,Q1,97.9,15740137
+"IEEE Transactions on Systems, Man, and Cybernetics: Systems",3.254,Q1,97.9,"21682216, 21682232"
+AI Open,3.212,Q1,97.9,26666510
+Journal of Statistical Software,3.211,Q1,97.9,15487660
+Computational Visual Media,3.166,Q1,97.9,"20960662, 20960433"
+International Journal of Computer Vision,3.136,Q1,97.9,"09205691, 15731405"
+Radiology: Artificial Intelligence,3.128,Q1,97.9,26386100
+Journal of the Association for Information Systems,3.119,Q1,97.9,15369323
+Computer-Aided Civil and Infrastructure Engineering,3.012,Q1,97.9,"14678667, 10939687"
+Artificial Intelligence Review,3.010,Q1,97.9,"02692821, 15737462"
+IEEE Transactions on Industrial Electronics,3.006,Q1,97.9,02780046
+ACM Transactions on Graphics,2.965,Q1,97.9,"15577368, 07300301"
+IEEE Transactions on Robotics,2.965,Q1,97.9,15523098
+Computers in Human Behavior,2.923,Q1,97.9,07475632
+Information and Management,2.920,Q1,97.9,03787206
+Robotics and Computer-Integrated Manufacturing,2.892,Q1,97.9,07365845
+Proceedings of the Annual ACM Symposium on Theory of Computing,2.889,-,29.8,07378017
+npj Computational Materials,2.835,Q1,97.9,20573960
+IEEE Transactions on Intelligent Vehicles,2.821,Q1,97.9,23798858
+Transportation Research Part C: Emerging Technologies,2.734,Q1,97.9,0968090X
+npj Quantum Information,2.730,Q1,97.9,20566387
+IEEE Signal Processing Magazine,2.685,Q1,97.9,10535888
+Satellite Navigation,2.658,Q1,97.9,"26629291, 26621363"
+Mechanical Systems and Signal Processing,2.636,Q1,97.9,"08883270, 10961216"
+IEEE Transactions on Medical Imaging,2.629,Q1,97.9,"02780062, 1558254X"
+IEEE Transactions on Intelligent Transportation Systems,2.589,Q1,97.9,"15580016, 15249050"
+Foundations and Trends in Communications and Information Theory,2.571,Q1,97.9,"15672190, 15672328"
+IEEE Transactions on Knowledge and Data Engineering,2.570,Q1,97.9,10414347
+Operations Research,2.557,Q1,97.9,"0030364X, 15265463"
+IEEE Transactions on Cognitive Communications and Networking,2.541,Q1,97.9,23327731
+IEEE Network,2.516,Q1,97.9,"08908044, 1558156X"
+IEEE Transactions on Image Processing,2.502,Q1,97.9,10577149
+IEEE Internet of Things Journal,2.483,Q1,97.9,23274662
+Smart Learning Environments,2.476,Q1,97.9,21967091
+Bioinformatics,2.451,Q1,97.9,"13674811, 13674803"
+Computer Methods in Applied Mechanics and Engineering,2.412,Q1,97.9,00457825
+Briefings in Bioinformatics,2.390,Q1,97.9,"14774054, 14675463"
+Annual Reviews in Control,2.386,Q1,97.9,13675788
+Physics of Life Reviews,2.384,Q1,97.9,"18731457, 15710645"
+Decision Support Systems,2.366,Q1,97.9,01679236
+Meta-Radiology,2.347,Q1,97.9,29501628
+International Journal of Robotics Research,2.333,Q1,97.9,"02783649, 17413176"
+IEEE Transactions on Mobile Computing,2.332,Q1,97.9,15361233
+Electronic Markets,2.325,Q1,97.9,"14228890, 10196781"
+Journal of Combinatorial Theory. Series B,2.312,Q1,97.9,"10960902, 00958956"
+Foundations of Computational Mathematics,2.308,Q1,97.9,"16153383, 16153375"
+International Journal of Information Management Data Insights,2.302,Q1,97.9,26670968
+Cyborg and Bionic Systems,2.263,Q1,97.9,"20971087, 26927632"
+Cell Reports Methods,2.257,Q1,97.9,26672375
+Journal of the ACM,2.246,Q1,97.9,"00045411, 1557735X"
+IEEE/ASME Transactions on Mechatronics,2.243,Q1,97.9,10834435
+European Journal of Operational Research,2.239,Q1,97.9,03772217
+"Proceedings of the Annual International Symposium on Microarchitecture, MICRO",2.229,-,29.9,10724451
+Internet and Higher Education,2.221,Q1,97.9,10967516
+Proceedings - International Symposium on High-Performance Computer Architecture,2.216,-,29.9,15300897
+Computers in Industry,2.209,Q1,97.9,01663615
+Big Data and Society,2.207,Q1,97.9,20539517
+Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery,2.202,Q1,97.9,"19424795, 19424787"
+Business and Information Systems Engineering,2.201,Q1,97.9,"18670202, 23637005"
+Production Planning and Control,2.198,Q1,97.9,"09537287, 13665871"
+Journal of Information Technology,2.192,Q1,97.9,"14664437, 02683962"
+Sustainable Operations and Computers,2.190,Q1,97.9,26664127
+IEEE Open Journal of the Communications Society,2.183,Q1,97.9,2644125X
+NAR Genomics and Bioinformatics,2.179,Q1,97.9,26319268
+ReCALL,2.177,Q1,97.9,09583440
+IEEE Communications Standards Magazine,2.174,Q1,97.9,24712825
+Fuzzy Optimization and Decision Making,2.171,Q1,97.9,"15732908, 15684539"
+Social Media and Society,2.169,Q1,97.9,20563051
+Mobile Media and Communication,2.165,Q1,97.9,"20501579, 20501587"
+IEEE Transactions on Vehicular Technology,2.156,Q1,97.9,"00189545, 19399359"
+IEEE Transactions on Affective Computing,2.136,Q1,97.9,19493045
+IEEE Transactions on Information Forensics and Security,2.135,Q1,97.9,15566013
+Telematics and Informatics,2.131,Q1,97.9,07365853
+IEEE Transactions on Parallel and Distributed Systems,2.097,Q1,97.9,10459219
+Information Processing and Management,2.062,Q1,97.9,"18735371, 03064573"
+Journal of Computers in Education,2.062,Q1,97.9,"21979995, 21979987"
+Proceedings - IEEE INFOCOM,2.061,-,29.9,0743166X
+Pattern Recognition,2.058,Q1,97.9,00313203
+IEEE Transactions on Signal Processing,2.054,Q1,97.9,"19410476, 1053587X"
+Archives of Computational Methods in Engineering,2.038,Q1,97.9,"18861784, 11343060"
+Journal of Educational Computing Research,2.024,Q1,97.9,"15414140, 07356331"
+Journal of Machine Learning Research,2.019,Q1,97.9,"15337928, 15324435"
+Information Systems Frontiers,2.002,Q1,97.9,"15729419, 13873326"
+Energy and AI,2.000,Q1,97.9,26665468
+Journal of Computer Assisted Learning,2.000,Q1,97.9,"13652729, 02664909"
+Advanced Engineering Informatics,1.993,Q1,97.9,14740346
+Journal of Big Data,1.979,Q1,97.9,21961115
+Proceedings - IEEE Symposium on Security and Privacy,1.978,-,29.9,10816011
+Interactive Learning Environments,1.976,Q1,97.9,10494820
+Journal of Network and Computer Applications,1.972,Q1,97.9,"10958592, 10848045"
+Foundations and Trends in Computer Graphics and Vision,1.968,Q1,97.9,15722740
+International Journal of Computer-Supported Collaborative Learning,1.967,Q1,97.9,"15561607, 15561615"
+International Journal of Artificial Intelligence in Education,1.960,Q1,97.9,"15604292, 15604306"
+Proceedings of the ACM SIGMOD International Conference on Management of Data,1.959,-,29.9,07308078
+Journal of Metaverse,1.955,Q1,97.9,27920232
+Mathematical Statistics and Learning,1.953,Q1,97.9,"25202324, 25202316"
+IEEE Transactions on Control of Network Systems,1.951,Q1,97.9,23255870
+Computer Physics Communications,1.946,Q1,97.9,00104655
+IEEE Transactions on Network Science and Engineering,1.941,Q1,97.9,23274697
+Knowledge-Based Systems,1.934,Q1,97.9,09507051
+Proceedings of the Annual ACM-SIAM Symposium on Discrete Algorithms,1.930,-,29.9,"15579468, 10719040"
+International Conference on Architectural Support for Programming Languages and Operating Systems - ASPLOS,1.928,-,29.9,-
+Swarm and Evolutionary Computation,1.890,Q1,97.9,22106502
+Journal of Materials Processing Technology,1.885,Q1,97.9,"09240136, 18734774"
+Advances in Neural Information Processing Systems,1.884,-,29.9,10495258
+Computers and Geotechnics,1.878,Q1,97.9,"0266352X, 18737633"
+Scientific Data,1.867,Q1,97.9,20524463
+Expert Systems with Applications,1.854,Q1,97.9,09574174
+Journal of Research on Technology in Education,1.854,Q1,97.9,"19450818, 15391523"
+Cognitive Robotics,1.852,Q1,97.9,26672413
+IEEE Computational Intelligence Magazine,1.851,Q1,97.9,1556603X
+Artificial Intelligence,1.836,Q1,97.9,00043702
+Computers and Electronics in Agriculture,1.834,Q1,97.9,01681699
+Proceedings of the VLDB Endowment,1.832,Q1,97.9,21508097
+Transactions of the Association for Computational Linguistics,1.824,Q1,97.9,2307387X
+Information and Organization,1.803,Q1,97.9,14717727
+Information Sciences,1.803,Q1,97.9,00200255
+Journal of Memory and Language,1.802,Q1,97.9,"10960821, 0749596X"
+CAAI Transactions on Intelligence Technology,1.785,Q1,97.9,"24686557, 24682322"
+IEEE Transactions on Green Communications and Networking,1.780,Q1,97.9,24732400
+Mechanism and Machine Theory,1.780,Q1,97.9,0094114X
+Engineering,1.767,Q1,97.9,20958099
+Soft Robotics,1.764,Q1,97.9,21695172
+Journal of Intelligent Manufacturing,1.763,Q1,97.9,"15728145, 09565515"
+IEEE Transactions on Dependable and Secure Computing,1.755,Q1,97.9,15455971
+Artificial Intelligence in Agriculture,1.750,Q1,97.9,25897217
+IEEE Transactions on Circuits and Systems,1.734,Q1,97.9,15498328
+Mathematical Programming,1.732,Q1,97.9,"14364646, 00255610"
+Journal of Computational and Cognitive Engineering,1.730,Q1,97.9,"28109503, 28109570"
+Telecommunications Policy,1.728,Q1,97.9,03085961
+Robotics: Science and Systems,1.712,-,29.9,"23307668, 2330765X"
+Computers in Human Behavior Reports,1.709,Q1,97.9,24519588
+IEEE Communications Letters,1.708,Q1,97.9,10897798
+Current Opinion in Systems Biology,1.702,Q1,97.9,24523100
+Journal of Computational Physics,1.685,Q1,97.9,"10902716, 00219991"
+"Technology, Mind, and Behavior",1.679,Q1,97.9,26890208
+Computers and Education Open,1.678,Q1,97.9,26665573
+Journal of Enterprise Information Management,1.675,Q1,97.9,17410398
+Virtual and Physical Prototyping,1.673,Q1,97.9,"17452767, 17452759"
+Foundations and Trends in Programming Languages,1.665,Q1,97.9,"23251107, 23251131"
+Engineering Applications of Artificial Intelligence,1.652,Q1,97.9,09521976
+Cognitive Psychology,1.651,Q1,97.9,"10955623, 00100285"
+IEEE Journal of Biomedical and Health Informatics,1.649,Q1,97.9,"21682208, 21682194"
+Journal of Communications and Information Networks,1.635,Q1,97.9,"20961081, 25093312"
+Computers and Industrial Engineering,1.628,Q1,97.9,03608352
+Chip,1.624,Q1,97.9,"27722724, 27094723"
+IEEE Transactions on Emerging Topics in Computational Intelligence,1.620,Q1,97.9,2471285X
+Computers and Operations Research,1.605,Q1,97.9,"03050548, 1873765X"
+Information Technology and Tourism,1.604,Q1,97.9,"10983058, 19434294"
+International Journal of Neural Systems,1.579,Q1,97.9,"01290657, 17936462"
+IEEE Transactions on Big Data,1.571,Q1,97.9,23327790
+Journal of Cheminformatics,1.570,Q1,97.9,17582946
+IEEE Open Journal of the Computer Society,1.567,Q1,97.9,26441268
+Information Technology and People,1.567,Q1,97.9,09593845
+International Journal of Cognitive Computing in Engineering,1.566,Q1,97.9,26663074
+Computational and Structural Biotechnology Journal,1.561,Q1,97.9,20010370
+mSystems,1.558,Q1,97.9,23795077
+ISA Transactions,1.552,Q1,97.9,00190578
+Future Generation Computer Systems,1.551,Q1,97.9,0167739X
+ACM Transactions on Computing for Healthcare,1.548,Q1,97.9,"26378051, 26911957"
+Neuromorphic Computing and Engineering,1.548,Q1,97.9,26344386
+International Journal of Intelligent Networks,1.545,Q1,97.9,26666030
+ACM Transactions on Information Systems,1.540,Q1,97.9,"10468188, 15582868"
+Policy and Internet,1.537,Q1,97.9,19442866
+Foundations and Trends in Information Retrieval,1.535,Q1,97.9,"15540669, 15540677"
+Journal of Manufacturing Technology Management,1.532,Q1,97.9,1741038X
+"BenchCouncil Transactions on Benchmarks, Standards and Evaluations",1.531,Q1,97.9,27724859
+APL Photonics,1.530,Q1,97.9,23780967
+Internet of Things (The Netherlands),1.527,Q1,97.9,25426605
+IEEE Transactions on Multimedia,1.521,Q1,97.9,15209210
+Developments in the Built Environment,1.516,Q1,97.9,26661659
+Applied Soft Computing,1.511,Q1,97.9,15684946
+PLoS Computational Biology,1.503,Q1,97.9,"15537358, 1553734X"
+International Journal of Geographical Information Science,1.502,Q1,97.9,"13658816, 13658824"
+IEEE Transactions on Network and Service Management,1.500,Q1,98.0,19324537
+Ecological Informatics,1.491,Q1,98.0,15749541
+Neural Networks,1.491,Q1,98.0,"08936080, 18792782"
+Journal of Chemical Theory and Computation,1.482,Q1,98.0,"15499626, 15499618"
+IEEE Robotics and Automation Letters,1.481,Q1,98.0,23773766
+Science China Information Sciences,1.479,Q1,98.0,"1674733X, 18691919"
+Journal of Hospitality and Tourism Technology,1.476,Q1,98.0,"17579880, 17579899"
+Neurocomputing,1.471,Q1,98.0,"09252312, 18728286"
+Journal of Chemical Information and Modeling,1.467,Q1,98.0,"1549960X, 15499596"
+Environmental Modelling and Software,1.466,Q1,98.0,"18736726, 13648152"
+IEEE Transactions on Information Theory,1.464,Q1,98.0,"00189448, 15579654"
+International Journal of Logistics Research and Applications,1.452,Q1,98.0,"13675567, 1469848X"
+Computing and Software for Big Science,1.449,Q1,98.0,25102044
+Computers in Biology and Medicine,1.447,Q1,98.0,"00104825, 18790534"
+IEEE Transactions on Software Engineering,1.447,Q1,98.0,00985589
+Computers and Security,1.445,Q1,98.0,01674048
+IEEE Transactions on Services Computing,1.441,Q1,98.0,19391374
+Digital Communications and Networks,1.440,Q1,98.0,"23528648, 24685925"
+Information Technology for Development,1.439,Q1,98.0,"15540170, 02681102"
+INFORMS Journal on Computing,1.439,Q1,98.0,"10919856, 15265528"
+Machine Learning and Knowledge Extraction,1.437,Q1,98.0,25044990
+IEEE Transactions on Artificial Intelligence,1.431,Q1,98.0,26914581
+Journal of Automation and Intelligence,1.429,Q1,98.0,29498554
+Electronic Commerce Research and Applications,1.411,Q1,98.0,15674223
+Bioinformatics Advances,1.410,Q1,98.0,26350041
+Design Studies,1.410,Q1,98.0,0142694X
+SIAM Journal on Computing,1.400,Q1,98.0,"00975397, 10957111"
+Dianli Xitong Zidonghua/Automation of Electric Power Systems,1.398,Q1,98.0,10001026
+European Journal of Combinatorics,1.398,Q1,98.0,"10959971, 01956698"
+Smart Cities,1.398,Q1,98.0,26246511
+Artificial Intelligence in Medicine,1.396,Q1,98.0,"09333657, 18732860"
+IEEE/ACM Transactions on Networking,1.394,Q1,98.0,10636692
+International Journal of Human Computer Studies,1.394,Q1,98.0,"10959300, 10715819"
+SIAM Journal on Optimization,1.388,Q1,98.0,"10526234, 10957189"
+Nonlinear Analysis: Hybrid Systems,1.387,Q1,98.0,1751570X
+Journal of Healthcare Informatics Research,1.385,Q1,98.0,2509498X
+Computational Communication Research,1.383,Q1,98.0,26659085
+Social Science Computer Review,1.374,Q1,98.0,"15528286, 08944393"
+Journal of Artificial Intelligence Research,1.372,Q1,98.0,10769757
+Data Science and Management,1.370,Q1,98.0,26667649
+Railway Engineering Science,1.368,Q1,98.0,"26624753, 26624745"
+ACM Transactions on Intelligent Systems and Technology,1.362,Q1,98.0,"21576912, 21576904"
+Journal of King Saud University - Computer and Information Sciences,1.357,Q1,98.0,"22131248, 13191578"
+Information Systems Management,1.352,Q1,98.0,10580530
+Mathematical Programming Computation,1.351,Q1,98.0,"18672949, 18672957"
+Mathematics of Operations Research,1.349,Q1,98.0,"15265471, 0364765X"
+Journal of Scientific Computing,1.348,Q1,98.0,"08857474, 15737691"
+IEEE Circuits and Systems Magazine,1.345,Q1,98.0,1531636X
+International Journal of Systems Science,1.345,Q1,98.0,"00207721, 14645319"
+Minds and Machines,1.339,Q1,98.0,"09246495, 15728641"
+Structural and Multidisciplinary Optimization,1.339,Q1,98.0,"16151488, 1615147X"
+Big Data Mining and Analytics,1.334,Q1,98.0,"2097406X, 20960654"
+Journal of Environmental Informatics,1.333,Q1,98.0,"17262135, 16848799"
+"Cyberpsychology, Behavior, and Social Networking",1.330,Q1,98.0,"21522715, 21522723"
+IEEE Intelligent Systems,1.326,Q1,98.0,15411672
+Journal of Combinatorial Theory. Series A,1.321,Q1,98.0,"00973165, 10960899"
+Journal of Informetrics,1.321,Q1,98.0,"18755879, 17511577"
+Blockchain: Research and Applications,1.317,Q1,98.0,"20967209, 26669536"
+AVS Quantum Science,1.310,Q1,98.0,26390213
+IEEE Transactions on Neural Systems and Rehabilitation Engineering,1.310,Q1,98.0,"15344320, 15580210"
+Control Engineering Practice,1.309,Q1,98.0,09670661
+Proceedings - International Conference on Software Engineering,1.301,-,29.9,02705257
+Journal of Information Technology and Politics,1.300,Q1,98.0,"19331681, 1933169X"
+IEEE Journal on Selected Areas in Information Theory,1.297,Q1,98.0,26418770
+Computers and Structures,1.296,Q1,98.0,00457949
+IEEE Open Journal of Intelligent Transportation Systems,1.296,Q1,98.0,26877813
+Science Technology and Human Values,1.290,Q1,98.0,"01622439, 15528251"
+IEEE Transactions on Emerging Topics in Computing,1.284,Q1,98.0,21686750
+ACM Transactions on Software Engineering and Methodology,1.283,Q1,98.0,"15577392, 1049331X"
+Industrial Management and Data Systems,1.279,Q1,98.0,02635577
+IEEE Systems Journal,1.276,Q1,98.0,"19379234, 19328184"
+Data Science and Engineering,1.273,Q1,98.0,"23641541, 23641185"
+International Journal of Molecular Sciences,1.273,Q1,98.0,"14220067, 16616596"
+Machine Intelligence Research,1.271,Q1,98.0,"2731538X, 27315398"
+Computerized Medical Imaging and Graphics,1.270,Q1,98.0,"18790771, 08956111"
+BMJ Health and Care Informatics,1.263,Q1,98.0,26321009
+Internet Policy Review,1.263,Q1,98.0,21976775
+IEEE Transactions on Computational Social Systems,1.257,Q1,98.0,2329924X
+Journal of Biomedical Informatics,1.257,Q1,98.0,"15320480, 15320464"
+Computational Mechanics,1.256,Q1,98.0,"14320924, 01787675"
+IEEE Transactions on Cloud Computing,1.254,Q1,98.0,21687161
+Topics in Cognitive Science,1.252,Q1,98.0,"17568765, 17568757"
+IEEE Transactions on Cognitive and Developmental Systems,1.249,Q1,98.0,"23798920, 23798939"
+"Mathematics of Control, Signals, and Systems",1.246,Q1,98.0,"09324194, 1435568X"
+Information Society,1.245,Q1,98.0,"01972243, 10876537"
+Journal of the Association for Information Science and Technology,1.245,Q1,98.0,"23301643, 23301635"
+Journal of Computing in Civil Engineering,1.244,Q1,98.0,08873801
+Library Hi Tech News,1.239,Q1,98.0,07419058
+Database : the journal of biological databases and curation,1.238,Q1,98.0,17580463
+npj Systems Biology and Applications,1.236,Q1,98.0,20567189
+"Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies",1.235,Q1,98.0,24749567
+ACM Transactions on Mathematical Software,1.234,Q1,98.0,"15577295, 00983500"
+"Revista Internacional de Tecnologia, Ciencia y Sociedad",1.231,Q1,98.0,25304895
+Biomedical Signal Processing and Control,1.229,Q1,98.0,"17468108, 17468094"
+Advanced Quantum Technologies,1.223,Q1,98.0,25119044
+Journal of Statistical Distributions and Applications,1.222,Q1,98.0,21955832
+Information and Inference,1.220,Q1,98.0,20498772
+Journal of Systems Architecture,1.220,Q1,98.0,13837621
+"International Conference for High Performance Computing, Networking, Storage and Analysis, SC",1.214,-,29.9,"21674337, 21674329"
+Ad Hoc Networks,1.210,Q1,98.0,15708705
+"Technology, Knowledge and Learning",1.210,Q1,98.0,"22111662, 22111670"
+AI and Society,1.208,Q1,98.0,"09515666, 14355655"
+Journal of Pragmatics,1.206,Q1,98.0,03782166
+IEEE Transactions on Signal and Information Processing over Networks,1.201,Q1,98.0,2373776X
+Virtual Reality,1.198,Q1,98.0,13594338
+BMC Bioinformatics,1.190,Q1,98.0,14712105
+Journal of Reliable Intelligent Environments,1.190,Q1,98.0,"21994668, 21994676"
+Systems and Control Letters,1.189,Q1,98.0,01676911
+Information Processing in Agriculture,1.188,Q1,98.0,"20970153, 22143173"
+ACM Transactions on Knowledge Discovery from Data,1.186,Q1,98.0,15564681
+VLDB Journal,1.176,Q1,98.0,"10668888, 0949877X"
+International Journal of Human-Computer Interaction,1.175,Q1,98.0,"15327590, 10447318"
+Proceedings of the Annual ACM Symposium on Principles of Distributed Computing,1.174,-,29.9,-
+Computer Networks,1.170,Q1,98.0,13891286
+Proceedings of Machine Learning Research,1.170,-,29.9,26403498
+Granular Computing,1.169,Q1,98.0,"23644974, 23644966"
+Cyber Security and Applications,1.168,Q1,98.0,27729184
+Robotics and Autonomous Systems,1.168,Q1,98.0,09218890
+ACM Transactions on Computer-Human Interaction,1.165,Q1,98.0,"10730516, 15577325"
+Publications,1.165,Q1,98.0,23046775
+Proceedings - International Conference on Data Engineering,1.165,-,29.9,"23750286, 10844627"
+ACM Transactions on Human-Robot Interaction,1.164,Q1,98.0,25739522
+International Journal of Social Robotics,1.157,Q1,98.0,"18754805, 18754791"
+IEEE Transactions on Computers,1.156,Q1,98.0,00189340
+Computational Linguistics,1.154,Q1,98.0,"08912017, 15309312"
+Journal of Internet Commerce,1.154,Q1,98.0,"1533287X, 15332861"
+Scientometrics,1.152,Q1,98.0,"15882861, 01389130"
+Library Hi Tech,1.150,Q1,98.0,07378831
+Proceedings of the ACM Conference on Computer and Communications Security,1.150,-,29.9,15437221
+Machine Learning,1.147,Q1,98.0,"15730565, 08856125"
+Communications of the ACM,1.146,Q1,98.0,"15577317, 00010782"
+Complex and Intelligent Systems,1.143,Q1,98.0,"21994536, 21986053"
+Computer Standards and Interfaces,1.142,Q1,98.0,09205489
+International Journal of Intelligent Systems,1.141,Q1,98.0,"1098111X, 08848173"
+Advanced Intelligent Systems,1.140,Q1,98.0,26404567
+Combinatorics Probability and Computing,1.133,Q1,98.0,"09635483, 14692163"
+IEEE Transactions on Human-Machine Systems,1.132,Q1,98.0,21682291
+Computer Methods and Programs in Biomedicine,1.130,Q1,98.0,"01692607, 18727565"
+"Technology, Pedagogy and Education",1.128,Q1,98.0,"17475139, 1475939X"
+Cognitive Science,1.126,Q1,98.0,"03640213, 15516709"
+Advances in Engineering Software,1.124,Q1,98.0,"18735339, 09659978"
+Bioprinting,1.123,Q1,98.0,24058866
+Machine Learning: Science and Technology,1.119,Q1,98.0,26322153
+Computer Communications,1.114,Q1,98.0,"1873703X, 01403664"
+International Journal of Digital Earth,1.111,Q1,98.0,"17538955, 17538947"
+Engineering with Computers,1.110,Q1,98.0,"14355663, 01770667"
+China Communications,1.108,Q1,98.0,16735447
+Ethics and Information Technology,1.107,Q1,98.0,13881957
+ACM Transactions on Quantum Computing,1.105,Q1,98.0,26436817
+Behaviour and Information Technology,1.103,Q1,98.0,"13623001, 0144929X"
+Computational Complexity,1.103,Q1,98.0,"14208954, 10163328"
+Neural Computing and Applications,1.102,Q1,98.0,"09410643, 14333058"
+IEEE Intelligent Transportation Systems Magazine,1.100,Q1,98.0,"19411197, 19391390"
+Autonomous Robots,1.096,Q1,98.0,"15737527, 09295593"
+"Engineering Science and Technology, an International Journal",1.093,Q1,98.0,22150986
+Digital Geography and Society,1.091,Q1,98.0,26663783
+TechTrends,1.091,Q1,98.0,87563894
+Bioelectronic Medicine,1.089,Q1,98.0,23328886
+Computer Law and Security Review,1.085,Q1,98.0,02673649
+IEEE Transactions on Computational Imaging,1.082,Q1,98.0,23339403
+Network Neuroscience,1.078,Q1,98.0,24721751
+Intelligent Medicine,1.075,Q1,98.0,"20969376, 26671026"
+Journal of Field Robotics,1.075,Q1,98.0,"15564967, 15564959"
+IEEE Computer Society Conference on Computer Vision and Pattern Recognition Workshops,1.072,-,29.9,"21607516, 21607508"
+IEEE Transactions on Learning Technologies,1.071,Q1,98.0,19391382
+Proceedings of the ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI),1.071,-,29.9,15317102
+Frontiers in Digital Health,1.070,Q1,98.0,2673253X
+Language Learning and Technology,1.070,Q1,98.0,10943501
+Proceedings - IEEE International Conference on Robotics and Automation,1.070,-,29.9,10504729
+BioData Mining,1.068,Q1,98.0,17560381
+Journal of Digital Learning in Teacher Education,1.068,Q1,98.0,"21532974, 23327383"
+Intelligent and Converged Networks,1.065,Q1,98.0,27086240
+"Journal of Intelligent Transportation Systems: Technology, Planning, and Operations",1.065,Q1,98.0,"15472450, 15472442"
+Digital Biomarkers,1.061,Q1,98.0,2504110X
+IEEE/ACM Transactions on Audio Speech and Language Processing,1.061,Q1,98.0,"23299304, 23299290"
+IEEE Internet of Things Magazine,1.060,Q1,98.0,"25763199, 25763180"
+IEEE Transactions on Visualization and Computer Graphics,1.059,Q1,98.0,10772626
+Quantum Machine Intelligence,1.059,Q1,98.0,"25244914, 25244906"
+Random Structures and Algorithms,1.055,Q1,98.0,"10429832, 10982418"
+Computers and Electrical Engineering,1.053,Q1,98.0,00457906
+International Journal of High Performance Computing Applications,1.051,Q1,98.0,"10943420, 17412846"
+Egyptian Informatics Journal,1.050,Q1,98.0,"11108665, 20904754"
+"Law, Innovation and Technology",1.049,Q1,98.0,"1757997X, 17579961"
+IEEE Transactions on Quantum Engineering,1.045,Q1,98.0,26891808
+Information and Software Technology,1.045,Q1,98.0,09505849
+Journal of Communications and Networks,1.043,Q1,98.0,"12292370, 19765541"
+Transportmetrica B,1.043,Q1,98.0,"21680582, 21680566"
+BIT Numerical Mathematics,1.042,Q1,98.0,"15729125, 00063835"
+BMC Medical Informatics and Decision Making,1.041,Q1,98.0,14726947
+Cluster Computing,1.040,Q1,98.0,13867857
+Computers and Geosciences,1.040,Q1,98.0,00983004
+Mathematics and Computers in Simulation,1.040,Q1,98.0,03784754
+Human Behavior and Emerging Technologies,1.036,Q1,98.0,25781863
+Journal of Computer and System Sciences,1.033,Q1,98.0,"10902724, 00220000"
+Human-Computer Interaction,1.027,Q1,98.0,"15327051, 07370024"
+Online Information Review,1.025,Q1,98.0,"14684527, 14684535"
+Sensors and Actuators Reports,1.025,Q1,98.0,26660539
+Communications in Analysis and Mechanics,1.019,Q1,98.0,28363310
+Data Mining and Knowledge Discovery,1.019,Q1,98.0,"13845810, 1573756X"
+International Journal of Child-Computer Interaction,1.019,Q1,98.0,22128689
+Sustainable Computing: Informatics and Systems,1.018,Q1,98.0,22105379
+Array,1.016,Q1,98.0,25900056
+International Journal of Critical Infrastructure Protection,1.016,Q1,98.0,18745482
+ICT Express,1.009,Q1,98.0,24059595
+Finite Elements in Analysis and Design,1.008,Q1,98.0,0168874X
+Pattern Recognition Letters,1.005,Q1,98.0,01678655
+Engineering Applications of Computational Fluid Mechanics,1.004,Q1,98.0,"1997003X, 19942060"
+"Visual Computing for Industry, Biomedicine, and Art",1.004,Q1,98.0,"25244442, 2096496X"
+ACM Transactions on Internet Technology,1.000,Q1,98.0,"15576051, 15335399"
+Journal of Learning Analytics,0.997,Q1,98.0,19297750
+IEEE Robotics and Automation Magazine,0.996,Q1,98.0,10709932
+IEEE Internet Computing,0.995,Q1,98.0,10897801
+Journal of the Franklin Institute,0.994,Q1,98.0,00160032
+ACM Transactions on Sensor Networks,0.993,Q1,98.0,15504859
+International Transactions in Operational Research,0.993,Q1,98.0,"09696016, 14753995"
+Journal of Semantics,0.986,Q1,98.0,"01675133, 14774593"
+IACR Transactions on Cryptographic Hardware and Embedded Systems,0.985,Q1,98.0,25692925
+Journal of Parallel and Distributed Computing,0.978,Q1,98.0,"07437315, 10960848"
+Journal of Computational Design and Engineering,0.976,Q1,98.0,"22885048, 22884300"
+Journal of Systems and Software,0.975,Q1,98.0,01641212
+ACM Transactions on Management Information Systems,0.973,Q1,98.0,"21586578, 2158656X"
+Proceedings - Symposium on Logic in Computer Science,0.970,-,29.9,10436871
+Algorithmica,0.969,Q1,98.0,"14320541, 01784617"
+"IEEE Transactions on Biometrics, Behavior, and Identity Science",0.969,Q1,98.0,26376407
+Intelligent Systems with Applications,0.969,Q1,98.0,26673053
+Foundations and Trends in Human-Computer Interaction,0.968,Q1,98.0,"15513963, 15513955"
+ACS Physical Chemistry Au,0.965,Q1,98.0,26942445
+Biomimetic Intelligence and Robotics,0.964,Q1,98.0,"26673797, 20970242"
+Simulation Modelling Practice and Theory,0.963,Q1,98.0,1569190X
+Drones,0.962,Q1,98.0,2504446X
+Journal of Medical Systems,0.962,Q1,98.0,"01485598, 1573689X"
+ACM Transactions on Interactive Intelligent Systems,0.960,Q2,79.9,"21606463, 21606455"
+Brain Informatics,0.959,Q1,98.0,"21984018, 21984026"
+Signal Processing,0.958,Q1,98.0,01651684
+Journal of Responsible Technology,0.956,Q1,98.0,26666596
+International Journal of Health Geographics,0.953,Q1,98.0,1476072X
+Diqiu Kexue - Zhongguo Dizhi Daxue Xuebao/Earth Science - Journal of China University of Geosciences,0.952,Q1,98.0,10002383
+Journal of Theoretical and Applied Electronic Commerce Research,0.952,Q1,98.0,07181876
+Computers and Mathematics with Applications,0.951,Q1,98.0,08981221
+Journal of Mechanical Design,0.950,Q1,98.0,10500472
+"Designs, Codes, and Cryptography",0.949,Q1,98.0,"09251022, 15737586"
+IEEE Micro,0.945,Q1,98.0,02721732
+Interactive Technology and Smart Education,0.944,Q1,98.0,"17415659, 17588510"
+IEEE Signal Processing Letters,0.938,Q1,98.0,"10709908, 15582361"
+Journal of Cybersecurity,0.938,Q1,98.0,20572093
+IEEE Transactions on Medical Robotics and Bionics,0.933,Q1,98.0,25763202
+Journal of Information Security and Applications,0.932,Q1,98.0,"22142126, 22142134"
+Mathematical Modelling and Numerical Simulation with Applications,0.932,Q1,98.0,27918564
+Applied Intelligence,0.932,Q2,79.9,"0924669X, 15737497"
+Online Social Networks and Media,0.931,Q1,98.0,24686964
+Neuroinformatics,0.927,Q1,98.0,"15392791, 15590089"
+Romanian Journal of Information Science and Technology,0.927,Q1,98.0,14538245
+Frontiers in Artificial Intelligence,0.927,Q2,79.9,26248212
+Big Data and Cognitive Computing,0.922,Q1,98.0,25042289
+International Journal on Semantic Web and Information Systems,0.920,Q1,98.0,"15526283, 15526291"
+Proceedings of the ACM on Human-Computer Interaction,0.919,Q1,98.0,25730142
+Big Earth Data,0.918,Q1,98.0,"20964471, 25745417"
+Journal of Information Technology in Construction,0.915,Q1,98.0,18744753
+Big Data Research,0.914,Q1,98.0,"22145796, 2214580X"
+ACM Transactions on Database Systems,0.913,Q1,98.0,"15574644, 03625915"
+IEEE Transactions on Sustainable Computing,0.913,Q1,98.0,23773782
+Journal of Cloud Computing,0.912,Q1,98.0,2192113X
+International Journal of Computer Integrated Manufacturing,0.911,Q1,98.0,"0951192X, 13623052"
+Computer Science Education,0.909,Q1,98.0,"17445175, 08993408"
+Smart Agricultural Technology,0.908,Q1,98.0,27723755
+Artificial Intelligence in Geosciences,0.907,Q1,98.0,26665441
+Multiscale Modeling and Simulation,0.906,Q1,98.0,"15403459, 15403467"
+Ocean Modelling,0.906,Q1,98.0,"14635003, 14635011"
+Telematics and Informatics Reports,0.902,Q1,98.0,27725030
+IEEE Transactions on Haptics,0.900,Q2,79.9,"23294051, 19391412"
+ACM Transactions on Evolutionary Learning and Optimization,0.899,Q1,98.0,"26883007, 2688299X"
+Inverse Problems,0.898,Q1,98.0,02665611
+Cryptography and Communications,0.897,Q1,98.0,"19362447, 19362455"
+Electronic Journal of Combinatorics,0.897,Q1,98.0,"10778926, 10971440"
+Journal of Pathology Informatics,0.897,Q1,98.0,"22295089, 21533539"
+Empirical Software Engineering,0.895,Q1,98.0,"13823256, 15737616"
+High-Confidence Computing,0.894,Q1,98.0,26672952
+Psychoradiology,0.891,Q1,98.0,26344416
+Journal of Innovation and Entrepreneurship,0.889,Q1,98.0,21925372
+Conference on Human Factors in Computing Systems - Proceedings,0.889,-,29.9,-
+Enterprise Information Systems,0.888,Q1,98.0,"17517583, 17517575"
+Games and Culture,0.888,Q1,98.0,"15554139, 15554120"
+Integrated Computer-Aided Engineering,0.887,Q1,98.0,"10692509, 18758835"
+Journal of Web Librarianship,0.887,Q1,98.0,"19322909, 19322917"
+"ACM Transactions on Multimedia Computing, Communications and Applications",0.885,Q1,98.0,"15516865, 15516857"
+Computational Statistics and Data Analysis,0.885,Q1,98.0,01679473
+Information Systems,0.885,Q1,98.0,03064379
+Computing,0.884,Q1,98.0,"14365057, 0010485X"
+Digital Translation: International Journal of Translation and Localization,0.884,Q1,98.0,"29496861, 29496845"
+Proceedings - Real-Time Systems Symposium,0.884,-,29.9,10528725
+Journal of Finance and Data Science,0.883,Q1,98.0,24059188
+International Journal of Multimedia Information Retrieval,0.882,Q1,98.0,"21926611, 2192662X"
+Journal of Computer Information Systems,0.882,Q1,98.0,08874417
+Journal of King Saud University - Engineering Sciences,0.882,Q1,98.0,10183639
+Proceedings of the ACM on Programming Languages,0.882,Q1,98.0,24751421
+Technologies,0.880,Q1,98.0,22277080
+Computers and Fluids,0.878,Q1,98.0,00457930
+Proceedings of the ACM on Measurement and Analysis of Computing Systems,0.878,Q1,98.0,24761249
+Artificial Intelligence in the Life Sciences,0.878,Q2,79.9,26673185
+Discover Artificial Intelligence,0.876,Q1,98.0,27310809
+Journal of Network and Systems Management,0.876,Q1,98.0,"15737705, 10647570"
+World Wide Web,0.876,Q1,98.0,"15731413, 1386145X"
+Intelligent Service Robotics,0.875,Q1,98.0,"18612784, 18612776"
+Journal of Open Research Software,0.875,Q1,98.0,20499647
+Journal of Sensor and Actuator Networks,0.875,Q1,98.0,22242708
+Digital Health,0.874,Q2,79.9,20552076
+Cybersecurity,0.873,Q1,98.0,"20964862, 25233246"
+Networks,0.873,Q1,98.0,"10970037, 00283045"
+Computers and Chemical Engineering,0.872,Q1,98.0,00981354
+Data Base for Advances in Information Systems,0.872,Q1,98.0,"23311622, 15320936"
+"Cognition, Technology and Work",0.869,Q1,98.0,"14355558, 14355566"
+Journal of Process Control,0.869,Q1,98.0,09591524
+JMIR Infodemiology,0.869,Q2,79.9,25641891
+Computers and Education: X Reality,0.868,Q1,98.0,29496780
+Multibody System Dynamics,0.868,Q1,98.0,"13845640, 1573272X"
+AI (Switzerland),0.868,Q2,79.9,26732688
+Journal of Intelligent Information Systems,0.865,Q2,79.9,"15737675, 09259902"
+Journal of Cybersecurity and Privacy,0.863,Q1,98.0,2624800X
+Frontiers of Computer Science,0.861,Q1,98.0,"20952228, 20952236"
+Health Information Science and Systems,0.860,Q2,79.9,20472501
+Queue,0.859,Q1,98.0,"15427730, 15427749"
+Journal of Optical Communications and Networking,0.858,Q2,79.9,19430620
+Computer Vision and Image Understanding,0.856,Q1,98.0,"10773142, 1090235X"
+IEEE Access,0.849,Q1,98.0,21693536
+IJCAI International Joint Conference on Artificial Intelligence,0.848,-,29.9,10450823
+Indonesian Journal of Science and Technology,0.846,Q1,98.0,"25278045, 25281410"
+Frontiers in Virtual Reality,0.844,Q1,98.0,26734192
+Applied Clinical Informatics,0.843,Q2,79.9,18690327
+Applied System Innovation,0.842,Q1,98.0,25715577
+Proceedings of the Annual Meeting of the Association for Computational Linguistics,0.842,-,29.9,0736587X
+Cognitive Computation,0.841,Q1,98.0,"18669964, 18669956"
+Mechatronics,0.841,Q1,98.0,09574158
+RAS Techniques and Instruments,0.837,Q1,98.0,27528200
+Journal of Ambient Intelligence and Humanized Computing,0.834,Q1,98.0,"18685145, 18685137"
+Journal of Technology in Behavioral Science,0.833,Q1,98.0,23665963
+Annals of Data Science,0.832,Q1,98.0,"21985812, 21985804"
+Computer Applications in Engineering Education,0.831,Q1,98.0,"10990542, 10613773"
+Autonomous Intelligent Systems,0.830,Q1,98.0,2730616X
+International Journal on Document Analysis and Recognition,0.830,Q1,98.0,"14332825, 14332833"
+Animal Biotelemetry,0.829,Q1,98.0,20503385
+Knowledge and Information Systems,0.827,Q2,79.9,"02191377, 02193116"
+Games for Health Journal,0.826,Q1,98.0,"21617856, 2161783X"
+Applied Ontology,0.822,Q1,98.0,"18758533, 15705838"
+Internet Pragmatics,0.822,Q1,98.0,"25423851, 2542386X"
+IEEE Networking Letters,0.821,Q1,98.0,25763156
+Online Learning Journal,0.821,Q1,98.0,"24725730, 24725749"
+Wearable Technologies,0.821,Q1,98.0,26317176
+ACM Transactions on Internet of Things,0.821,Q2,79.9,25776207
+Artificial Intelligence and Law,0.815,Q1,98.0,"09248463, 15728382"
+Statistics and Computing,0.815,Q1,98.0,"09603174, 15731375"
+Journal of High Technology Management Research,0.814,Q1,98.0,10478310
+Journal of Rail Transport Planning and Management,0.813,Q1,98.0,22109706
+Electronic Commerce Research,0.810,Q1,98.0,13895753
+Distributed Computing,0.809,Q1,98.0,"01782770, 14320452"
+Journal of Global Optimization,0.807,Q1,98.0,"09255001, 15732916"
+Journal of Systems Science and Complexity,0.807,Q1,98.0,10096124
+ACM Transactions on Storage,0.807,Q2,79.9,15533077
+IACR Transactions on Symmetric Cryptology,0.806,Q2,79.9,2519173X
+Computers,0.805,Q2,79.9,2073431X
+Computational Urban Science,0.803,Q1,98.0,27306852
+Match,0.801,Q1,98.0,03406253
+Applied Computing and Geosciences,0.800,Q1,98.0,25901974
+Journal of Cryptology,0.799,Q2,79.9,"14321378, 09332790"
+Journal of Global Information Management,0.799,Q2,79.9,"10627375, 15337995"
+Australasian Journal of Information Systems,0.796,Q1,98.0,"14498618, 13262238"
+Internet of Things,0.795,Q1,98.0,"21991073, 21991081"
+Robotics,0.792,Q1,98.0,22186581
+Image and Vision Computing,0.791,Q1,98.0,02628856
+Conference on Machine Translation - Proceedings,0.790,-,29.9,27680983
+Computer Graphics Forum,0.788,Q1,98.0,"01677055, 14678659"
+Journal of Computing and Information Science in Engineering,0.788,Q1,98.0,15309827
+Journal of Documentation,0.787,Q1,98.0,00220418
+Pervasive and Mobile Computing,0.787,Q1,98.0,15741192
+Discover Internet of Things,0.787,Q2,79.9,27307239
+ACM Transactions on Computing Education,0.784,Q1,98.0,19466226
+Frontiers in Communications and Networks,0.784,Q2,79.9,2673530X
+Systems Science and Control Engineering,0.783,Q1,98.0,21642583
+Computational Materials Science,0.782,Q1,98.0,09270256
+AIS Transactions on Human-Computer Interaction,0.782,Q2,79.9,19443900
+International Journal of Smart Grid,0.781,Q2,79.9,2602439X
+Applied Artificial Intelligence,0.780,Q2,79.9,"10876545, 08839514"
+Construction Innovation,0.778,Q1,98.0,"14770857, 14714175"
+Memetic Computing,0.778,Q1,98.0,"18659284, 18659292"
+Computer Speech and Language,0.778,Q2,79.9,"08852308, 10958363"
+Multimedia Tools and Applications,0.777,Q1,98.0,"13807501, 15737721"
+Journal of Safety Science and Resilience,0.775,Q1,98.0,"26664496, 20967527"
+Advanced Modeling and Simulation in Engineering Sciences,0.771,Q1,98.0,22137467
+Journal of Intelligent and Robotic Systems: Theory and Applications,0.768,Q1,98.0,"15730409, 09210296"
+Smart Materials and Structures,0.767,Q1,98.0,"09641726, 1361665X"
+CAD Computer Aided Design,0.766,Q1,98.0,00104485
+IEEE Journal of Radio Frequency Identification,0.766,Q1,98.0,24697281
+ACM Transactions on Embedded Computing Systems,0.766,Q2,79.9,"15583465, 15399087"
+International Journal of Adaptive Control and Signal Processing,0.765,Q2,79.9,"08906327, 10991115"
+Sensors,0.764,Q1,98.0,14248220
+Frontiers in Nanotechnology,0.763,Q2,79.9,26733013
+Future Internet,0.762,Q2,79.9,19995903
+Informatics in Medicine Unlocked,0.762,Q2,79.9,23529148
+Journal of Decision Systems,0.761,Q1,98.0,"21167052, 12460125"
+ACM Transactions on Computation Theory,0.761,Q2,79.9,"19423454, 19423462"
+Algorithms for Molecular Biology,0.760,Q2,79.9,17487188
+User Modeling and User-Adapted Interaction,0.759,Q1,98.0,"15731391, 09241868"
+Advances and Applications in Bioinformatics and Chemistry,0.759,Q2,79.9,11786949
+Sensing and Bio-Sensing Research,0.759,Q2,79.9,22141804
+CoDesign,0.758,Q1,98.0,"15710882, 17453755"
+Mesopotamian Journal of CyberSecurity,0.758,Q2,79.9,29586542
+E-Learning and Digital Media,0.757,Q1,98.0,"20427530, 17418887"
+Foundations and Trends in Databases,0.755,Q1,98.0,"19317883, 19317891"
+Laboratory Phonology,0.755,Q1,98.0,"18686354, 18686346"
+International Journal of Systems Science: Operations and Logistics,0.755,Q2,79.9,"23302674, 23302682"
+Fuzzy Sets and Systems,0.754,Q1,98.0,01650114
+Software and Systems Modeling,0.754,Q1,98.0,"16191374, 16191366"
+International Journal of Information Security,0.753,Q2,79.9,"16155270, 16155262"
+Informatics in Education,0.751,Q1,98.0,16485831
+Public Transport,0.749,Q1,98.0,"16137159, 1866749X"
+4OR,0.749,Q2,80.0,"16142411, 16194500"
+Theory of Computing,0.749,Q2,80.0,15572862
+IEEE Open Journal of Signal Processing,0.747,Q2,80.0,26441322
+IEEE Consumer Electronics Magazine,0.745,Q2,80.0,"21622256, 21622248"
+Computational Toxicology,0.744,Q2,80.0,24681113
+IEEE Transactions on Very Large Scale Integration (VLSI) Systems,0.744,Q2,80.0,"15579999, 10638210"
+Intelligent Computing,0.743,Q1,98.0,27715892
+Computer Methods and Programs in Biomedicine Update,0.742,Q1,98.0,26669900
+EPJ Data Science,0.742,Q1,98.0,21931127
+Applied Computing and Informatics,0.742,Q2,80.0,"22108327, 26341964"
+Expert Systems,0.742,Q2,80.0,"14680394, 02664720"
+Proceedings of the ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems,0.740,-,30.0,10556338
+Journal of Cognitive Engineering and Decision Making,0.739,Q1,98.0,"21695032, 15553434"
+Autonomous Agents and Multi-Agent Systems,0.738,Q2,80.0,"15737454, 13872532"
+Communications of the Association for Information Systems,0.738,Q2,80.0,15293181
+Computing in Science and Engineering,0.735,Q1,98.0,15219615
+Journal of Electronic Commerce Research,0.735,Q1,98.0,"19389027, 15266133"
+Journal of Digital Imaging,0.734,Q2,80.0,"1618727X, 08971889"
+Journal of Grid Computing,0.734,Q2,80.0,15707873
+Journal of Information Systems,0.733,Q2,80.0,"08887985, 15587959"
+International Journal of Approximate Reasoning,0.731,Q2,80.0,"0888613X, 18734731"
+Applied Categorical Structures,0.730,Q1,98.0,"09272852, 15729095"
+Education Sciences,0.730,Q1,98.0,22277102
+Journal of Computational Physics: X,0.730,Q1,98.0,25900552
+VINE Journal of Information and Knowledge Management Systems,0.729,Q1,98.0,"20595905, 20595891"
+Proceedings - International Conference on Distributed Computing Systems,0.728,-,30.0,"25758411, 10636927"
+International Journal of Mobile Learning and Organisation,0.727,Q1,98.0,"17467268, 1746725X"
+Engineered Science,0.726,Q1,98.0,"2576988X, 25769898"
+Journal of Cultural Heritage,0.726,Q1,98.0,12962074
+Annals of GIS,0.725,Q1,98.0,"19475691, 19475683"
+IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems,0.725,Q1,98.0,02780070
+Optimization Methods and Software,0.725,Q2,80.0,"10294937, 10556788"
+Library and Information Science Research,0.721,Q1,98.0,07408188
+PeerJ Computer Science,0.719,Q1,98.0,23765992
+Profesional de la Informacion,0.719,Q1,98.0,"16992407, 13866710"
+Frontiers in Robotics and AI,0.719,Q2,80.0,22969144
+International Journal of Information Technology (Singapore),0.717,Q2,80.0,"25112104, 25112112"
+ACM Transactions on Privacy and Security,0.716,Q1,98.0,"24712566, 24712574"
+Journal of Supercomputing,0.716,Q2,80.0,"15730484, 09208542"
+International Journal of Fuzzy Systems,0.714,Q2,80.0,"15622479, 21993211"
+Journal of Information Technology Education: Research,0.712,Q1,98.0,"15393585, 15479714"
+Journal of Artificial Intelligence and Technology,0.712,Q2,80.0,27668649
+Peer-to-Peer Networking and Applications,0.712,Q2,80.0,"19366450, 19366442"
+Aslib Journal of Information Management,0.711,Q1,98.0,"20503806, 20503814"
+Frontiers in Neuroinformatics,0.710,Q2,80.0,16625196
+ACM Transactions on Economics and Computation,0.708,Q2,80.0,"21678375, 21678383"
+International Journal of Advanced Manufacturing Technology,0.706,Q1,98.0,"02683768, 14333015"
+Forecasting,0.705,Q1,98.0,25719394
+Digital Signal Processing: A Review Journal,0.704,Q2,80.0,"10954333, 10512004"
+Electronic Journal of e-Learning,0.703,Q2,80.0,14794403
+Bulletin of Mathematical Biology,0.702,Q1,98.0,"00928240, 15229602"
+Evolving Systems,0.701,Q1,98.0,"18686486, 18686478"
+Journal of Forecasting,0.701,Q1,98.0,"02776693, 1099131X"
+Journal of Manufacturing Science and Engineering,0.700,Q1,98.0,"10871357, 15288935"
+Optical Materials,0.699,Q1,98.0,09253467
+International Journal of Information and Learning Technology,0.699,Q2,80.0,"20564899, 20564880"
+Multimedia Systems,0.698,Q1,98.0,"14321882, 09424962"
+ACM Transactions on Cyber-Physical Systems,0.698,Q2,80.0,"23789638, 2378962X"
+Journal of Building Performance Simulation,0.697,Q1,98.0,"19401507, 19401493"
+Journal of Computational Science,0.697,Q2,80.0,18777503
+International Journal of Machine Learning and Cybernetics,0.694,Q2,80.0,"1868808X, 18688071"
+Grey Systems,0.693,Q2,80.0,"20439385, 20439377"
+IET Collaborative Intelligent Manufacturing,0.693,Q2,80.0,25168398
+Big Data,0.692,Q2,80.0,"21676461, 2167647X"
+International Journal of Distance Education Technologies,0.692,Q2,80.0,15393100
+SIGMOD Record,0.692,Q2,80.0,01635808
+Sustainability (Switzerland),0.688,Q1,98.0,20711050
+Knowledge Engineering Review,0.688,Q2,80.0,"14698005, 02698889"
+International Journal of Population Data Science,0.687,Q1,98.0,23994908
+Information and Learning Science,0.686,Q1,98.0,"23985356, 23985348"
+Human-centric Computing and Information Sciences,0.686,Q2,80.0,21921962
+Systems and Soft Computing,0.686,Q2,80.0,27729419
+Energy Informatics,0.685,Q2,80.0,25208942
+Data-Centric Engineering,0.684,Q1,98.0,26326736
+Connection Science,0.681,Q2,80.0,"13600494, 09540091"
+Entertainment Computing,0.681,Q2,80.0,18759521
+International Journal of Control,0.681,Q2,80.0,"00207179, 13665820"
+IEEE International Conference on Intelligent Robots and Systems,0.681,-,30.0,21530858
+Journal of Engineering,0.680,Q1,98.0,20513305
+Signal Processing: Image Communication,0.679,Q2,80.0,09235965
+International Journal of Data Science and Analytics,0.678,Q2,80.0,"2364415X, 23644168"
+Journal of Scheduling,0.676,Q1,98.0,10946136
+IEEE Multimedia,0.675,Q1,98.0,1070986X
+Software - Practice and Experience,0.675,Q2,80.0,"1097024X, 00380644"
+Soft Computing,0.674,Q2,80.0,"14327643, 14337479"
+International Journal of Interactive Multimedia and Artificial Intelligence,0.672,Q2,80.0,19891660
+Neural Processing Letters,0.672,Q2,80.0,"13704621, 1573773X"
+Forensic Science International: Digital Investigation,0.671,Q1,98.0,"26662817, 26662825"
+Statistical Analysis and Data Mining,0.671,Q2,80.0,"19321864, 19321872"
+Information Systems and e-Business Management,0.670,Q2,80.0,16179846
+"Proceedings - ICASSP, IEEE International Conference on Acoustics, Speech and Signal Processing",0.668,-,30.0,07367791
+Computational Geosciences,0.666,Q2,80.0,14200597
+Displays,0.665,Q2,80.0,01419382
+Photogrammetric Record,0.664,Q1,98.0,"14779730, 0031868X"
+Journal for the Measurement of Physical Behaviour,0.662,Q1,98.0,"25756605, 25756613"
+Journal of Imaging,0.662,Q1,98.0,2313433X
+IEEE Open Journal of Circuits and Systems,0.660,Q2,80.0,26441225
+Infrastructures,0.660,Q2,80.0,24123811
+Operational Research,0.659,Q2,80.0,"11092858, 18661505"
+International Journal of Computer Assisted Radiology and Surgery,0.658,Q2,80.0,"18616410, 18616429"
+Numerical Functional Analysis and Optimization,0.657,Q2,80.0,"15322467, 01630563"
+Smart Structures and Systems,0.655,Q2,80.0,"17381584, 17381991"
+Chemometrics and Intelligent Laboratory Systems,0.654,Q2,80.0,"01697439, 18733239"
+Informatics,0.651,Q1,98.0,22279709
+Journal of Privacy and Confidentiality,0.651,Q2,80.0,25758527
+Queueing Systems,0.651,Q2,80.0,"15729443, 02570130"
+Swarm Intelligence,0.651,Q2,80.0,"19353820, 19353812"
+ACM Transactions on the Web,0.648,Q2,80.0,15591131
+Information (Switzerland),0.648,Q2,80.0,20782489
+Astronomy and Computing,0.647,Q2,80.0,22131337
+Molecular Diversity,0.646,Q2,80.0,"1573501X, 13811991"
+Information Technology and Management,0.643,Q1,98.0,"1385951X, 15737667"
+Journal of Emerging Technologies in Accounting,0.642,Q2,80.0,"15541908, 15587940"
+Journal of Physics: Complexity,0.641,Q2,80.0,2632072X
+Journal of Soft Computing and Data Mining,0.641,Q2,80.0,2716621X
+Journal of Web Semantics,0.640,Q2,80.0,15708268
+Natural Language Engineering,0.639,Q1,98.0,"14698110, 13513249"
+Conference Record - International Conference on Communications,0.638,-,30.0,05361486
+Visual Computer,0.637,Q2,80.0,"14322315, 01782789"
+AI Magazine,0.634,Q2,80.0,07384602
+"Proceedings of the IEEE Workshop on Computers in Power Electronics, COMPEL",0.634,-,30.0,10935142
+ACM Transactions on Computer Systems,0.633,Q2,80.0,"07342071, 15577333"
+Universal Access in the Information Society,0.633,Q2,80.0,"16155289, 16155297"
+Heritage Science,0.631,Q1,98.0,20507445
+International Journal of Telemedicine and Applications,0.631,Q2,80.0,"16876415, 16876423"
+IEEE International Symposium on Information Theory - Proceedings,0.630,-,30.0,21578095
+Journal of Information Science,0.629,Q1,98.0,"01655515, 17416485"
+Nano Communication Networks,0.629,Q2,80.0,18787789
+Frontiers in Human Dynamics,0.628,Q1,98.0,26732726
+Internet of Things,0.628,Q1,98.0,2624831X
+Journal of Computational Biology,0.627,Q2,80.0,"15578666, 10665277"
+IEEE Transactions on Games,0.626,Q2,80.0,"24751510, 24751502"
+Automated Software Engineering,0.625,Q2,80.0,"09288910, 15737535"
+Journal of Computational Social Science,0.625,Q2,80.0,"24322717, 24322725"
+Telecom,0.625,Q2,80.0,26734001
+Social Network Analysis and Mining,0.624,Q1,98.0,"18695450, 18695469"
+International Journal for Numerical Methods in Fluids,0.623,Q1,98.0,"10970363, 02712091"
+Argument and Computation,0.622,Q1,98.0,"19462166, 19462174"
+Data and Policy,0.622,Q1,98.0,26323249
+ACM Transactions on Reconfigurable Technology and Systems,0.621,Q2,80.0,"19367406, 19367414"
+Journal of Membrane Computing,0.621,Q2,80.0,"25238914, 25238906"
+Virtual Reality and Intelligent Hardware,0.621,Q2,80.0,"20965796, 26661209"
+Engineering Optimization,0.620,Q2,80.0,"0305215X, 10290273"
+IET Quantum Communication,0.620,Q2,80.0,26328925
+Frontiers in Neurorobotics,0.618,Q2,80.0,16625218
+i-Perception,0.618,Q2,80.0,20416695
+ACM/IEEE International Conference on Human-Robot Interaction,0.618,-,30.0,21672148
+Journal of Automated Reasoning,0.616,Q2,80.0,"15730670, 01687433"
+"Leibniz International Proceedings in Informatics, LIPIcs",0.616,-,30.0,18688969
+Electronics (Switzerland),0.615,Q2,80.0,20799292
+ACM Transactions on Accessible Computing,0.613,Q2,80.0,19367228
+Interdisciplinary Sciences - Computational Life Sciences,0.612,Q2,80.0,"19132751, 18671462"
+Journal of Information and Telecommunication,0.612,Q2,80.0,"24751847, 24751839"
+Smart Health,0.612,Q2,80.0,23526483
+Medical and Biological Engineering and Computing,0.611,Q2,80.0,"17410444, 01400118"
+Informatica (Netherlands),0.610,Q2,80.0,08684952
+Journal of Interactive Media in Education,0.609,Q1,98.0,1365893X
+Evolutionary Intelligence,0.609,Q2,80.0,"18645917, 18645909"
+Theory and Practice of Logic Programming,0.609,Q2,80.0,"14753081, 14710684"
+Kybernetes,0.606,Q1,98.0,0368492X
+International Journal of Computerized Dentistry,0.605,Q2,80.0,14634201
+APSIPA Transactions on Signal and Information Processing,0.604,Q2,80.0,20487703
+Calphad: Computer Coupling of Phase Diagrams and Thermochemistry,0.604,Q2,80.0,03645916
+Cognitive Systems Research,0.604,Q2,80.0,"13890417, 22144366"
+Applied Computational Intelligence and Soft Computing,0.602,Q1,98.0,"16879724, 16879732"
+ACM Transactions on Computational Logic,0.602,Q2,80.0,"15293785, 1557945X"
+Telemedicine Reports,0.602,Q2,80.0,26924366
+Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining,0.602,-,30.0,2154817X
+Japanese Journal of Statistics and Data Science,0.601,Q2,80.0,25208764
+"Proceedings International Conference on Automated Planning and Scheduling, ICAPS",0.601,-,30.0,"23340835, 23340843"
+Applied Mathematics in Science and Engineering,0.600,Q1,98.0,27690911
+Discrete and Computational Geometry,0.600,Q2,80.0,"14320444, 01795376"
+Journal of Aerospace Information Systems,0.600,Q2,80.0,23273097
+ACM Journal on Emerging Technologies in Computing Systems,0.599,Q2,80.0,"15504832, 15504840"
+"Transforming Government: People, Process and Policy",0.596,Q2,80.0,17506166
+Artificial Intelligence Surgery,0.594,Q2,80.0,27710408
+Journal of Visual Communication and Image Representation,0.593,Q1,98.0,"10473203, 10959076"
+International Journal of Computational Intelligence Systems,0.593,Q2,80.0,"18756891, 18756883"
+Visual Informatics,0.593,Q2,80.0,"25432656, 2468502X"
+Proceedings of the International Symposium on Wireless Communication Systems,0.592,-,30.0,"21540217, 21540225"
+Bioinformatics and Biology Insights,0.590,Q2,80.0,11779322
+Multimodal Technologies and Interaction,0.590,Q2,80.0,24144088
+IET Smart Cities,0.588,Q1,98.0,26317680
+Frontiers in Computer Science,0.588,Q2,80.0,26249898
+RIED-Revista Iberoamericana de Educacion a Distancia,0.588,Q2,80.0,"13903306, 11382783"
+IEEE Transactions on Nanobioscience,0.587,Q2,80.0,"15361241, 15582639"
+CALICO Journal,0.586,Q1,98.0,20569017
+JASSS,0.586,Q1,98.0,14607425
+Results in Control and Optimization,0.586,Q2,80.0,26667207
+PSU Research Review,0.581,Q1,98.0,"23984007, 23991747"
+Journal of Radars,0.581,Q2,80.0,2095283X
+Journal on Computing and Cultural Heritage,0.580,Q1,98.0,"15564711, 15564673"
+ACM Transactions on Architecture and Code Optimization,0.580,Q2,80.0,"15443973, 15443566"
+Digital,0.579,Q2,80.0,26736470
+Journal of Advanced Transportation,0.579,Q2,80.0,"01976729, 20423195"
+Systems,0.579,Q2,80.0,20798954
+Proceedings of the IEEE Sensor Array and Multichannel Signal Processing Workshop,0.579,-,30.0,"2151870X, 15512282"
+"Journal of Information, Communication and Ethics in Society",0.578,Q1,98.0,"17588871, 1477996X"
+Computational Intelligence,0.578,Q2,80.0,"08247935, 14678640"
+EAI Endorsed Transactions on AI and Robotics,0.578,Q2,80.0,27907511
+Journal of Real-Time Image Processing,0.578,Q2,80.0,"18618200, 18618219"
+Semantic Web,0.577,Q2,80.0,"15700844, 22104968"
+SLAS Technology,0.577,Q2,80.0,"24726311, 24726303"
+Eurasip Journal on Information Security,0.576,Q2,80.0,"2510523X, 16874161"
+Frontiers in Signal Processing,0.576,Q2,80.0,26738198
+Journal of Computer-Aided Molecular Design,0.576,Q2,80.0,"15734951, 0920654X"
+Digital Creativity,0.575,Q1,98.0,"17443806, 14626268"
+International Journal of Distributed Sensor Networks,0.575,Q2,80.0,"15501329, 15501477"
+"Proceedings - International Conference on Network Protocols, ICNP",0.575,-,30.0,10921648
+"Communication, Culture and Critique",0.574,Q1,98.0,"17539129, 17539137"
+"Artificial Intelligence for Engineering Design, Analysis and Manufacturing: AIEDAM",0.574,Q2,80.0,"08900604, 14691760"
+Digital Threats: Research and Practice,0.573,Q2,80.0,25765337
+Journal of Organizational Computing and Electronic Commerce,0.573,Q2,80.0,"15327744, 10919392"
+Optimization and Engineering,0.573,Q2,80.0,13894420
+"Sampling Theory, Signal Processing, and Data Analysis",0.573,Q2,80.0,"27305724, 27305716"
+Journal of Systems Engineering and Electronics,0.572,Q2,80.0,16711793
+International Journal of Web Information Systems,0.571,Q2,80.0,"17440084, 17440092"
+Wireless Networks,0.571,Q2,80.0,"10220038, 15728196"
+Procesamiento del Lenguaje Natural,0.570,Q1,98.0,"19897553, 11355948"
+Industrial Robot,0.570,Q2,80.0,"17585791, 0143991X"
+Machines,0.570,Q2,80.0,20751702
+Research in Learning Technology,0.570,Q2,80.0,"21567077, 21567069"
+Computers and Graphics,0.569,Q2,80.0,00978493
+IFAC Journal of Systems and Control,0.569,Q2,80.0,24686018
+Cognitive Processing,0.568,Q2,80.0,"16124782, 16124790"
+IET Cyber-Physical Systems: Theory and Applications,0.567,Q2,80.0,23983396
+Library Resources and Technical Services,0.566,Q1,98.0,00242527
+Journal of Data and Information Quality,0.565,Q2,80.0,"19361963, 19361955"
+SN Computer Science,0.565,Q2,80.0,"2662995X, 26618907"
+ACM Transactions on Programming Languages and Systems,0.564,Q2,80.0,01640925
+Flow Measurement and Instrumentation,0.564,Q2,80.0,09555986
+IET Control Theory and Applications,0.564,Q2,80.0,"17518644, 17518652"
+Mathematical Foundations of Computing,0.563,Q2,80.0,25778838
+Pacific Symposium on Biocomputing,0.563,Q2,80.0,"23356928, 23356936"
+Publishing Research Quarterly,0.563,Q2,80.0,"19364792, 10538801"
+Advances in Data Analysis and Classification,0.562,Q2,80.0,"18625347, 18625355"
+American Journal of Distance Education,0.562,Q2,80.0,"08923647, 15389286"
+International Journal of Advanced Robotic Systems,0.562,Q2,80.0,17298806
+Advances in Mathematics of Communications,0.561,Q2,80.0,"19305346, 19305338"
+International Journal of Imaging Systems and Technology,0.561,Q2,80.0,"10981098, 08999457"
+Journal of Special Education Technology,0.561,Q2,80.0,"23813121, 01626434"
+Journal of Computer Applications in Archaeology,0.560,Q1,98.0,25148362
+"IEEE Transactions on Molecular, Biological, and Multi-Scale Communications",0.560,Q2,80.0,23327804
+Information Technology and Libraries,0.559,Q1,98.0,"07309295, 21635226"
+Frontiers of Information Technology and Electronic Engineering,0.559,Q2,80.0,"20959230, 20959184"
+Pattern Analysis and Applications,0.559,Q2,80.0,"1433755X, 14337541"
+Dynamic Games and Applications,0.558,Q2,80.0,"21530785, 21530793"
+Journal of Cyber Security Technology,0.558,Q2,80.0,"23742925, 23742917"
+Journal of Systems and Information Technology,0.558,Q2,80.0,"17588847, 13287265"
+Iraqi Journal for Computer Science and Mathematics,0.557,Q2,80.0,"27887421, 29580544"
+Robotic Intelligence and Automation,0.557,Q2,80.0,"27546977, 27546969"
+IEEE Software,0.556,Q2,80.0,07407459
+International Journal of General Systems,0.556,Q2,80.0,"03081079, 15635104"
+Robotica,0.556,Q2,80.0,"02635747, 14698668"
+Intelligence and Robotics,0.556,Q3,60.0,27703541
+"Proceedings - International Symposium on Software Reliability Engineering, ISSRE",0.556,-,30.0,10719458
+Ecological Psychology,0.555,Q2,80.0,"15326969, 10407413"
+IET Smart Grid,0.555,Q2,80.0,25152947
+Mobile Networks and Applications,0.555,Q2,80.0,"1383469X, 15728153"
+Frontiers in Big Data,0.554,Q2,80.0,2624909X
+Computer,0.551,Q2,80.0,00189162
+Optical Switching and Networking,0.551,Q2,80.0,15734277
+Eurasip Journal on Wireless Communications and Networking,0.550,Q2,80.0,"16871499, 16871472"
+International Journal of Medical Robotics and Computer Assisted Surgery,0.550,Q2,80.0,"1478596X, 14785951"
+Proceedings of the IEEE Symposium on Reliable Distributed Systems,0.550,-,30.0,10609857
+Computer Supported Cooperative Work,0.549,Q2,80.0,"09259724, 15737551"
+Molecular Informatics,0.549,Q2,80.0,"18681751, 18681743"
+International Journal for Numerical Methods in Biomedical Engineering,0.548,Q2,80.0,"20407947, 20407939"
+"International Journal of Control, Automation and Systems",0.547,Q2,80.0,"20054092, 15986446"
+Power Electronic Devices and Components,0.547,Q2,80.0,27723704
+Complex Analysis and Operator Theory,0.545,Q2,80.0,"16618262, 16618254"
+Computational Methods and Function Theory,0.545,Q2,80.0,16179447
+Advances in Human-Computer Interaction,0.545,Q3,60.0,"16875893, 16875907"
+European Solid-State Circuits Conference,0.545,-,30.0,19308833
+Computers in the Schools,0.544,Q2,80.0,"07380569, 15287033"
+Software-Intensive Cyber-Physical Systems,0.544,Q2,80.0,"25248510, 25248529"
+IEEE Journal on Exploratory Solid-State Computational Devices and Circuits,0.543,Q2,80.0,23299231
+Parallel Computing,0.541,Q2,80.0,01678191
+Data Technologies and Applications,0.540,Q2,80.0,"25149288, 25149318"
+Information Discovery and Delivery,0.540,Q2,80.0,23986247
+Australasian Journal of Engineering Education,0.538,Q2,80.0,"22054952, 13254340"
+Journal of Interactive Learning Research,0.538,Q2,80.0,1093023X
+Technology Innovation Management Review,0.537,Q2,80.0,19270321
+Computational Economics,0.535,Q2,80.0,"09277099, 15729974"
+Journal of Experimental and Theoretical Artificial Intelligence,0.535,Q2,80.0,"13623079, 0952813X"
+Personal and Ubiquitous Computing,0.535,Q2,80.0,"16174909, 16174917"
+"Proceedings - IEEE Global Communications Conference, GLOBECOM",0.535,-,30.0,"25766813, 23340983"
+CALL-EJ,0.533,Q1,98.0,21879036
+International Journal of Telerehabilitation,0.533,Q2,80.0,19452020
+Open Systems and Information Dynamics,0.533,Q2,80.0,"17937191, 12301612"
+Digital Applications in Archaeology and Cultural Heritage,0.532,Q1,98.0,22120548
+IET Blockchain,0.532,Q2,80.0,26341573
+Wireless Personal Communications,0.532,Q2,80.0,"1572834X, 09296212"
+Internet Histories,0.531,Q1,98.0,"24701483, 24701475"
+Machine Vision and Applications,0.530,Q2,80.0,"14321769, 09328092"
+Journal of Cultural Analytics,0.528,Q1,98.0,23714549
+Computer Communication Review,0.528,Q2,80.0,"19435819, 01464833"
+"Digital Policy, Regulation and Governance",0.528,Q2,80.0,"23985038, 23985046"
+Proceedings of the ACM on Computer Graphics and Interactive Techniques,0.528,Q2,80.0,25776193
+International Journal of Simulation Modelling,0.527,Q2,80.0,17264529
+Journal of Complex Networks,0.525,Q2,80.0,"20511310, 20511329"
+Entropy,0.524,Q2,80.0,10994300
+Journal of Electronic Packaging,0.524,Q2,80.0,"15289044, 10437398"
+Journal of Software: Evolution and Process,0.524,Q2,80.0,20477481
+Frontiers in Neuroergonomics,0.523,Q2,80.0,26736195
+International Journal of E-Planning Research,0.523,Q2,80.0,"21609926, 21609918"
+"Signal, Image and Video Processing",0.523,Q2,80.0,"18631711, 18631703"
+Cryptography,0.522,Q2,80.0,2410387X
+Requirements Engineering,0.522,Q2,80.0,"09473602, 1432010X"
+KI - Kunstliche Intelligenz,0.522,Q3,60.0,"16101987, 09331875"
+Applied Sciences (Switzerland),0.521,Q2,80.0,20763417
+Journal on Multimodal User Interfaces,0.521,Q2,80.0,"17837677, 17838738"
+IEEE Open Journal of Control Systems,0.520,Q2,80.0,2694085X
+Medicine in Novel Technology and Devices,0.519,Q2,80.0,25900935
+Modelling and Simulation in Materials Science and Engineering,0.519,Q2,80.0,"09650393, 1361651X"
+Nordic Journal of Digital Literacy,0.519,Q2,80.0,"1891943X, 08096724"
+Wuhan Daxue Xuebao (Xinxi Kexue Ban)/Geomatics and Information Science of Wuhan University,0.519,Q2,80.0,16718860
+Biological Cybernetics,0.518,Q2,80.0,"14320770, 03401200"
+International Journal of Network Management,0.518,Q2,80.0,"10557148, 10991190"
+"IEEE/ACM International Conference on Computer-Aided Design, Digest of Technical Papers",0.518,-,30.0,10923152
+Information and Communications Technology Law,0.516,Q1,98.0,13600834
+Mathematical Sciences,0.516,Q2,80.0,"22517456, 20081359"
+International Journal of Design,0.515,Q1,98.0,"1994036X, 19913761"
+Algorithms,0.515,Q2,80.0,19994893
+Compositionality,0.515,Q2,80.0,26314444
+Perception,0.515,Q2,80.0,"14684233, 03010066"
+Frontiers in Mechanical Engineering,0.514,Q2,80.0,22973079
+Journal of Organizational and End User Computing,0.514,Q2,80.0,"15465012, 15462234"
+Qubahan Academic Journal,0.514,Q2,80.0,27098206
+"Memories - Materials, Devices, Circuits and Systems",0.513,Q2,80.0,27730646
+"Proceedings of the AAAI Conference on Human Computation and Crowdsourcing, HCOMP",0.513,-,30.0,"27691330, 27691349"
+Journal of Computer Networks and Communications,0.512,Q2,80.0,"20907141, 2090715X"
+Pacific Asia Journal of the Association for Information Systems,0.512,Q2,80.0,"19437536, 19437544"
+ACM Transactions on Design Automation of Electronic Systems,0.510,Q2,80.0,"10844309, 15577309"
+"Methods, Data, Analyses",0.510,Q2,80.0,"21904936, 18646956"
+"Proceedings - AAAI Artificial Intelligence and Interactive Digital Entertainment Conference, AIIDE",0.510,-,30.0,"23340924, 2326909X"
+Journal of Robotics,0.508,Q2,80.0,"16879600, 16879619"
+IEEE Canadian Journal of Electrical and Computer Engineering,0.506,Q2,80.0,26941783
+"Pixel-Bit, Revista de Medios y Educacion",0.506,Q2,80.0,"11338482, 21717966"
+IEEE-RAS International Conference on Humanoid Robots,0.506,-,30.0,"21640580, 21640572"
+Journal of Logic and Computation,0.505,Q1,98.0,"0955792X, 1465363X"
+IET Biometrics,0.505,Q2,80.0,"20474938, 20474946"
+International Journal of Vehicle Performance,0.505,Q2,80.0,"17453194, 17453208"
+Differential Geometry and its Application,0.504,Q2,80.0,"18726984, 09262245"
+Eurasip Journal on Advances in Signal Processing,0.504,Q2,80.0,"16876172, 16876180"
+ACM Transactions on Asian and Low-Resource Language Information Processing,0.503,Q2,80.0,"23754699, 23754702"
+Online Journal of Communication and Media Technologies,0.503,Q2,80.0,19863497
+HighTech and Innovation Journal,0.501,Q2,80.0,27239535
+International Journal of Computer Mathematics,0.501,Q2,80.0,"00207160, 10290265"
+Journal of Intelligent Systems,0.500,Q2,80.0,"03341860, 2191026X"
+Proceedings - IEEE International Conference on Edge Computing,0.499,-,30.0,"27679918, 2767990X"
+JALT CALL Journal,0.498,Q1,98.0,18324215
+Mathematics,0.498,Q2,80.0,22277390
+Data and Information Management,0.497,Q2,80.0,25439251
+Software Quality Journal,0.497,Q2,80.0,"09639314, 15731367"
+IEEE Computer Architecture Letters,0.496,Q2,80.0,15566056
+IET Image Processing,0.496,Q2,80.0,"17519667, 17519659"
+International Journal of Architectural Computing,0.496,Q2,80.0,14780771
+Simulation and Gaming,0.496,Q2,80.0,"1552826X, 10468781"
+Communications in Applied Mathematics and Computational Science,0.495,Q2,80.0,"15593940, 21575452"
+Theoretical Computer Science,0.494,Q2,80.0,03043975
+Speech Communication,0.493,Q1,98.0,01676393
+Evolutionary Bioinformatics,0.493,Q2,80.0,11769343
+Information and Computation,0.493,Q2,80.0,"10902651, 08905401"
+Microprocessors and Microsystems,0.493,Q2,80.0,01419331
+Journal of Consciousness Studies,0.492,Q1,98.0,"20512201, 13558250"
+Journal of Biomedical Semantics,0.491,Q2,80.0,20411480
+Journal of Mathematical Imaging and Vision,0.491,Q2,80.0,"09249907, 15737683"
+Real-Time Systems,0.491,Q2,80.0,"09226443, 15731383"
+Proceedings of the IEEE International Conference on Requirements Engineering,0.491,-,30.0,"23326441, 1090705X"
+Intelligence-Based Medicine,0.490,Q2,80.0,26665212
+BioMedInformatics,0.489,Q2,80.0,26737426
+Information Security Journal,0.489,Q2,80.0,"19393555, 19393547"
+Journal of Signal Processing Systems,0.489,Q2,80.0,"19398115, 19398018"
+International Journal of Data and Network Science,0.488,Q2,80.0,"25618148, 25618156"
+FinTech,0.487,Q2,80.0,26741032
+Information Technology and Control,0.486,Q2,80.0,1392124X
+Information and Computer Security,0.485,Q2,80.0,20564961
+Journal of Fuzzy Extension and Applications,0.485,Q2,80.0,"27831442, 27173453"
+Computational Management Science,0.483,Q2,80.0,"1619697X, 16196988"
+Journal of Artificial Intelligence and Soft Computing Research,0.483,Q2,80.0,"24496499, 20832567"
+Paladyn,0.483,Q3,60.0,20814836
+SoftwareX,0.483,Q3,60.0,23527110
+Computer Journal,0.482,Q2,80.0,"14602067, 00104620"
+International Journal of Modelling and Simulation,0.482,Q2,80.0,02286203
+Journal of Molecular Graphics and Modelling,0.482,Q2,80.0,"10933263, 18734243"
+Graphical Models,0.481,Q2,80.0,"15240703, 15240711"
+IT Professional,0.481,Q2,80.0,15209202
+Brain-Computer Interfaces,0.480,Q2,80.0,"23262621, 2326263X"
+Data,0.480,Q2,80.0,23065729
+Intelligent Transportation Infrastructure,0.480,Q2,80.0,27529991
+International Journal of Serious Games,0.480,Q2,80.0,23848766
+Theory and Decision,0.478,Q1,98.0,"15737187, 00405833"
+International Journal of Information Technology and Decision Making,0.478,Q2,80.0,"17936845, 02196220"
+Quantum Information Processing,0.477,Q2,80.0,15700755
+"Parallel Architectures and Compilation Techniques - Conference Proceedings, PACT",0.477,-,30.0,1089795X
+Cogent Engineering,0.476,Q2,80.0,23311916
+Blockchain in Healthcare Today,0.476,Q3,60.0,25738240
+Progress in Artificial Intelligence,0.476,Q3,60.0,"21926360, 21926352"
+Journal of Control and Decision,0.475,Q2,80.0,"23307714, 23307706"
+International Journal of Information and Communication Technology Education,0.474,Q2,80.0,"15501337, 15501876"
+Optimal Control Applications and Methods,0.474,Q2,80.0,"10991514, 01432087"
+Journal of Medical Artificial Intelligence,0.474,Q3,60.0,26172496
+Discrete Optimization,0.473,Q2,80.0,15725286
+Advanced Robotics,0.472,Q2,80.0,"01691864, 15685535"
+Networks and Spatial Economics,0.472,Q2,80.0,1566113X
+New Generation Computing,0.472,Q2,80.0,"02883635, 18827055"
+Information Polity,0.471,Q2,80.0,"18758754, 15701255"
+Procedia Computer Science,0.471,-,30.0,18770509
+Digital Finance,0.470,Q2,80.0,"25246984, 25246186"
+Frontiers in Blockchain,0.468,Q2,80.0,26247852
+Journal of Technology in Human Services,0.468,Q2,80.0,"15228991, 15228835"
+GeoInformatica,0.467,Q2,80.0,"15737624, 13846175"
+Symmetry,0.467,Q2,80.0,20738994
+"Vestnik Udmurtskogo Universiteta: Matematika, Mekhanika, Komp'yuternye Nauki",0.467,Q2,80.0,"20765959, 19949197"
+International Journal of Intelligent Robotics and Applications,0.467,Q3,60.0,"23665971, 2366598X"
+Journal of Medical Ethics and History of Medicine,0.465,Q1,98.0,20080387
+Virtual Archaeology Review,0.465,Q1,98.0,19899947
+Multidimensional Systems and Signal Processing,0.465,Q2,80.0,"15730824, 09236082"
+Spatial Information Research,0.465,Q2,80.0,"23663286, 23663294"
+Foundations of Data Science,0.464,Q2,80.0,26398001
+"Journal of Dynamic Systems, Measurement and Control",0.463,Q2,80.0,"00220434, 15289028"
+Communication Research and Practice,0.462,Q2,80.0,22063374
+Computational and Mathematical Organization Theory,0.462,Q2,80.0,1381298X
+Integration,0.462,Q2,80.0,01679260
+International Journal of Communication Systems,0.462,Q2,80.0,"10991131, 10745351"
+Formal Aspects of Computing,0.462,Q3,60.0,"09345043, 1433299X"
+Journal of Computer Virology and Hacking Techniques,0.461,Q2,80.0,22638733
+"Proceedings of the Annual International Conference on Mobile Computing and Networking, MOBICOM",0.460,-,30.0,15435679
+Engineering Reports,0.459,Q2,80.0,25778196
+International Journal of Image and Data Fusion,0.459,Q2,80.0,"19479832, 19479824"
+Journal of Financial Data Science,0.459,Q2,80.0,"26403951, 26403943"
+Photonics and Nanostructures - Fundamentals and Applications,0.459,Q2,80.0,"15694429, 15694410"
+Art of Discrete and Applied Mathematics,0.458,Q2,80.0,25909770
+Journal of Heuristics,0.458,Q2,80.0,"13811231, 15729397"
+Natural Computing,0.456,Q3,60.0,"15677818, 15729796"
+Smart Science,0.455,Q2,80.0,23080477
+Digital Library Perspectives,0.454,Q2,80.0,"20595816, 20595824"
+Scandinavian Journal of Information Systems,0.454,Q2,80.0,"19010990, 09050167"
+Journal of Electromagnetic Engineering and Science,0.453,Q2,80.0,"26717255, 26717263"
+Distributed and Parallel Databases,0.451,Q2,80.0,"09268782, 15737578"
+Proceedings - IEEE International Conference on Multimedia and Expo,0.451,-,30.0,"1945788X, 19457871"
+CMES - Computer Modeling in Engineering and Sciences,0.450,Q2,80.0,"15261492, 15261506"
+Discover Computing,0.449,Q2,80.0,29482992
+IET Information Security,0.449,Q2,80.0,"17518709, 17518717"
+Journal of Ambient Intelligence and Smart Environments,0.449,Q3,60.0,18761364
+Logical Methods in Computer Science,0.446,Q2,80.0,18605974
+Journal of Computer Science and Technology,0.446,Q3,60.0,"18604749, 10009000"
+CCF Transactions on Pervasive Computing and Interaction,0.445,Q2,80.0,"25245228, 2524521X"
+International Symposium on Empirical Software Engineering and Measurement,0.445,-,30.0,"19493770, 19493789"
+"Proceedings of the International Conference on Application-Specific Systems, Architectures and Processors",0.444,-,30.0,"2160052X, 21600511"
+Behavioral Science and Policy,0.443,Q2,80.0,"23794607, 23794615"
+International Journal of Cloud Applications and Computing,0.443,Q2,80.0,"21561826, 21561834"
+International Journal of Wireless Information Networks,0.443,Q2,80.0,"10689605, 15728129"
+Journal of Biosystems Engineering,0.443,Q2,80.0,"22341862, 17381266"
+Proceedings - Symposium on Computer Arithmetic,0.443,-,30.0,"25762265, 10636889"
+Journal of Logical and Algebraic Methods in Programming,0.442,Q2,80.0,"23522208, 23522216"
+3D Printing in Medicine,0.442,Q3,60.0,23656271
+First Monday,0.441,Q1,98.0,13960466
+Electronic News,0.441,Q2,80.0,"1931244X, 19312431"
+Development Engineering,0.440,Q2,80.0,23527285
+International Journal of Automation and Control,0.440,Q2,80.0,"17407516, 17407524"
+Journal of Machine Engineering,0.438,Q2,80.0,"18957595, 23918071"
+Computation,0.437,Q2,80.0,20793197
+Concurrency and Computation: Practice and Experience,0.437,Q2,80.0,"15320626, 15320634"
+Operations Research Letters,0.437,Q2,80.0,01676377
+RAIRO - Operations Research,0.437,Q3,60.0,"12903868, 03990559"
+International Journal of Aerospace Psychology,0.436,Q2,80.0,"24721832, 24721840"
+Journal of Computational Geometry,0.436,Q2,80.0,1920180X
+"International Journal of Computers, Communications and Control",0.436,Q3,60.0,"18419836, 18419844"
+Journal of Robotics and Control (JRC),0.435,Q2,80.0,"27155056, 27155072"
+IEEE Embedded Systems Letters,0.434,Q2,80.0,19430663
+Journal of Analytical Methods in Chemistry,0.434,Q2,80.0,"20908873, 20908865"
+Journal of Graph Algorithms and Applications,0.434,Q2,80.0,15261719
+Complexity,0.433,Q1,98.0,"10762787, 10990526"
+IEEE Security and Privacy,0.433,Q1,98.0,"15584046, 15407993"
+Journal of Computational Mathematics and Data Science,0.433,Q2,80.0,27724158
+Journal of Combinatorial Optimization,0.432,Q2,80.0,"13826905, 15732886"
+Journal of Social Computing,0.432,Q2,80.0,26885255
+"Computers, Materials and Continua",0.431,Q2,80.0,"15462218, 15462226"
+"Annual IEEE Communications Society Conference on Sensor, Mesh and Ad Hoc Communications and Networks workshops",0.431,-,30.0,"21555486, 21555494"
+Applied Network Science,0.430,Q1,98.0,23648228
+Software Testing Verification and Reliability,0.430,Q2,80.0,"10991689, 09600833"
+Intelligenza Artificiale,0.430,Q3,60.0,"17248035, 22110097"
+Proceedings of the IEEE VLSI Test Symposium,0.430,-,30.0,23751053
+Discrete Mathematics and Theoretical Computer Science,0.429,Q2,80.0,"14627264, 13658050"
+Science of Computer Programming,0.429,Q3,60.0,01676423
+Control Theory and Technology,0.428,Q2,80.0,"20956983, 21980942"
+Iranian Journal of Science and Technology - Transactions of Electrical Engineering,0.428,Q2,80.0,"23641827, 22286179"
+Proceedings - IEEE International Conference on Computer Design: VLSI in Computers and Processors,0.427,-,30.0,10636404
+Journal of Soft Computing in Civil Engineering,0.426,Q1,98.0,25882872
+ETRI Journal,0.426,Q2,80.0,"12256463, 22337326"
+Eurasip Journal on Image and Video Processing,0.426,Q2,80.0,"16875281, 16875176"
+Mathematical Structures in Computer Science,0.426,Q2,80.0,"09601295, 14698072"
+Journal of Computer Languages,0.426,Q3,60.0,"25901184, 26659182"
+Performance Evaluation,0.426,Q3,60.0,01665316
+Systems Engineering,0.426,Q3,60.0,"15206858, 10981241"
+IEEE Transactions on Nanotechnology,0.425,Q2,80.0,1536125X
+Networks and Heterogeneous Media,0.425,Q2,80.0,"1556181X, 15561801"
+Journal of Applied Biomedicine,0.424,Q2,80.0,"12140287, 1214021X"
+Cybernetics and Systems,0.424,Q3,60.0,"10876553, 01969722"
+Journal of Uncertain Systems,0.422,Q2,80.0,"17528917, 17528909"
+Proceedings of the International Conference on Knowledge Representation and Reasoning,0.422,-,30.0,"23341025, 23341033"
+Computers and Composition,0.420,Q1,98.0,87554615
+Aloma,0.420,Q2,80.0,"23399694, 11383194"
+Computational and Systems Oncology,0.420,Q3,60.0,26899655
+"Journal of Data, Information and Management",0.419,Q2,80.0,"25246356, 25246364"
+Annals of Mathematics and Artificial Intelligence,0.419,Q3,60.0,"15737470, 10122443"
+Mathematical and Computer Modelling of Dynamical Systems,0.419,Q3,60.0,13873954
+World Patent Information,0.418,Q2,80.0,01722190
+ACM Transactions on Parallel Computing,0.418,Q3,60.0,"23294957, 23294949"
+Automation,0.417,Q2,80.0,26734052
+IET Communications,0.417,Q2,80.0,"17518628, 17518636"
+International Journal of Computer-Assisted Language Learning and Teaching,0.416,Q1,98.0,"21557101, 21557098"
+ACM Transactions on Autonomous and Adaptive Systems,0.416,Q2,80.0,"15564665, 15564703"
+Zidonghua Xuebao/Acta Automatica Sinica,0.416,Q2,80.0,"18741029, 02544156"
+Computability,0.416,Q3,60.0,"22113576, 22113568"
+Foundations and Trends in Web Science,0.416,Q3,60.0,"15550788, 1555077X"
+International Journal of Modern Education and Computer Science,0.415,Q2,80.0,"2075017X, 20750161"
+Theory of Computing Systems,0.414,Q3,60.0,"14330490, 14324350"
+Adaptive Behavior,0.413,Q1,98.0,"17412633, 10597123"
+Intelligent Pharmacy,0.413,Q2,80.0,2949866X
+International Journal of Computers and Applications,0.413,Q2,80.0,1206212X
+International Journal of Interactive Mobile Technologies,0.413,Q3,60.0,18657923
+Electronic Library,0.412,Q2,80.0,02640473
+Information Processing Letters,0.412,Q3,60.0,00200190
+EAI Endorsed Transactions on Industrial Networks and Intelligent Systems,0.411,Q3,60.0,24100218
+ACM Transactions on Applied Perception,0.410,Q2,80.0,"15443965, 15443558"
+Data Intelligence,0.410,Q2,80.0,"2641435X, 20967004"
+Journal of Systems Science and Systems Engineering,0.410,Q3,60.0,10043756
+Journal of Electronic Science and Technology,0.409,Q2,80.0,"2666223X, 1674862X"
+OPSEARCH,0.409,Q2,80.0,"00303887, 09750320"
+Digital Scholarship in the Humanities,0.408,Q1,98.0,"20557671, 2055768X"
+Journal of Electrical and Computer Engineering,0.408,Q2,80.0,"20900147, 20900155"
+International Journal of Computational Methods,0.407,Q2,80.0,"02198762, 17936969"
+International Journal of Crowd Science,0.407,Q2,80.0,23987294
+Revista Chilena de Derecho y Tecnologia,0.407,Q2,80.0,"07192576, 07192584"
+IEEE Vehicular Technology Conference,0.407,-,30.0,07400551
+Journal of Internet Services and Applications,0.406,Q3,60.0,"18674828, 18690238"
+International Journal of Knowledge Management,0.404,Q2,80.0,"15480666, 15480658"
+Nordic Journal of Media Studies,0.403,Q2,80.0,2003184X
+Operations Research Forum,0.403,Q2,80.0,26622556
+Journal of Global Information Technology Management,0.402,Q2,80.0,"1097198X, 23336846"
+Computer Science and Information Systems,0.401,Q2,80.0,"24061018, 18200214"
+Network Modeling Analysis in Health Informatics and Bioinformatics,0.401,Q3,60.0,"21926670, 21926662"
+"Numerical Heat Transfer, Part B: Fundamentals",0.401,Q3,60.0,"15210626, 10407790"
+Order,0.400,Q3,60.0,"15729273, 01678094"
+Computer Methods in Biomechanics and Biomedical Engineering,0.398,Q3,60.0,"14768259, 10255842"
+International Journal of Web and Grid Services,0.398,Q3,60.0,"17411106, 17411114"
+Journal of Engineering (United Kingdom),0.397,Q2,80.0,"23144912, 23144904"
+Journal of Geo-Information Science,0.397,Q2,80.0,15608999
+"Proceedings - International Conference on Computational Linguistics, COLING",0.397,-,30.0,29512093
+Computational Geometry: Theory and Applications,0.396,Q3,60.0,09257721
+EJNMMI Reports,0.395,Q2,80.0,3005074X
+Journal of Internet Services and Information Security,0.395,Q2,80.0,"21822077, 21822069"
+Revista de Educacion a Distancia,0.395,Q2,80.0,15787680
+IET Networks,0.395,Q3,60.0,"20474962, 20474954"
+International Journal of e-Business Research,0.394,Q2,80.0,"1548114X, 15481131"
+Journal of Mathematics and Computer Science,0.394,Q2,80.0,2008949X
+Genetic Programming and Evolvable Machines,0.394,Q3,60.0,"13892576, 15737632"
+Corpus Pragmatics,0.393,Q1,98.0,25099515
+Engineering Computations,0.393,Q2,80.0,02644401
+Digital Education Review,0.392,Q2,80.0,20139144
+Journal of Technology and Science Education,0.392,Q2,80.0,"20145349, 20136374"
+Concurrent Engineering Research and Applications,0.391,Q2,80.0,"15312003, 1063293X"
+SCIRES-IT,0.389,Q1,98.0,22394303
+International Journal of Technology Management,0.388,Q2,80.0,"17415276, 02675730"
+"Journal of Control, Automation and Electrical Systems",0.388,Q3,60.0,"21953880, 21953899"
+IET Software,0.387,Q2,80.0,"17518806, 17518814"
+"Circuits, Systems, and Signal Processing",0.387,Q3,60.0,"0278081X, 15315878"
+INFOR,0.387,Q3,60.0,"03155986, 19160615"
+Journal of Data Science,0.387,Q3,60.0,"1680743X, 16838602"
+Journal of Statistical Theory and Applications,0.387,Q3,60.0,"15387887, 22141766"
+Jiaotong Yunshu Xitong Gongcheng Yu Xinxi/ Journal of Transportation Systems Engineering and Information Technology,0.386,Q3,60.0,10096744
+"Proceedings of the International Joint Conference on Autonomous Agents and Multiagent Systems, AAMAS",0.386,-,30.0,"15488403, 15582914"
+Acta Acustica,0.385,Q1,98.0,"10224793, 26814617"
+Global Journal of Engineering Education,0.385,Q2,80.0,13283154
+Journal of Energy in Southern Africa,0.385,Q2,80.0,1021447X
+Pollack Periodica,0.385,Q3,60.0,17881994
+Journal of Theoretical and Computational Acoustics,0.383,Q2,80.0,"25917811, 25917285"
+IEEE Pervasive Computing,0.383,Q3,60.0,15361268
+International Journal of Intelligent Computing and Cybernetics,0.382,Q2,80.0,"1756378X, 17563798"
+Journal of Business Analytics,0.382,Q2,80.0,"2573234X, 25732358"
+Mathematical Methods of Operations Research,0.382,Q2,80.0,"14325217, 14322994"
+Simulation,0.382,Q2,80.0,"17413133, 00375497"
+Applied AI Letters,0.382,Q3,60.0,26895595
+"Proceedings - IEEE Consumer Communications and Networking Conference, CCNC",0.382,-,30.0,23319860
+Digital Government: Research and Practice,0.380,Q2,80.0,26390175
+Interactions (N.Y.),0.380,Q3,60.0,"15583449, 10725520"
+"Journal of the Optical Society of America A: Optics and Image Science, and Vision",0.379,Q2,80.0,"15208532, 10847529"
+International Journal of Speech Technology,0.378,Q1,98.0,"13812416, 15728110"
+Kybernetika,0.378,Q3,60.0,"00235954, 1805949X"
+Problems of Information Transmission,0.378,Q3,60.0,"00329460, 16083253"
+"IEEE International Conference on Cloud Computing, CLOUD",0.378,-,30.0,"21596182, 21596190"
+"Proceedings - International Conference on Computer Communications and Networks, ICCCN",0.378,-,30.0,10952055
+Health Systems,0.377,Q3,60.0,"20476973, 20476965"
+Computer Methods in Biomechanics and Biomedical Engineering: Imaging and Visualization,0.376,Q2,80.0,"21681163, 21681171"
+i-com,0.376,Q2,80.0,"21966826, 1618162X"
+Biomedical Physics and Engineering Express,0.376,Q3,60.0,20571976
+E-Informatica Software Engineering Journal,0.376,Q3,60.0,"18977979, 20844840"
+International Journal on Software Tools for Technology Transfer,0.376,Q3,60.0,"14332779, 14332787"
+Journal of Educational Data Mining,0.376,Q3,60.0,21572100
+Journal of Molecular Modeling,0.376,Q3,60.0,"16102940, 09485023"
+Journal of Operation and Automation in Power Engineering,0.376,Q3,60.0,"24234567, 23224576"
+"IEEE Vehicular Networking Conference, VNC",0.376,-,30.0,"21579865, 21579857"
+Electronic Journal of Information Systems in Developing Countries,0.375,Q3,60.0,16814835
+IET Signal Processing,0.374,Q3,60.0,"17519675, 17519683"
+Molecular Simulation,0.374,Q3,60.0,"08927022, 10290435"
+"Proceedings - IEEE International Conference on Cluster Computing, ICCC",0.374,-,30.0,15525244
+International Journal of Circuit Theory and Applications,0.373,Q3,60.0,"1097007X, 00989886"
+Computer Aided Geometric Design,0.372,Q2,80.0,01678396
+AI Communications,0.372,Q3,60.0,09217126
+Proceedings - International Conference on Pattern Recognition,0.372,-,30.0,10514651
+International Journal on Engineering Applications,0.371,Q1,98.0,"25332295, 22812881"
+ACM Inroads,0.371,Q2,80.0,"21532184, 21532192"
+Open Computer Science,0.371,Q2,80.0,22991093
+Innovations in Systems and Software Engineering,0.371,Q3,60.0,"16145054, 16145046"
+Journal of Enabling Technologies,0.371,Q3,60.0,23986263
+Automatika,0.369,Q2,80.0,00051144
+IETE Journal of Research,0.369,Q3,60.0,"0974780X, 03772063"
+International Journal of Advances in Soft Computing and its Applications,0.369,Q3,60.0,20748523
+Izvestiya Instituta Matematiki i Informatiki Udmurtskogo Gosudarstvennogo Universiteta,0.369,Q3,60.0,"22263594, 24101737"
+Photonic Network Communications,0.368,Q3,60.0,"1387974X, 15728188"
+"Proceedings - International Conference on Image Processing, ICIP",0.368,-,30.0,15224880
+Brazilian Journal of Operations and Production Management,0.367,Q2,80.0,"16798171, 22378960"
+Journal of the Brazilian Computer Society,0.367,Q2,80.0,"01046500, 16784804"
+IEEE Latin America Transactions,0.366,Q2,80.0,15480992
+RIAI - Revista Iberoamericana de Automatica e Informatica Industrial,0.366,Q2,80.0,"16977920, 16977912"
+Software Impacts,0.366,Q3,60.0,26659638
+ACM Transactions on Modeling and Performance Evaluation of Computing Systems,0.365,Q2,80.0,"23763647, 23763639"
+Information Display,0.365,Q3,60.0,"03620972, 2637496X"
+Advances in Database Technology - EDBT,0.365,-,30.0,23672005
+Designs for Learning,0.364,Q1,98.0,20017480
+CCF Transactions on High Performance Computing,0.364,Q2,80.0,"25244930, 25244922"
+Journal of Intelligent and Fuzzy Systems,0.364,Q2,80.0,"18758967, 10641246"
+Springer Proceedings in Advanced Robotics,0.364,Q2,80.0,"25111264, 25111256"
+IET Cyber-systems and Robotics,0.364,Q3,60.0,26316315
+"Proceedings - International Symposium on Wearable Computers, ISWC",0.363,-,30.0,15504816
+Iran Journal of Computer Science,0.362,Q2,80.0,"25208438, 25208446"
+Somatechnics,0.362,Q2,80.0,"20440146, 20440138"
+Journal of Location Based Services,0.362,Q3,60.0,"17489725, 17489733"
+International Journal for Multiscale Computational Engineering,0.361,Q2,80.0,15431649
+Service Oriented Computing and Applications,0.361,Q2,80.0,"18632386, 18632394"
+Combinatorial Chemistry and High Throughput Screening,0.361,Q3,60.0,"13862073, 18755402"
+Technical Services Quarterly,0.360,Q2,80.0,07317131
+Turkish Journal of Electrical Engineering and Computer Sciences,0.360,Q2,80.0,"13000632, 13036203"
+NETNOMICS: Economic Research and Electronic Networking,0.360,Q3,60.0,"15737071, 13859587"
+Multisensory Research,0.359,Q3,60.0,"22134808, 22134794"
+Cybernetics and Information Technologies,0.358,Q2,80.0,"13119702, 13144081"
+Journal of Electronic Resources Librarianship,0.358,Q2,80.0,"1941126X, 19411278"
+Intelligent Buildings International,0.357,Q2,80.0,"17566932, 17508975"
+IEEE Design and Test,0.357,Q3,60.0,21682356
+Journal of Simulation,0.356,Q2,80.0,"17477778, 17477786"
+ZTE Communications,0.356,Q2,80.0,16735188
+Microsystem Technologies,0.356,Q3,60.0,09467076
+Data Science Journal,0.355,Q2,80.0,16831470
+Artificial Life and Robotics,0.355,Q3,60.0,14335298
+Constraints,0.355,Q3,60.0,"15729354, 13837133"
+Digital Transformation and Society,0.353,Q2,80.0,"27550761, 2755077X"
+Fuzzy Information and Engineering,0.353,Q2,80.0,"16168658, 16168666"
+Cognitive Computation and Systems,0.353,Q3,60.0,25177567
+Cyber-Physical Systems,0.352,Q2,80.0,23335785
+Design Journal,0.352,Q2,80.0,14606925
+Journal of ICT Standardization,0.352,Q2,80.0,"2245800X, 22460853"
+Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics),0.352,Q2,80.0,"03029743, 16113349"
+"International Journal of Mathematical, Engineering and Management Sciences",0.351,Q2,80.0,24557749
+Journal of Cryptographic Engineering,0.351,Q3,60.0,"21908516, 21908508"
+"Proceedings of the ACM SIGCOMM Internet Measurement Conference, IMC",0.351,-,30.0,21503761
+Journal of E-Learning and Knowledge Society,0.350,Q3,60.0,"18266223, 19718829"
+"IEEE Haptics Symposium, HAPTICS",0.350,-,30.0,"23247347, 23247355"
+"Proceedings - IEEE International Symposium on Defect and Fault Tolerance in VLSI and Nanotechnology Systems, DFT",0.350,-,30.0,"25761501, 2765933X"
+Drone Systems and Applications,0.349,Q2,80.0,25644939
+Dynamical Systems,0.349,Q3,60.0,14689367
+International Journal of Hybrid Intelligent Systems,0.349,Q3,60.0,"18758819, 14485869"
+International Journal of Sensor Networks,0.349,Q3,60.0,"17481287, 17481279"
+Proceedings of the International Joint Conference on Neural Networks,0.349,-,30.0,-
+IET Computer Vision,0.348,Q3,60.0,"17519640, 17519632"
+International Journal of Parallel Programming,0.348,Q3,60.0,08857458
+International Journal of Intelligent Transportation Systems Research,0.347,Q2,80.0,"13488503, 18688659"
+"African Journal of Science, Technology, Innovation and Development",0.347,Q3,60.0,"20421338, 20421346"
+International Journal of Networked and Distributed Computing,0.347,Q3,60.0,"22117938, 22117946"
+Machine Translation,0.345,Q2,80.0,"09226567, 15730573"
+ACM Transactions on Modeling and Computer Simulation,0.345,Q3,60.0,"15581195, 10493301"
+Formal Methods in System Design,0.345,Q3,60.0,"15728102, 09259856"
+"International Journal of Innovative Computing, Information and Control",0.344,Q3,60.0,13494198
+Spatial Cognition and Computation,0.343,Q2,80.0,13875868
+Human Technology,0.342,Q2,80.0,17956889
+Artificial Life,0.342,Q3,60.0,"10645462, 15309185"
+International Journal of Humanoid Robotics,0.342,Q3,60.0,"17936942, 02198436"
+Applied Science and Engineering Progress,0.341,Q2,80.0,"26730421, 26729156"
+Baghdad Science Journal,0.341,Q2,80.0,"24117986, 20788665"
+IAES International Journal of Artificial Intelligence,0.341,Q2,80.0,"20894872, 22528938"
+International Journal of Electronic Government Research,0.341,Q2,80.0,"15483894, 15483886"
+Iraqi Journal of Science,0.341,Q3,60.0,00672904
+Iranian Journal of Fuzzy Systems,0.340,Q2,80.0,17350654
+Trudy Instituta Matematiki i Mekhaniki UrO RAN,0.339,Q2,80.0,"26584786, 01344889"
+"International Journal of Numerical Modelling: Electronic Networks, Devices and Fields",0.339,Q3,60.0,"08943370, 10991204"
+"High-Performance Graphics - ACM SIGGRAPH / Eurographics Symposium Proceedings, HPG",0.339,-,30.0,"20798687, 20798679"
+ACM Transactions on Spatial Algorithms and Systems,0.338,Q3,60.0,"23740361, 23740353"
+International Journal of Agricultural and Environmental Information Systems,0.338,Q3,60.0,"19473206, 19473192"
+Journal of Mathematical Cryptology,0.338,Q3,60.0,"18622984, 18622976"
+Kongzhi yu Juece/Control and Decision,0.338,Q3,60.0,10010920
+Technology and Health Care,0.338,Q3,60.0,"18787401, 09287329"
+"Conference Record of the Asilomar Conference on Signals, Systems and Computers",0.337,-,30.0,10586393
+Nonlinear Engineering,0.335,Q2,80.0,"21928029, 21928010"
+Mendel,0.335,Q3,60.0,"25713701, 18033814"
+"IEEE International Conference on Emerging Technologies and Factory Automation, ETFA",0.335,-,30.0,"19460759, 19460740"
+IEEE Computer Graphics and Applications,0.334,Q3,60.0,"15581756, 02721716"
+Journal of Biomedical Physics and Engineering,0.333,Q3,60.0,22517200
+"IEEE Conference on Computatonal Intelligence and Games, CIG",0.333,-,30.0,"23254289, 23254270"
+"IEEE International Conference on High Performance Switching and Routing, HPSR",0.333,-,30.0,"23255609, 23255595"
+"Engineering, Technology and Applied Science Research",0.332,Q2,80.0,"17928036, 22414487"
+AIMS Electronics and Electrical Engineering,0.332,Q3,60.0,25781588
+Journal on Data Semantics,0.332,Q3,60.0,"18612040, 18612032"
+Observational Studies,0.332,Q3,60.0,27673324
+International Journal of Computer Games Technology,0.331,Q3,60.0,"16877047, 16877055"
+International Journal of Fuzzy Logic and Intelligent Systems,0.331,Q3,60.0,"2093744X, 15982645"
+"Vestnik Samarskogo Gosudarstvennogo Tekhnicheskogo Universiteta, Seriya Fiziko-Matematicheskie Nauki",0.331,Q3,60.0,"23107081, 19918615"
+Computing and Informatics,0.330,Q3,60.0,"25858807, 13359150"
+International Journal of Bio-Inspired Computation,0.330,Q3,60.0,"17580374, 17580366"
+International Journal of Electrical and Computer Engineering,0.330,Q3,60.0,20888708
+International Journal of RF and Microwave Computer-Aided Engineering,0.330,Q3,60.0,"1099047X, 10964290"
+International Journal of Agile Systems and Management,0.329,Q2,80.0,"17419174, 17419182"
+IEEE Open Journal of Nanotechnology,0.329,Q3,60.0,26441292
+Jixie Gongcheng Xuebao/Chinese Journal of Mechanical Engineering,0.329,Q3,60.0,05776686
+Proceedings of the Institution of Civil Engineers: Smart Infrastructure and Construction,0.329,Q3,60.0,23978759
+Computer Assisted Surgery,0.328,Q2,80.0,24699322
+Quantitative Biology,0.328,Q3,60.0,"20954697, 20954689"
+International Arab Journal of Information Technology,0.327,Q3,60.0,"16833198, 23094524"
+Journal of Functional Programming,0.327,Q3,60.0,"14697653, 09567968"
+"Integrated Communications, Navigation and Surveillance Conference, ICNS",0.327,-,30.0,"21554951, 21554943"
+Xitong Gongcheng Lilun yu Shijian/System Engineering Theory and Practice,0.326,Q2,80.0,10006788
+Quantum Information and Computation,0.326,Q3,60.0,15337146
+"Electronic Proceedings in Theoretical Computer Science, EPTCS",0.326,-,30.0,20752180
+Proceedings of the IEEE Symposium on Computer-Based Medical Systems,0.325,-,30.0,10637125
+COMPEL - The International Journal for Computation and Mathematics in Electrical and Electronic Engineering,0.324,Q3,60.0,03321649
+International Journal of Pervasive Computing and Communications,0.323,Q3,60.0,"1742738X, 17427371"
+Journal of Cyber Security and Mobility,0.323,Q3,60.0,"22454578, 22451439"
+Operating Systems Review (ACM),0.323,Q3,60.0,01635980
+Transport and Telecommunication,0.322,Q2,80.0,"14076179, 14076160"
+Computer Animation and Virtual Worlds,0.321,Q3,60.0,15464261
+Presence: Teleoperators and Virtual Environments,0.321,Q3,60.0,"15313263, 10547460"
+"Statistics, Optimization and Information Computing",0.321,Q3,60.0,"23105070, 2311004X"
+International Journal of E-Health and Medical Communications,0.320,Q3,60.0,"19473168, 1947315X"
+Journal of Gaming and Virtual Worlds,0.320,Q3,60.0,"1757191X, 17571928"
+"Proceedings - IEEE Computer Society's Annual International Symposium on Modeling, Analysis, and Simulation of Computer and Telecommunications Systems, MASCOTS",0.320,-,30.0,15267539
+Constructivist Foundations,0.319,Q1,98.0,1782348X
+Advanced Information Systems,0.319,Q3,60.0,25229052
+Statistical Theory and Related Fields,0.319,Q3,60.0,"24754277, 24754269"
+Proceedings of The International Symposium on Multiple-Valued Logic,0.319,-,30.0,0195623X
+"International Review of Law, Computers and Technology",0.318,Q2,80.0,"13600869, 13646885"
+Journal of Electronic Publishing,0.318,Q3,60.0,10802711
+Malaysian Journal of Computer Science,0.318,Q3,60.0,01279084
+Education for Information,0.317,Q2,80.0,"18758649, 01678329"
+International Journal of Modern Physics C,0.317,Q3,60.0,"01291831, 17936586"
+Modelling,0.316,Q2,80.0,26733951
+Educar,0.315,Q2,80.0,"0211819X, 20148801"
+Inverse Problems in Science and Engineering,0.315,Q2,80.0,"17415985, 17415977"
+Advanced Control for Applications: Engineering and Industrial Systems,0.315,Q3,60.0,25780727
+"International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems",0.315,Q3,60.0,"02184885, 17936411"
+International Journal of Applied Mathematics and Computer Science,0.314,Q2,80.0,1641876X
+Geomatics and Environmental Engineering,0.314,Q3,60.0,"23007095, 18981135"
+International Journal of Mobile and Blended Learning,0.314,Q3,60.0,"19418655, 19418647"
+Journal of Web Engineering,0.314,Q3,60.0,15409589
+Journal of Internet Technology,0.312,Q3,60.0,"20794029, 16079264"
+Journal of Payments Strategy and Systems,0.312,Q3,60.0,"17501806, 17501814"
+EAI Endorsed Transactions on Pervasive Health and Technology,0.311,Q3,60.0,24117145
+International Journal of Electronic Business,0.311,Q3,60.0,"14706067, 17415063"
+ROBOMECH Journal,0.311,Q3,60.0,21974225
+Wireless Power Transfer,0.311,Q3,60.0,20528418
+"International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences - ISPRS Archives",0.311,-,30.0,16821750
+"International Journal of Service Science, Management, Engineering, and Technology",0.310,Q2,80.0,"19479603, 1947959X"
+Journal of Information Systems Engineering and Business Intelligence,0.310,Q3,60.0,"25986333, 24432555"
+At-Automatisierungstechnik,0.309,Q3,60.0,"01782312, 2196677X"
+Dianji yu Kongzhi Xuebao/Electric Machines and Control,0.309,Q3,60.0,1007449X
+Journal of The Institution of Engineers (India): Series B,0.309,Q3,60.0,"22502114, 22502106"
+Mathematical Modeling and Computing,0.309,Q3,60.0,"23129794, 24153788"
+Information Geometry,0.308,Q3,60.0,"2511249X, 25112481"
+Bio-Algorithms and Med-Systems,0.307,Q3,60.0,"1896530X, 18959091"
+Qinghua Daxue Xuebao/Journal of Tsinghua University,0.307,Q3,60.0,10000054
+Sustainable Engineering and Innovation,0.306,Q2,80.0,27120562
+Bulletin of Electrical Engineering and Informatics,0.306,Q3,60.0,"20893191, 23029285"
+Foundations of Computing and Decision Sciences,0.306,Q3,60.0,"23003405, 08676356"
+Journal of Artificial Intelligence and Consciousness,0.306,Q3,60.0,"27050793, 27050785"
+Journal of Computer Security,0.306,Q3,60.0,"0926227X, 18758924"
+Journal of Information Technology Education: Innovations in Practice,0.306,Q3,60.0,"2165316X, 21653151"
+Studies in Informatics and Control,0.306,Q3,60.0,"12201766, 1841429X"
+Information Visualization,0.305,Q3,60.0,"14738724, 14738716"
+European Signal Processing Conference,0.305,-,30.0,22195491
+"Proceedings of the International Symposium on Modeling and Optimization in Mobile, Ad Hoc, and Wireless Networks, WiOpt",0.305,-,30.0,"26903342, 26903334"
+International Journal of Applied Mathematics,0.304,Q3,60.0,"13111728, 13148060"
+Logistics Research,0.304,Q3,60.0,"18650368, 1865035X"
+Scientia Iranica,0.304,Q3,60.0,"23453605, 10263098"
+"IEEE Radio and Wireless Symposium, RWS",0.304,-,30.0,"21642974, 21642958"
+Interaction Design and Architecture(s),0.303,Q2,80.0,"18269745, 22832998"
+Proceedings of the International Symposium on Automation and Robotics in Construction,0.302,-,30.0,24135844
+Complex Systems Informatics and Modeling Quarterly,0.301,Q3,60.0,22559922
+Proceedings of the Design Society,0.301,-,30.0,2732527X
+International Journal of Information and Education Technology,0.300,Q3,60.0,20103689
+IEEE Workshop on Statistical Signal Processing Proceedings,0.300,-,30.0,"23730803, 26933551"
+Imaging Science Journal,0.299,Q2,80.0,"13682199, 1743131X"
+Advances in Science and Technology Research Journal,0.299,Q3,60.0,22998624
+Proceedings of the Data Compression Conference,0.299,-,30.0,10680314
+Business Systems Research,0.298,Q2,80.0,18479375
+Data Science,0.298,Q3,60.0,"24518484, 24518492"
+International Journal on Magnetic Particle Imaging,0.298,Q3,60.0,23659033
+Transactions on Data Privacy,0.298,Q3,60.0,"18885063, 20131631"
+eJournal of eDemocracy and Open Government,0.297,Q2,80.0,20759517
+Foundations and Trends in Information Systems,0.297,Q3,60.0,"2331124X, 23311231"
+Journal of Advances in Information Technology,0.297,Q3,60.0,17982340
+Journal of Computational Biophysics and Chemistry,0.297,Q3,60.0,"27374173, 27374165"
+Proceedings of the Romanian Academy Series A - Mathematics Physics Technical Sciences Information Science,0.297,Q3,60.0,14549069
+Infocommunications Journal,0.296,Q3,60.0,"20612125, 20612079"
+International Journal on Artificial Intelligence Tools,0.296,Q3,60.0,"02182130, 17936349"
+"IEEE Workshop on Signal Processing Systems, SiPS: Design and Implementation",0.296,-,30.0,15206130
+"International Journal of Image, Graphics and Signal Processing",0.295,Q3,60.0,"20749074, 20749082"
+International Journal of Knowledge-Based and Intelligent Engineering Systems,0.295,Q3,60.0,"13272314, 18758827"
+"Jisuanji Jicheng Zhizao Xitong/Computer Integrated Manufacturing Systems, CIMS",0.295,Q3,60.0,10065911
+Canadian Journal of Learning and Technology,0.294,Q3,60.0,14996685
+Engineering and Applied Science Research,0.294,Q3,60.0,"25396218, 25396161"
+Journal of Cases on Information Technology,0.294,Q3,60.0,"15487717, 15487725"
+Proceedings of International Conference on Applied Innovation in IT,0.294,-,30.0,21998876
+Proceedings of the Association for Information Science and Technology,0.293,Q2,80.0,23739231
+Journal of Robotics and Mechatronics,0.293,Q3,60.0,"18838049, 09153942"
+Proceedings of the European Test Workshop,0.293,-,30.0,"15301877, 15581780"
+International Journal of Advances in Intelligent Informatics,0.292,Q3,60.0,"25483161, 24426571"
+International Conference on Information Networking,0.291,-,30.0,19767684
+Journal of Control Science and Engineering,0.290,Q3,60.0,"16875249, 16875257"
+Forum on Specification and Design Languages,0.290,-,30.0,16369874
+International Journal of Prognostics and Health Management,0.289,Q3,60.0,21532648
+Jisuanji Xuebao/Chinese Journal of Computers,0.289,Q3,60.0,02544164
+Matematiche,0.289,Q3,60.0,"03733505, 20375298"
+Annual International Conference of the IEEE Engineering in Medicine and Biology - Proceedings,0.289,-,30.0,05891019
+"IEEE International Conference on Software Quality, Reliability and Security, QRS",0.289,-,30.0,26939177
+"Proceedings - European Workshop on Visual Information Processing, EUVIP",0.289,-,30.0,24718963
+Research Data Journal for the Humanities and Social Sciences,0.288,Q2,80.0,24523666
+Journal of Education and e-Learning Research,0.288,Q3,60.0,"25180169, 24109991"
+Fundamenta Informaticae,0.287,Q3,60.0,01692968
+Qwerty,0.286,Q1,98.0,"18287344, 22402950"
+Gyroscopy and Navigation,0.286,Q3,60.0,"20751109, 20751087"
+Intelligent Data Analysis,0.286,Q3,60.0,"1088467X, 15714128"
+International Journal of Advanced Computer Science and Applications,0.285,Q3,60.0,"21565570, 2158107X"
+"Interdisciplinary Journal of Information, Knowledge, and Management",0.284,Q3,60.0,"15551237, 15551229"
+International Journal of Data Analysis Techniques and Strategies,0.284,Q3,60.0,"17558050, 17558069"
+International Journal of Sociotechnology and Knowledge Development,0.284,Q3,60.0,"19416253, 19416261"
+Journal of Universal Computer Science,0.284,Q3,60.0,"0948695X, 09486968"
+IEEE International Conference on Multisensor Fusion and Integration for Intelligent Systems,0.284,-,30.0,"2835947X, 27679357"
+"International Conference on Wireless and Mobile Computing, Networking and Communications",0.284,-,30.0,"21619646, 21619654"
+"Proceedings - International Symposium on Quality Electronic Design, ISQED",0.284,-,30.0,"19483287, 19483295"
+Computer Music Journal,0.283,Q1,98.0,"01489267, 15315169"
+Karbala International Journal of Modern Science,0.283,Q2,80.0,"24056103, 2405609X"
+KSII Transactions on Internet and Information Systems,0.283,Q3,60.0,"19767277, 22881468"
+"Proceedings of IEEE Computer Society Annual Symposium on VLSI, ISVLSI",0.283,-,30.0,"21593469, 21593477"
+Proceedings of the International Conference on New Interfaces for Musical Expression,0.283,-,30.0,"22204792, 22204806"
+Cybernetics and Physics,0.282,Q3,60.0,"22237038, 22264116"
+GI_Forum,0.282,Q3,60.0,23081708
+IAENG International Journal of Computer Science,0.282,Q3,60.0,"1819656X, 18199224"
+Proceedings International Radar Symposium,0.282,-,30.0,"21555753, 21555745"
+Canadian Journal of Information and Library Science,0.281,Q2,80.0,"19207239, 1195096X"
+Journal of Information and Communication Technology,0.281,Q3,60.0,"21803862, 1675414X"
+Proceedings - Annual Reliability and Maintainability Symposium,0.281,-,30.0,0149144X
+Artnodes,0.280,Q1,98.0,16955951
+Interacting with Computers,0.280,Q2,80.0,"18737951, 09535438"
+Acta Informatica,0.280,Q3,60.0,"14320525, 00015903"
+"International Journal of Wavelets, Multiresolution and Information Processing",0.280,Q3,60.0,"1793690X, 02196913"
+"Journal of Wireless Mobile Networks, Ubiquitous Computing, and Dependable Applications",0.280,Q3,60.0,"20935382, 20935374"
+Organised Sound,0.279,Q1,98.0,"13557718, 14698153"
+Computational and Mathematical Methods,0.279,Q3,60.0,25777408
+Digital Chinese Medicine,0.279,Q3,60.0,"2096479X, 25893777"
+International Journal of Computational Intelligence and Applications,0.279,Q3,60.0,"14690268, 17575885"
+International Journal of Computer Science in Sport,0.279,Q3,60.0,16844769
+Journal of Electronic Commerce in Organizations,0.279,Q3,60.0,15392937
+Journal of Intelligent Systems and Internet of Things,0.279,Q3,60.0,"2769786X, 26906791"
+"Revista de Internet, Derecho y Politica",0.278,Q2,80.0,16998154
+International Journal of Technology Enhanced Learning,0.278,Q3,60.0,"17535263, 17535255"
+Journal of Medical Robotics Research,0.278,Q3,60.0,"24249068, 2424905X"
+International Journal of Computer Network and Information Security,0.277,Q3,60.0,"20749104, 20749090"
+Analog Integrated Circuits and Signal Processing,0.276,Q3,60.0,"09251030, 15731979"
+International Journal of Enterprise Information Systems,0.276,Q3,60.0,"15481115, 15481123"
+"International Journal of Parallel, Emergent and Distributed Systems",0.276,Q3,60.0,"17445779, 17445760"
+Journal of Database Management,0.276,Q3,60.0,"15338010, 10638016"
+Journal of Spatial Information Science,0.276,Q3,60.0,1948660X
+Scientia Sinica Technologica,0.276,Q3,60.0,"16747259, 2095946X"
+Informatica (Slovenia),0.275,Q3,60.0,"18543871, 03505596"
+Sao Paulo Journal of Mathematical Sciences,0.275,Q3,60.0,"19826907, 23169028"
+Eastern-European Journal of Enterprise Technologies,0.274,Q3,60.0,"17293774, 17294061"
+"Vestnik Sankt-Peterburgskogo Universiteta, Prikladnaya Matematika, Informatika, Protsessy Upravleniya",0.274,Q3,60.0,"18119905, 25422251"
+"Proceedings of IEEE Workshop on Advanced Robotics and its Social Impacts, ARSO",0.274,-,30.0,"21627576, 21627568"
+Edutec,0.273,Q3,60.0,11359250
+Future Technology,0.273,Q3,60.0,28320379
+Image Processing On Line,0.273,Q3,60.0,21051232
+International Journal of Pattern Recognition and Artificial Intelligence,0.273,Q3,60.0,"02180014, 17936381"
+Diagnostyka,0.272,Q3,60.0,"24495220, 16416414"
+International Journal of E-Services and Mobile Applications,0.272,Q3,60.0,"1941627X, 19416288"
+International Journal of Intelligent Engineering and Systems,0.272,Q3,60.0,"21853118, 2185310X"
+IT - Information Technology,0.272,Q3,60.0,"21967032, 16112776"
+Jordanian Journal of Computers and Information Technology,0.272,Q3,60.0,"24151076, 24139351"
+Sovremennye Problemy Distantsionnogo Zondirovaniya Zemli iz Kosmosa,0.272,Q3,60.0,"20707401, 24110280"
+Vietnam Journal of Computer Science,0.272,Q3,60.0,21968896
+"IEEE International Workshop on Machine Learning for Signal Processing, MLSP",0.272,-,30.0,"21610363, 21610371"
+"International Conference on Cyber Conflict, CYCON",0.272,-,30.0,"23255374, 23255366"
+"Annals of the University of Craiova, Mathematics and Computer Science Series",0.271,Q3,60.0,"22469958, 12236934"
+Bulletin of the Polish Academy of Sciences: Technical Sciences,0.271,Q3,60.0,"23001917, 02397528"
+Eurasian Journal of Mathematical and Computer Applications,0.271,Q3,60.0,"23066172, 23089822"
+Journal of Image and Graphics (United Kingdom),0.271,Q3,60.0,23013699
+"International Winter Conference on Brain-Computer Interface, BCI",0.271,-,30.0,25727672
+"Proceedings of the International Conference on Digital Audio Effects, DAFx",0.271,-,30.0,"24136700, 24136689"
+Digital Humanities Quarterly,0.270,Q2,80.0,19384122
+Applied Mathematics and Information Sciences,0.270,Q3,60.0,"19350090, 23250399"
+Journal of Advanced Research in Numerical Heat Transfer,0.270,Q3,60.0,27350142
+Journal of Medical Signals and Sensors,0.270,Q3,60.0,22287477
+Economic Computation and Economic Cybernetics Studies and Research,0.269,Q3,60.0,"0424267X, 18423264"
+"International Journal of Modelling, Identification and Control",0.269,Q3,60.0,"17466172, 17466180"
+Journal of Visualization,0.269,Q3,60.0,"18758975, 13438875"
+International Journal of Cooperative Information Systems,0.268,Q3,60.0,"02188430, 17936365"
+International Journal on Technical and Physical Problems of Engineering,0.267,Q3,60.0,20773528
+Proceedings - International Symposium on Computers and Communications,0.267,-,30.0,15301346
+APTISI Transactions on Technopreneurship,0.266,Q3,60.0,"26558807, 26568888"
+Computer Optics,0.265,Q3,60.0,01342452
+International Journal of Information Security and Privacy,0.265,Q3,60.0,"19301650, 19301669"
+"Journal of Automata, Languages and Combinatorics",0.265,Q3,60.0,"25673785, 1430189X"
+Communications - Scientific Letters of the University of Zilina,0.264,Q3,60.0,"13354205, 25857878"
+Radioelectronic and Computer Systems,0.264,Q3,60.0,"26632012, 18144225"
+"Journal of Circuits, Systems and Computers",0.263,Q3,60.0,"17936454, 02181266"
+Scientia Sinica Informationis,0.263,Q3,60.0,"20959486, 16747267"
+"IEEE International Workshop on Computer Aided Modeling and Design of Communication Links and Networks, CAMAD",0.263,-,30.0,23784873
+International Geoscience and Remote Sensing Symposium (IGARSS),0.263,-,30.0,-
+International Journal of Web Based Communities,0.262,Q3,60.0,"17418216, 14778394"
+Lecture Notes in Business Information Processing,0.262,Q3,60.0,18651348
+IEEE Pacific Visualization Symposium,0.262,-,30.0,"21658765, 21658773"
+Proceedings of the IEEE Radar Conference,0.262,-,30.0,"10975764, 23755318"
+International Review of Applied Sciences and Engineering,0.261,Q2,80.0,"20620810, 20634269"
+International Journal of Mathematics and Computer Science,0.261,Q3,60.0,"18140432, 18140424"
+Journal of Computer and Systems Sciences International,0.261,Q3,60.0,"10642307, 15556530"
+Journal of Object Technology,0.261,Q3,60.0,16601769
+JLIS.it,0.260,Q2,80.0,"20381026, 20385366"
+"Herald of the Bauman Moscow State Technical University, Series Natural Sciences",0.260,Q3,60.0,18123368
+International Journal of Computer Mathematics: Computer Systems Theory,0.260,Q3,60.0,"23799935, 23799927"
+Izvestiya of Saratov University. Mathematics. Mechanics. Informatics,0.260,Q3,60.0,"18169791, 25419005"
+Kinetics and Catalysis,0.260,Q3,60.0,"00231584, 16083210"
+Applied Computer Science,0.259,Q3,60.0,"18953735, 23536977"
+Design Automation for Embedded Systems,0.259,Q3,60.0,"15728080, 09295585"
+International Journal of Information Technology and Computer Science,0.259,Q3,60.0,"20749007, 20749015"
+"International Journal of Modeling, Simulation, and Scientific Computing",0.259,Q3,60.0,"17939623, 17939615"
+"Modeling, Identification and Control",0.259,Q3,60.0,"03327353, 18901328"
+"International Conference on Human System Interaction, HSI",0.259,-,30.0,"21582246, 21582254"
+"International IEEE/EMBS Conference on Neural Engineering, NER",0.259,-,30.0,"19483554, 19483546"
+Proceedings - Winter Simulation Conference,0.259,-,30.0,08917736
+"Law, Technology and Humans",0.258,Q2,80.0,26524074
+New Review of Hypermedia and Multimedia,0.258,Q2,80.0,"17407842, 13614568"
+International Journal of Mechanical Engineering and Robotics Research,0.258,Q3,60.0,22780149
+Journal of Advanced Computational Intelligence and Intelligent Informatics,0.258,Q3,60.0,"13430130, 18838014"
+New Mathematics and Natural Computation,0.258,Q3,60.0,"17937027, 17930057"
+Notes on Intuitionistic Fuzzy Sets,0.258,Q3,60.0,"23678283, 13104926"
+Periodica Polytechnica Electrical Engineering and Computer Science,0.258,Q3,60.0,"20645279, 20645260"
+IEEE International Conference on Industrial Informatics (INDIN),0.257,-,30.0,19354576
+Journal of Information Science and Engineering,0.256,Q2,80.0,10162364
+Cybernetics and Systems Analysis,0.256,Q3,60.0,"15738337, 10600396"
+International Journal of Computational Science and Engineering,0.256,Q3,60.0,"17427185, 17427193"
+Pragmatics and Cognition,0.255,Q2,80.0,"15699943, 09290907"
+Electronic Government,0.255,Q3,60.0,"17407494, 17407508"
+Archeologia e Calcolatori,0.254,Q2,80.0,"23851953, 11206861"
+Journal of Electronic Imaging,0.254,Q3,60.0,"1560229X, 10179909"
+Sakarya University Journal of Computer and Information Sciences,0.254,Q3,60.0,26368129
+IEEE International Conference on Fuzzy Systems,0.254,-,30.0,10987584
+International Journal of Healthcare Information Systems and Informatics,0.253,Q3,60.0,"15553396, 1555340X"
+International Journal of Information Engineering and Electronic Business,0.253,Q3,60.0,"20749023, 20749031"
+The International Symposium on Combinatorial Search,0.253,-,30.0,"28329171, 28329163"
+Smart and Sustainable Manufacturing Systems,0.252,Q3,60.0,"25206478, 25723928"
+International Journal of Image and Graphics,0.251,Q3,60.0,"02194678, 17936756"
+Inteligencia Artificial,0.251,Q4,30.0,11373601
+International Congress on Ultra Modern Telecommunications and Control Systems and Workshops,0.251,-,30.0,"21570221, 2157023X"
+"Proceedings of IEEE Symposium on Visual Languages and Human-Centric Computing, VL/HCC",0.251,-,30.0,"19436106, 19436092"
+Wireless Telecommunications Symposium,0.251,-,30.0,19345070
+Rivista Italiana di Informatica e Diritto,0.250,Q2,80.0,27047318
+"African Journal of Research in Mathematics, Science and Technology Education",0.250,Q3,60.0,"18117295, 24697656"
+Intelligent Decision Technologies,0.250,Q3,60.0,"18724981, 18758843"
+"International Journal of Reliability, Quality and Safety Engineering",0.250,Q3,60.0,"02185393, 17936446"
+Journal of 3D Printing in Medicine,0.250,Q3,60.0,"20594763, 20594755"
+Journal of Systems Science and Information,0.250,Q3,60.0,"14789906, 25126660"
+Zhurnal Belorusskogo Gosudarstvennogo Universiteta. Matematika. Informatika,0.250,Q4,30.0,"25206508, 26173956"
+"Proceedings of International Conference on Service Science, ICSS",0.250,-,30.0,"21653828, 21653836"
+International Journal of Information Systems and Supply Chain Management,0.249,Q3,60.0,"19355726, 19355734"
+"eCrime Researchers Summit, eCrime",0.249,-,30.0,"21591245, 21591237"
+International Journal of Electrical and Computer Engineering Systems,0.248,Q3,60.0,"18477003, 18476996"
+Acta Informatica Pragensia,0.247,Q2,80.0,18054951
+Ingenierie des Systemes d'Information,0.247,Q3,60.0,"16331311, 21167125"
+International Journal of Technology Marketing,0.247,Q3,60.0,"17418798, 1741878X"
+Uniciencia,0.247,Q3,60.0,22153470
+Journal of Multiple-Valued Logic and Soft Computing,0.247,Q4,30.0,15423980
+Xitong Fangzhen Xuebao / Journal of System Simulation,0.247,Q4,30.0,1004731X
+Cognitive Studies,0.246,Q2,80.0,23922397
+Defence Science Journal,0.246,Q2,80.0,"0011748X, 0976464X"
+"Bulletin of the South Ural State University, Series: Mathematical Modelling, Programming and Computer Software",0.245,Q3,60.0,"20710216, 23080256"
+International Journal of Advanced Technology and Engineering Exploration,0.245,Q3,60.0,"23945443, 23947454"
+International Journal of Electrical and Electronic Engineering and Telecommunications,0.245,Q3,60.0,23192518
+International Journal of Foundations of Computer Science,0.245,Q3,60.0,"17936373, 01290541"
+Annals of Emerging Technologies in Computing,0.244,Q3,60.0,"2516029X, 25160281"
+Annals of Library and Information Studies,0.244,Q3,60.0,"09725423, 09752404"
+Journal of High Speed Networks,0.244,Q3,60.0,"09266801, 18758940"
+Journal of Multiscale Modelling,0.244,Q4,30.0,"17569737, 17569745"
+International Journal of Humanities and Arts Computing,0.243,Q2,80.0,"17538548, 17551706"
+Modelling and Simulation in Engineering,0.243,Q3,60.0,"16875605, 16875591"
+Digital Presentation and Preservation of Cultural and Scientific Heritage,0.243,-,30.0,"25350366, 13144006"
+Jiqiren/Robot,0.242,Q3,60.0,10020446
+Journal of Fiber Bioengineering and Informatics,0.242,Q3,60.0,19408676
+Mathematics in Computer Science,0.242,Q3,60.0,"16618289, 16618270"
+TEM Journal,0.242,Q3,60.0,"22178309, 22178333"
+Journal of Applied Analysis,0.242,Q4,30.0,"18696082, 14256908"
+Masaryk University Journal of Law and Technology,0.241,Q2,80.0,"18025951, 18025943"
+International Journal of Communication Networks and Distributed Systems,0.241,Q3,60.0,"17543916, 17543924"
+Ruan Jian Xue Bao/Journal of Software,0.241,Q4,30.0,10009825
+Umanistica Digitale,0.240,Q2,80.0,25328816
+IEICE Transactions on Information and Systems,0.240,Q3,60.0,"17451361, 09168532"
+International Journal of Human Capital and Information Technology Professionals,0.240,Q3,60.0,"19473486, 19473478"
+International Journal of Knowledge Management Studies,0.240,Q3,60.0,"17438276, 17438268"
+Journal of Scientometric Research,0.240,Q3,60.0,"23200057, 23216654"
+Proceedings of the IEEE RAS and EMBS International Conference on Biomedical Robotics and Biomechatronics,0.240,-,30.0,21551774
+Baltic Journal of Modern Computing,0.239,Q3,60.0,"22558950, 22558942"
+"Conference proceedings International Research Council on the Biomechanics of Injury, IRCOBI",0.239,-,30.0,22353151
+Advances in Electrical and Computer Engineering,0.238,Q3,60.0,"18447600, 15827445"
+International Journal of Web-Based Learning and Teaching Technologies,0.238,Q3,60.0,"15481107, 15481093"
+Journal of Graphic Engineering and Design,0.238,Q3,60.0,"2217379X, 22179860"
+"IEEE International Conference on Data Mining Workshops, ICDMW",0.238,-,30.0,"23759232, 23759259"
+"Proceedings of IEEE Pacific Rim International Symposium on Dependable Computing, PRDC",0.238,-,30.0,15410110
+"Preservation, Digital Technology and Culture",0.237,Q2,80.0,"21952965, 21952957"
+CommIT Journal,0.237,Q3,60.0,"19792484, 24607010"
+"Proceedings of the International Florida Artificial Intelligence Research Society Conference, FLAIRS",0.237,-,30.0,"23340754, 23340762"
+International Journal of Computational Vision and Robotics,0.236,Q3,60.0,"1752914X, 17529131"
+International Journal of Asian Business and Information Management,0.235,Q2,80.0,"19479638, 19479646"
+Advanced Biomedical Engineering,0.235,Q3,60.0,21875219
+Computational Methods in Applied Sciences,0.235,Q3,60.0,18713033
+International Journal of Information Systems in the Service Sector,0.235,Q3,60.0,"19355688, 19355696"
+International Journal of Work Innovation,0.235,Q3,60.0,"20439032, 20439040"
+International Journal of Innovative Computing and Applications,0.235,Q4,30.0,"17516498, 1751648X"
+International Journal of Decision Support System Technology,0.234,Q3,60.0,"19416296, 1941630X"
+Journal of Information and Knowledge Management,0.234,Q3,60.0,"02196492, 17936926"
+Journal of Bioinformatics and Computational Biology,0.234,Q4,30.0,"02197200, 17576334"
+RAIRO - Theoretical Informatics and Applications,0.234,Q4,30.0,"1290385X, 09883754"
+Interaction Studies,0.233,Q2,80.0,"15720381, 15720373"
+Performance Evaluation Review,0.233,Q3,60.0,01635999
+Journal of Advanced Manufacturing Systems,0.232,Q3,60.0,"17936896, 02196867"
+SAE International Journal of Connected and Automated Vehicles,0.232,Q3,60.0,"25740741, 2574075X"
+Scientific Visualization,0.232,Q4,30.0,20793537
+Synthesis Lectures on Artificial Intelligence and Machine Learning,0.232,Q4,30.0,"19394616, 19394608"
+Design Issues,0.231,Q2,80.0,"15314790, 07479360"
+"Journal of Logic, Language and Information",0.231,Q2,80.0,09258531
+"Bulletin of the Transilvania University of Brasov, Series III: Mathematics and Computer Science",0.231,Q3,60.0,28102029
+International Biomechanics,0.231,Q3,60.0,23335432
+International Journal of Computational Materials Science and Engineering,0.231,Q3,60.0,"2047685X, 20476841"
+International Journal of Computing and Digital Systems,0.231,Q3,60.0,2210142X
+Journal of Information Processing Systems,0.231,Q3,60.0,"2092805X, 1976913X"
+Proceedings of the European Conference on Computing in Construction,0.231,-,30.0,26841150
+International Journal of Computer Networks and Applications,0.230,Q3,60.0,23950455
+Journal of Information Systems Engineering and Management,0.230,Q3,60.0,24684376
+Tongxin Xuebao/Journal on Communications,0.230,Q3,60.0,1000436X
+Electronic Letters on Computer Vision and Image Analysis,0.230,Q4,30.0,15775097
+Italian Journal of Computational Linguistics,0.229,Q2,80.0,24994553
+International Journal of Robotics and Automation,0.229,Q3,60.0,"19257090, 08268185"
+Annals of DAAAM and Proceedings of the International DAAAM Symposium,0.229,-,30.0,17269679
+"Conference Proceedings - IEEE International Conference on Systems, Man and Cybernetics",0.228,-,30.0,1062922X
+International Journal of Manufacturing Research,0.227,Q3,60.0,"17500591, 17500605"
+"International Journal of Technological Learning, Innovation and Development",0.227,Q3,60.0,"17531942, 17531950"
+Journal Europeen des Systemes Automatises,0.227,Q3,60.0,"21167087, 12696935"
+"International Conference on Ubiquitous and Future Networks, ICUFN",0.227,-,30.0,"21658536, 21658528"
+International Journal of Biometrics,0.226,Q3,60.0,"1755831X, 17558301"
+Internet Technology Letters,0.226,Q3,60.0,24761508
+International System on Chip Conference,0.226,-,30.0,"21641676, 21641706"
+Computer Assisted Methods in Engineering and Science,0.225,Q3,60.0,"22993649, 29565839"
+International Journal for Technology in Mathematics Education,0.225,Q3,60.0,"17442710, 20452519"
+International Journal of Technology and Human Interaction,0.225,Q4,30.0,"15483916, 15483908"
+"International Conference on Cloud Computing and Services Science, CLOSER - Proceedings",0.225,-,30.0,21845042
+"International Symposium on Wireless Personal Multimedia Communications, WPMC",0.225,-,30.0,13476890
+Proceedings - IEEE Computer Society's International Computer Software and Applications Conference,0.225,-,30.0,07303157
+Journal of Technology and Chinese Language Teaching,0.224,Q2,80.0,1949260X
+Journal of VLSI Circuits and Systems,0.224,Q3,60.0,25821458
+International Journal of Swarm Intelligence Research,0.224,Q4,30.0,"19479263, 19479271"
+International Journal of Computing,0.223,Q3,60.0,"17276209, 23125381"
+Jisuanji Yanjiu yu Fazhan/Computer Research and Development,0.223,Q3,60.0,10001239
+Pattern Recognition and Image Analysis,0.223,Q3,60.0,"15556212, 10546618"
+Recent Advances in Computer Science and Communications,0.223,Q3,60.0,"26662558, 26662566"
+"Art, Science, and Engineering of Programming",0.223,Q4,30.0,24737321
+Differencialnie Uravnenia i Protsesy Upravlenia,0.223,Q4,30.0,18172172
+Computational Linguistics in the Netherlands Journal,0.223,-,30.0,22114009
+Periodicals of Engineering and Natural Sciences,0.222,Q2,80.0,23034521
+Annual Review of CyberTherapy and Telemedicine,0.222,Q3,60.0,15548716
+Journal of Image and Graphics,0.222,Q3,60.0,10068961
+IS and T International Symposium on Electronic Imaging Science and Technology,0.222,-,30.0,24701173
+Leonardo,0.221,Q1,98.0,0024094X
+Texto Livre,0.221,Q2,80.0,19833652
+IET Computers and Digital Techniques,0.221,Q3,60.0,"1751861X, 17518601"
+International Journal of Communication Networks and Information Security,0.221,Q3,60.0,"20760930, 2073607X"
+International Journal of Nanoscience,0.221,Q3,60.0,"17935350, 0219581X"
+Journal of Bio-X Research,0.221,Q3,60.0,"25773585, 20965672"
+Journal of ICT Research and Applications,0.221,Q3,60.0,23375787
+International Journal of Intelligent Engineering Informatics,0.221,Q4,30.0,"17588715, 17588723"
+"Journal of Institute of Control, Robotics and Systems",0.221,Q4,30.0,19765622
+"IEEE/IFIP International Conference on VLSI and System-on-Chip, VLSI-SoC",0.221,-,30.0,"23248432, 23248440"
+Indonesian Journal of Electrical Engineering and Informatics,0.220,Q3,60.0,20893272
+Informatika i ee Primeneniya,0.220,Q3,60.0,"19922264, 23109912"
+International Journal of Unconventional Computing,0.220,Q3,60.0,"15487199, 15487202"
+International Journal on Communications Antenna and Propagation,0.220,Q3,60.0,"20395086, 25332929"
+Optical Memory and Neural Networks (Information Optics),0.220,Q3,60.0,"19347898, 1060992X"
+International Journal of Gaming and Computer-Mediated Simulations,0.220,Q4,30.0,"19423896, 19423888"
+Transactions on Combinatorics,0.220,Q4,30.0,"22518657, 22518665"
+"Proceedings of IEEE International Conference on Signal Processing,Computing and Control",0.220,-,30.0,26438615
+Proceedings of the International Conference Computational Linguistics in Bulgaria,0.220,-,30.0,"23675578, 23675675"
+Advances in Distributed Computing and Artificial Intelligence Journal,0.219,Q3,60.0,22552863
+Journal of Applied Data Sciences,0.219,Q3,60.0,27236471
+Journal of Communications Software and Systems,0.219,Q3,60.0,18456421
+Tehnicki Glasnik,0.219,Q3,60.0,"18485588, 18466168"
+Proceedings of the IEEE International Conference on Industrial Technology,0.219,-,30.0,"26432978, 26410184"
+Data Analysis and Knowledge Discovery,0.218,Q3,60.0,20963467
+International Game Theory Review,0.218,Q3,60.0,"02191989, 17936675"
+International Journal of Computer Applications in Technology,0.218,Q3,60.0,09528091
+Scalable Computing,0.218,Q3,60.0,18951767
+International Conference on ICT Convergence,0.218,-,30.0,"21621241, 21621233"
+"Proceedings of International Conference on Harmonics and Quality of Power, ICHQP",0.218,-,30.0,"21640610, 15406008"
+Journal of Sound and Music in Games,0.217,Q2,80.0,25783432
+Discrete and Continuous Models and Applied Computational Science,0.217,Q3,60.0,"26587149, 26584670"
+Electronic Journal of Knowledge Management,0.217,Q3,60.0,14794411
+International Journal of Electronics and Telecommunications,0.217,Q3,60.0,"20818491, 23001933"
+International Journal of Digital Crime and Forensics,0.217,Q4,30.0,"19416210, 19416229"
+International Journal of Applied Metaheuristic Computing,0.216,Q3,60.0,"19478283, 19478291"
+International Journal of Electronic Finance,0.216,Q3,60.0,"17460077, 17460069"
+Nonlinear Optics Quantum Optics,0.216,Q3,60.0,15430537
+International Journal of Computational Methods and Experimental Measurements,0.215,Q3,60.0,"20460554, 20460546"
+International Journal of eBusiness and eGovernment Studies,0.215,Q3,60.0,21460744
+International Journal of Data Warehousing and Mining,0.215,Q4,30.0,"15483924, 15483932"
+WSEAS Transactions on Systems and Control,0.215,Q4,30.0,"22242856, 19918763"
+"IEEE International Symposium on Broadband Multimedia Systems and Broadcasting, BMSB",0.215,-,30.0,"21555052, 21555044"
+International Journal of Fuzzy System Applications,0.214,Q3,60.0,"2156177X, 21561761"
+Lecture Notes in Information Systems and Organisation,0.214,Q3,60.0,"21954968, 21954976"
+Ledger,0.214,Q3,60.0,23795980
+International Journal of Ad Hoc and Ubiquitous Computing,0.214,Q4,30.0,"17438225, 17438233"
+International Journal of Distributed Systems and Technologies,0.214,Q4,30.0,"19473540, 19473532"
+International Journal of Grid and Utility Computing,0.214,Q4,30.0,"1741847X, 17418488"
+International Journal of Information System Modeling and Design,0.214,Q4,30.0,"19478186, 19478194"
+Journal of Flow Visualization and Image Processing,0.214,Q4,30.0,10653090
+"Iranian Conference on Machine Vision and Image Processing, MVIP",0.214,-,30.0,"21666776, 21666784"
+"International Computer Music Conference, ICMC Proceedings",0.213,-,30.0,22233881
+"Proceedings of the Annual Precise Time and Time Interval Systems and Applications Meeting, PTTI",0.213,-,30.0,23332085
+International Journal of Arts and Technology,0.212,Q1,98.0,"17548861, 17548853"
+Information-Wissenschaft und Praxis,0.212,Q3,60.0,"14344653, 16194292"
+Programming and Computer Software,0.212,Q4,30.0,"16083261, 03617688"
+IN4PL - Proceedings of the International Conference on Innovative Intelligent Industrial Production and Logistics,0.212,-,30.0,21849285
+"International Symposium on Medical Information and Communication Technology, ISMICT",0.211,-,30.0,"23268301, 2326828X"
+"Proceedings - Frontiers in Education Conference, FIE",0.211,-,30.0,15394565
+Proceedings of the International Conference on Education and Research in Computer Aided Architectural Design in Europe,0.211,-,30.0,26841843
+SiSal Journal,0.210,Q2,80.0,21853762
+IFIP Advances in Information and Communication Technology,0.210,Q3,60.0,"18684238, 1868422X"
+International Journal of Customer Relationship Marketing and Management,0.210,Q3,60.0,"19479247, 19479255"
+Journal of Computer Science and Technology (Argentina),0.210,Q4,30.0,"16666046, 16666038"
+IEEE Conference on Evolving and Adaptive Intelligent Systems,0.210,-,30.0,"23304863, 24734691"
+Ad-Hoc and Sensor Wireless Networks,0.209,Q3,60.0,"15519899, 15520633"
+Journal of Frontiers of Computer Science and Technology,0.209,Q4,30.0,16739418
+ICSE Workshop on Software Engineering for Adaptive and Self-Managing Systems,0.209,-,30.0,"21567891, 21572305"
+"IEEE International Conference on Control and Automation, ICCA",0.209,-,30.0,"19483457, 19483449"
+Proceedings - International Workshop on Content-Based Multimedia Indexing,0.209,-,30.0,19493991
+Transinformacao,0.208,Q2,80.0,01033786
+Canadian Conference on Electrical and Computer Engineering,0.208,-,30.0,08407789
+"Journal of Music, Technology and Education",0.207,Q2,80.0,"17527074, 17527066"
+Acta Cybernetica,0.207,Q3,60.0,0324721X
+IEICE Transactions on Communications,0.207,Q4,30.0,"09168516, 17451345"
+International Journal of Simulation and Process Modelling,0.207,Q4,30.0,"17402123, 17402131"
+Proceedings of the International Conference on Security and Cryptography,0.207,-,30.0,21847711
+Data and Metadata,0.206,Q3,60.0,29534917
+International Journal of Software Engineering and Knowledge Engineering,0.206,Q3,60.0,"17936403, 02181940"
+Indonesian Journal of Electrical Engineering and Computer Science,0.206,Q4,30.0,"25024760, 25024752"
+International Conference Image and Vision Computing New Zealand,0.206,-,30.0,"21512205, 21512191"
+Proceedings - Symposium on Computer Architecture and High Performance Computing,0.206,-,30.0,15506533
+IIUM Engineering Journal,0.205,Q3,60.0,"1511788X, 22897860"
+Business Informatics,0.205,Q4,30.0,"25878158, 2587814X"
+"ECTI Transactions on Electrical Engineering, Electronics, and Communications",0.205,Q4,30.0,16859545
+International Journal of Electronic Commerce Studies,0.205,Q4,30.0,"20739729, 24108588"
+Journal of Transportation Engineering and Information,0.205,Q4,30.0,16724747
+Conference Proceedings - IEEE SOUTHEASTCON,0.205,-,30.0,"1558058X, 10910050"
+"Proceedings of the European Conference on Synthetic Aperture Radar, EUSAR",0.205,-,30.0,21974403
+Control Engineering and Applied Informatics,0.204,Q4,30.0,14548658
+International Journal Of Advances In Signal And Image Sciences,0.204,Q4,30.0,24570370
+International Journal of Information and Computer Security,0.204,Q4,30.0,"17441765, 17441773"
+Revue Francaise de Photogrammetrie et de Teledetection,0.204,Q4,30.0,17689791
+"Conference of Open Innovation Association, FRUCT",0.204,-,30.0,23057254
+"Conference on Control and Fault-Tolerant Systems, SysTol",0.204,-,30.0,"21621195, 21621209"
+"International Conference on Computer Supported Education, CSEDU - Proceedings",0.204,-,30.0,21845026
+International Journal of Reliable and Quality E-Healthcare,0.203,Q3,60.0,"21609551, 2160956X"
+Observatorio,0.203,Q3,60.0,"16465954, 08748810"
+Pertanika Journal of Science and Technology,0.203,Q3,60.0,01287680
+System Research and Information Technologies,0.203,Q4,30.0,"16816048, 23088893"
+Advances in Technology Innovation,0.202,Q3,60.0,"25182994, 24150436"
+International Journal of Electronic Security and Digital Forensics,0.202,Q3,60.0,"17519128, 1751911X"
+EAI Endorsed Transactions on Energy Web,0.202,Q4,30.0,2032944X
+Information and Control,0.202,Q4,30.0,10020411
+International Journal of Electronics Letters,0.202,Q4,30.0,"21681732, 21681724"
+New Review of Information Networking,0.202,Q4,30.0,"13614576, 17407869"
+Proceedings of the National Academy of Sciences of Belarus. Physics and Mathematics Series,0.202,Q4,30.0,"15612430, 25242415"
+Journal of Digital Landscape Architecture,0.201,Q2,80.0,"2511624X, 23674253"
+Shenzhen Daxue Xuebao (Ligong Ban)/Journal of Shenzhen University Science and Engineering,0.201,Q3,60.0,10002618
+International Journal of Value Chain Management,0.201,Q4,30.0,"17415365, 17415357"
+Internetworking Indonesia Journal,0.201,Q4,30.0,19429703
+Proceedings of the IEEE International Conference on VLSI Design,0.201,-,30.0,10639667
+Proceedings of the International Conference on Parallel and Distributed Systems - ICPADS,0.201,-,30.0,15219097
+EDPACS,0.200,Q4,30.0,"19361009, 07366981"
+Journal of Computer Science,0.200,Q4,30.0,15493636
+"ASEE Annual Conference and Exposition, Conference Proceedings",0.200,-,30.0,21535965
+Proceedings of the International Conference on Computer-Aided Architectural Design Research in Asia,0.200,-,30.0,"27104265, 27104257"
+Journal on Interactive Systems,0.199,Q4,30.0,27637719
+Mechatronic Systems and Control,0.199,Q4,30.0,"25611771, 2561178X"
+Proceedings - Graphics Interface,0.199,-,30.0,07135424
+Journal of Language Modelling,0.198,Q2,80.0,"2299856X, 22998470"
+EAI Endorsed Transactions on Internet of Things,0.198,Q3,60.0,24141399
+"International Journal of Sensors, Wireless Communications and Control",0.198,Q4,30.0,"22103287, 22103279"
+International Journal of Virtual and Personal Learning Environments,0.198,Q4,30.0,"19478526, 19478518"
+Journal of Computational Finance,0.198,Q4,30.0,"14601559, 17552850"
+"SICE Journal of Control, Measurement, and System Integration",0.198,Q4,30.0,18849970
+Journal of Information Technology Management,0.197,Q3,60.0,"20085893, 24235059"
+Register: Jurnal Ilmiah Teknologi Sistem Informasi,0.197,Q3,60.0,"25023357, 25030477"
+International Journal of Ambient Computing and Intelligence,0.197,Q4,30.0,"19416245, 19416237"
+International Journal of Artificial Intelligence,0.197,Q4,30.0,09740635
+International Journal of Business Data Communications and Networking,0.197,Q4,30.0,"15480631, 1548064X"
+International Journal of Computational Biology and Drug Design,0.197,Q4,30.0,"17560764, 17560756"
+International Journal of Computer Information Systems and Industrial Management Applications,0.197,Q4,30.0,21507988
+Journal of Information Hiding and Multimedia Signal Processing,0.197,Q4,30.0,"20734239, 20734212"
+NTT Technical Review,0.197,Q4,30.0,13483447
+WSEAS Transactions on Information Science and Applications,0.197,Q4,30.0,"17900832, 22243402"
+Xi'an Dianzi Keji Daxue Xuebao/Journal of Xidian University,0.197,Q4,30.0,10012400
+"International Conference Recent Advances in Natural Language Processing, RANLP",0.197,-,30.0,13138502
+"Proceedings - Asia-Pacific Software Engineering Conference, APSEC",0.197,-,30.0,15301362
+International Journal on Informatics Visualization,0.196,Q3,60.0,25499904
+IEEE Electromagnetic Compatibility Magazine,0.196,Q4,30.0,"21622264, 21622272"
+Image Analysis and Stereology,0.196,Q4,30.0,"15803139, 18545165"
+International Journal of Computer Networks and Communications,0.196,Q4,30.0,"09752293, 09749322"
+Journal of Computational Technologies,0.196,Q4,30.0,"2313691X, 15607534"
+Neural Network World,0.196,Q4,30.0,"23364335, 12100552"
+EPiC Series in Computing,0.196,-,30.0,23987340
+"International Conference on Enterprise Information Systems, ICEIS - Proceedings",0.196,-,30.0,21844992
+Journal of Information Science Theory and Practice,0.195,Q3,60.0,"22879099, 22874577"
+ACM Communications in Computer Algebra,0.195,Q4,30.0,"19322232, 19322240"
+International Journal of Embedded Systems,0.195,Q4,30.0,"17411076, 17411068"
+Journal of Applied Mathematics and Informatics,0.195,Q4,30.0,"27341194, 22348417"
+National Journal of Antennas and Propagation,0.194,Q3,60.0,25822659
+"Brazilian Symposium on Computing System Engineering, SBESC",0.194,-,30.0,"23247886, 23247894"
+Proceedings of the International ISCRAM Conference,0.194,-,30.0,24113387
+International Journal of Mobile Computing and Multimedia Communications,0.193,Q4,30.0,"19379412, 19379404"
+Review of Computer Engineering Research,0.193,Q4,30.0,"24124281, 24109142"
+IEEE Workshop on Local and Metropolitan Area Networks,0.193,-,30.0,"19440375, 19440367"
+IEEE Annals of the History of Computing,0.192,Q3,60.0,10586180
+Ingenius,0.192,Q3,60.0,"1390860X, 1390650X"
+"Vestnik Tomskogo Gosudarstvennogo Universiteta - Upravlenie, Vychislitel'naya Tekhnika i Informatika",0.192,Q4,30.0,"23112085, 19988605"
+"International Symposium on Image and Signal Processing and Analysis, ISPA",0.192,-,30.0,"18455921, 18492266"
+Chinese Journal of Intelligent Science and Technology,0.191,Q4,30.0,20966652
+ECTI Transactions on Computer and Information Technology,0.191,Q4,30.0,22869131
+Journal of the Acoustical Society of Korea,0.191,Q4,30.0,"12254428, 22873775"
+South African Computer Journal,0.191,Q4,30.0,"10157999, 23137835"
+ACM International Conference Proceeding Series,0.191,-,30.0,-
+Advances in Knowledge Organization,0.191,-,30.0,09385495
+International Journal of Operations Research and Information Systems,0.190,Q4,30.0,"19479328, 19479336"
+Journal of Telecommunications and Information Technology,0.190,Q4,30.0,"15094553, 18998852"
+"Mekhatronika, Avtomatizatsiya, Upravlenie",0.190,Q4,30.0,"16846427, 26191253"
+"IEEE Advanced Information Technology, Electronic and Automation Control Conference (IAEAC)",0.190,-,30.0,26896621
+International Conference on Agents and Artificial Intelligence,0.190,-,30.0,"2184433X, 21843589"
+"Proceedings of Technical Papers - International Microsystems, Packaging, Assembly, and Circuits Technology Conference, IMPACT",0.190,-,30.0,"21505942, 21505934"
+Proceedings of the Information Visualization Conference,0.190,-,30.0,10939547
+Journal of Studies in Science and Engineering,0.189,Q3,60.0,2789634X
+Automatic Control and Computer Sciences,0.189,Q4,30.0,"1558108X, 01464116"
+International Journal of Reconfigurable and Embedded Systems,0.189,Q4,30.0,"20894864, 27222608"
+"Journal of Robotics, Networking and Artificial Life",0.189,Q4,30.0,"23526386, 24059021"
+Studies in Computational Intelligence,0.189,Q4,30.0,"18609503, 1860949X"
+Proceedings - International Conference on Computational Intelligence and Networks,0.189,-,30.0,23755822
+"IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences",0.188,Q3,60.0,"17451337, 09168508"
+Acta Scientiarum - Technology,0.188,Q4,30.0,"18078664, 18062563"
+Dongbei Daxue Xuebao/Journal of Northeastern University,0.188,Q4,30.0,10053026
+International Journal of Cloud Computing,0.188,Q4,30.0,"20439997, 20439989"
+International Journal of Intelligent Information Technologies,0.188,Q4,30.0,"15483665, 15483657"
+"Proceedings of IEEE/ACS International Conference on Computer Systems and Applications, AICCSA",0.188,-,30.0,"21615330, 21615322"
+"Proceedings of the IEEE International Conference on Software Engineering and Service Sciences, ICSESS",0.188,-,30.0,"23270586, 23270594"
+Encontros Bibli,0.187,Q3,60.0,15182924
+Chinese Journal of Liquid Crystals and Displays,0.187,Q4,30.0,10072780
+GIS-Zeitschrift fur Geoinformatik,0.187,Q4,30.0,"26984571, 18699391"
+International Journal of Computational Materials Science and Surface Engineering,0.187,Q4,30.0,"17533465, 17533473"
+Journal of Imaging Science and Technology,0.187,Q4,30.0,"19433522, 10623701"
+"International Conference on Virtual Rehabilitation, ICVR",0.187,-,30.0,23319569
+"Proceedings - International Conference on Advanced Computer Information Technologies, ACIT",0.187,-,30.0,"27705218, 27705226"
+InfoDesign,0.186,Q2,80.0,18085377
+Informatics and Automation,0.186,Q4,30.0,"27133206, 27133192"
+International Journal of Information Technology and Web Engineering,0.186,Q4,30.0,"15541053, 15541045"
+"International Conference on Systems, Signals, and Image Processing",0.186,-,30.0,"21578702, 21578672"
+Computer Science,0.185,Q3,60.0,"23007036, 15082806"
+TripleC,0.185,Q3,60.0,1726670X
+International Journal of Cognitive Informatics and Natural Intelligence,0.185,Q4,30.0,"15573958, 15573966"
+Journal of Information Processing,0.185,Q4,30.0,18826652
+Passer Journal of Basic and Applied Sciences,0.185,Q4,30.0,"27065944, 27065952"
+"International Conference on Harbour, Maritime and Multimodal Logistics Modelling and Simulation",0.185,-,30.0,27240339
+International Conference on Information Systems Security and Privacy,0.185,-,30.0,21844356
+"Proceedings of International Conference on Communications, Electromagnetic and Medical Applications, CEMA",0.185,-,30.0,13142100
+Journal of Zhengzhou University - Natural Science,0.184,Q3,60.0,16716841
+Science and Innovation,0.184,Q3,60.0,"24099066, 24134996"
+Biomedical Instrumentation and Technology,0.184,Q4,30.0,"08998205, 19435967"
+Fusion: Practice and Applications,0.184,Q4,30.0,"27700070, 26924048"
+Informatik-Spektrum,0.184,Q4,30.0,01706012
+International Journal of Knowledge and Systems Science,0.184,Q4,30.0,"19478216, 19478208"
+International Journal of Networking and Virtual Organisations,0.184,Q4,30.0,"14709503, 17415225"
+International Journal of Web Services Research,0.184,Q4,30.0,"15465004, 15457362"
+Progress in Computational Fluid Dynamics,0.184,Q4,30.0,"14684349, 17415233"
+Journal of Information and Communication Convergence Engineering,0.183,Q3,60.0,"22348883, 22348255"
+Huazhong Keji Daxue Xuebao (Ziran Kexue Ban)/Journal of Huazhong University of Science and Technology (Natural Science Edition),0.183,Q4,30.0,16714512
+ICIC Express Letters,0.183,Q4,30.0,1881803X
+Journal of Signal Processing,0.183,Q4,30.0,10030530
+Turkish Journal of Mathematics and Computer Science,0.183,Q4,30.0,21481830
+Vascular Cell,0.183,Q4,30.0,2045824X
+"International Conference on Control, Automation and Systems",0.183,-,30.0,15987833
+Communications in Computer and Information Science,0.182,Q4,30.0,"18650937, 18650929"
+International Journal of Reasoning-based Intelligent Systems,0.182,Q4,30.0,"17550556, 17550564"
+Journal of Advances in Information Fusion,0.182,Q4,30.0,15576418
+"Proceedings of the Annual Conference of the Prognostics and Health Management Society, PHM",0.182,-,30.0,23250178
+Digital Studies/ Le Champ Numerique,0.181,Q2,80.0,19183666
+Language Documentation and Conservation,0.181,Q2,80.0,19345275
+Intelligent Systems Reference Library,0.181,Q3,60.0,"18684394, 18684408"
+Jisuanji Gongcheng/Computer Engineering,0.181,Q3,60.0,10003428
+Science Talks,0.181,Q4,30.0,27725693
+"International Conference on Internet of Things, Big Data and Security, IoTBDS - Proceedings",0.181,-,30.0,21844976
+"Proceedings of the International Joint Conference on Computer Vision, Imaging and Computer Graphics Theory and Applications",0.181,-,30.0,"21845921, 21844321"
+AIUB Journal of Science and Engineering,0.180,Q4,30.0,"16083679, 25204890"
+Journal of Electrical Systems,0.180,Q4,30.0,11125209
+"Journal of Verification, Validation and Uncertainty Quantification",0.180,Q4,30.0,"23772158, 23772166"
+Open Bioinformatics Journal,0.180,Q4,30.0,18750362
+International Conference on Advanced Technologies for Communications,0.180,-,30.0,"21621020, 21621039"
+Journal of Educational Media and Library Sciences,0.179,Q2,80.0,1013090X
+Journal of Telecommunications and the Digital Economy,0.179,Q3,60.0,22031693
+International Journal of Grid and High Performance Computing,0.179,Q4,30.0,"19380259, 19380267"
+Journal of Computational Methods in Sciences and Engineering,0.179,Q4,30.0,14727978
+Synthesis Lectures on Computer Architecture,0.179,Q4,30.0,"19353235, 19353243"
+WSEAS Transactions on Systems,0.179,Q4,30.0,11092777
+Computacion y Sistemas,0.178,Q4,30.0,14055546
+Computer Research and Modeling,0.178,Q4,30.0,"20767633, 20776853"
+International Journal of Internet Technology and Secured Transactions,0.178,Q4,30.0,"17485703, 1748569X"
+Menoufia Journal of Electronic Engineering Research,0.178,Q4,30.0,"26823535, 16871189"
+Scientific and Technical Information Processing,0.178,Q4,30.0,"01476882, 19348118"
+Space-Integrated-Ground Information Networks,0.178,Q4,30.0,20968930
+Supercomputing Frontiers and Innovations,0.178,Q4,30.0,"23138734, 24096008"
+International Journal of Software Innovation,0.177,Q3,60.0,"21667179, 21667160"
+Frontiers in Artificial Intelligence and Applications,0.177,Q4,30.0,"09226389, 18798314"
+International Journal of Intelligent Systems Technologies and Applications,0.177,Q4,30.0,"17408865, 17408873"
+"International Journal on Advanced Science, Engineering and Information Technology",0.177,Q4,30.0,"20885334, 24606952"
+SAE International Journal of Transportation Cybersecurity and Privacy,0.177,Q4,30.0,"25721054, 25721046"
+"IEEE Region 10 Annual International Conference, Proceedings/TENCON",0.177,-,30.0,"21593450, 21593442"
+"International Conference on Information and Communication Technologies for Ageing Well and e-Health, ICT4AWE - Proceedings",0.177,-,30.0,21844984
+"International Symposium on Advanced Networks and Telecommunication Systems, ANTS",0.177,-,30.0,21531684
+"Proceedings of the European Conference on e-Learning, ECEL",0.177,-,30.0,"20488637, 20488645"
+ASEAN Engineering Journal,0.176,Q4,30.0,25869159
+Journal of Computing Science and Engineering,0.176,Q4,30.0,"19764677, 20938020"
+"International Conference on Electrical Engineering, Computer Science and Informatics (EECSI)",0.176,-,30.0,2407439X
+Journal of Advanced Manufacturing Technology,0.175,Q3,60.0,"19853157, 22898107"
+Journal of Contemporary Eastern Asia,0.175,Q3,60.0,23839449
+International Conference on Pattern Recognition Applications and Methods,0.175,-,30.0,21844313
+WIT Transactions on the Built Environment,0.174,Q2,80.0,"17464498, 17433509"
+Ibersid,0.174,Q3,60.0,"2174081X, 18880967"
+CAAI Transactions on Intelligent Systems,0.174,Q4,30.0,16734785
+International Journal of Informatics and Communication Technology,0.174,Q4,30.0,"22528776, 27222616"
+International Journal of Mechatronics and Applied Mechanics,0.174,Q4,30.0,"25594397, 25596497"
+Journal of Information Systems and Telecommunication,0.174,Q4,30.0,"23221437, 23452773"
+International Journal of Semantic Computing,0.173,Q2,80.0,"17937108, 1793351X"
+Perspectivas em Ciencia da Informacao,0.173,Q2,80.0,"19815344, 14139936"
+International Journal of Public Administration in the Digital Age,0.173,Q3,60.0,"23344539, 23344520"
+Journal of Graphics,0.173,Q3,60.0,2095302X
+International Journal of Vehicle Information and Communication Systems,0.173,Q4,30.0,"17418208, 14710242"
+Journal of Innovative Image Processing,0.173,Q4,30.0,25824252
+Parallel Processing Letters,0.173,Q4,30.0,"1793642X, 01296264"
+Serbian Journal of Electrical Engineering,0.173,Q4,30.0,"14514869, 22177183"
+Eurographics Workshop on Visual Computing for Biomedicine,0.173,-,30.0,"20705786, 20705778"
+"IEEE International Symposium on Precision Clock Synchronization for Measurement, Control, and Communication, ISPCS",0.173,-,30.0,"19490313, 19490305"
+"Revista de Direito, Estado e Telecomunicacoes",0.172,Q3,60.0,"19849729, 19848161"
+Journal of Network Intelligence,0.172,Q4,30.0,24148105
+Machinery and Energetics,0.172,Q4,30.0,"26631334, 26631342"
+Olympiads in Informatics,0.172,-,30.0,18227732
+"Proceedings - International Conference on Developments in eSystems Engineering, DeSE",0.172,-,30.0,21611343
+"Proceedings - International Conference on Knowledge and Systems Engineering, KSE",0.172,-,30.0,26944804
+"Proceedings of the IEEE National Aerospace Electronics Conference, NAECON",0.172,-,30.0,"23792027, 05473578"
+International Journal of Security and Networks,0.171,Q4,30.0,"17478413, 17478405"
+International Journal of Services Operations and Informatics,0.171,Q4,30.0,"1741539X, 17415403"
+Journal of Applied Engineering and Technological Science,0.171,Q4,30.0,"27156087, 27156079"
+"KazNU Bulletin. Mathematics, Mechanics, Computer Science Series",0.171,Q4,30.0,"15630277, 26174871"
+"Radioelektronika, Nanosistemy, Informacionnye Tehnologii",0.171,Q4,30.0,"22183000, 24141267"
+Linguistica,0.170,Q2,80.0,"2079312X, 11320214"
+Advances in Artificial Intelligence and Machine Learning,0.170,Q4,30.0,25829793
+Advances in Computational Design,0.170,Q4,30.0,"23838477, 24660523"
+International Journal of High Performance Systems Architecture,0.170,Q4,30.0,"17516536, 17516528"
+NED University Journal of Research,0.170,Q4,30.0,"27065758, 2304716X"
+IFIP Wireless Days,0.170,-,30.0,"2156972X, 21569711"
+"International Conference on Emerging Trends in Engineering and Technology, ICETET",0.170,-,30.0,"21570485, 21570477"
+Proceedings of the European Conference on Games-based Learning,0.170,-,30.0,20490992
+International Journal of Advanced Intelligence Paradigms,0.169,Q4,30.0,"17550386, 17550394"
+Mathematics and Visualization,0.169,Q4,30.0,"2197666X, 16123786"
+Logos (The Netherlands),0.168,Q1,98.0,"18784712, 09579656"
+Journal of Information and Organizational Sciences,0.168,Q3,60.0,"18463312, 18469418"
+Enterprise Modelling and Information Systems Architectures,0.168,Q4,30.0,18663621
+International Journal of Computing Science and Mathematics,0.168,Q4,30.0,"17525063, 17525055"
+IPSJ Transactions on Bioinformatics,0.168,Q4,30.0,18826679
+Journal of Theoretical and Applied Information Technology,0.168,Q4,30.0,"18173195, 19928645"
+Lujun Gongcheng Daxue Xuebao/Journal of Army Engineering University of PLA,0.168,Q4,30.0,20970730
+"Proceedings of the International Multi-Conference on Society, Cybernetics and Informatics, IMSCI",0.168,-,30.0,2831722X
+AUT Journal of Mathematics and Computing,0.167,Q4,30.0,"27832449, 27832287"
+Revista Digital de Biblioteconomia e Ciencia da Informacao,0.166,Q3,60.0,1678765X
+International Journal of Advances in Applied Sciences,0.166,Q4,30.0,"27222594, 22528814"
+Lecture Notes in Networks and Systems,0.166,Q4,30.0,"23673370, 23673389"
+CEUR Workshop Proceedings,0.166,-,30.0,16130073
+Archives of Design Research,0.165,Q1,98.0,"22882987, 12268046"
+Multiagent and Grid Systems,0.165,Q4,30.0,"15741702, 18759076"
+Chinese Journal of Network and Information Security,0.164,Q4,30.0,2096109X
+Creative Mathematics and Informatics,0.164,Q4,30.0,"1843441X, 1584286X"
+International Journals of e-Collaboration,0.164,Q4,30.0,"15483681, 15483673"
+Computing in Cardiology,0.164,-,30.0,"2325887X, 23258861"
+"Proceedings of the Workshop on Enabling Technologies: Infrastructure for Collaborative Enterprises, WET ICE",0.164,-,30.0,15244547
+"Smart Innovation, Systems and Technologies",0.163,Q4,30.0,"21903026, 21903018"
+Challenges to National Defence in Contemporary Geopolitical Situation,0.163,-,30.0,25388959
+IEIE Transactions on Smart Processing and Computing,0.162,Q4,30.0,22875255
+International Journal of Embedded and Real-Time Communication Systems,0.162,Q4,30.0,"19473184, 19473176"
+International Journal of Information and Decision Sciences,0.162,Q4,30.0,"17567017, 17567025"
+International Journal of Electronic Governance,0.161,Q3,60.0,"17427517, 17427509"
+"ICIC Express Letters, Part B: Applications",0.161,Q4,30.0,21852766
+"International Journal of Data Mining, Modelling and Management",0.161,Q4,30.0,"17591163, 17591171"
+IPSJ Transactions on System LSI Design Methodology,0.161,Q4,30.0,18826687
+"Journal of Automation, Mobile Robotics and Intelligent Systems",0.161,Q4,30.0,"20802145, 18978649"
+Mathematical and Computational Forestry and Natural-Resource Sciences,0.160,Q4,30.0,19467664
+Transactions on Fuzzy Sets and Systems,0.160,Q4,30.0,28210131
+Annales Mathematicae et Informaticae,0.159,Q4,30.0,"17875021, 17876117"
+Chongqing Daxue Xuebao/Journal of Chongqing University,0.159,Q4,30.0,1000582X
+CLEI Eletronic Journal (CLEIej),0.159,Q4,30.0,07175000
+Shuju Caiji Yu Chuli/Journal of Data Acquisition and Processing,0.159,Q4,30.0,10049037
+Ubiquitous Learning,0.159,Q4,30.0,18359795
+International Conference on Transparent Optical Networks,0.159,-,30.0,21627339
+Proceedings of the Asian Technology Conference in Mathematics,0.159,-,30.0,19404204
+International Journal of Geospatial and Environmental Research,0.158,Q4,30.0,23322047
+ISeCure,0.158,Q4,30.0,"20083076, 20082045"
+"Lecture Notes of the Institute for Computer Sciences, Social-Informatics and Telecommunications Engineering, LNICST",0.158,Q4,30.0,"1867822X, 18678211"
+Springer Proceedings in Complexity,0.158,Q4,30.0,"22138692, 22138684"
+"Eurographics Workshop on 3D Object Retrieval, EG 3DOR",0.158,-,30.0,"19970471, 19970463"
+Proceedings - International Conference on Informatics and Computational Sciences,0.158,-,30.0,"27677087, 27677079"
+Beijing Youdian Xueyuan Xuebao/Journal of Beijing University of Posts And Telecommunications,0.157,Q4,30.0,10005145
+International Journal of Mathematics and Physics,0.157,Q4,30.0,"24095508, 22187987"
+Journal of Microelectronics and Electronic Packaging,0.157,Q4,30.0,"15514897, 15558037"
+"Conference on Millimeter-Wave and Terahertz Technologies, MMWaTT",0.157,-,30.0,"21570965, 21570973"
+"Eurographics Italian Chapter Proceedings - Smart Tools and Applications in Graphics, STAG",0.157,-,30.0,26174855
+Final Program and Proceedings - IS and T/SID Color Imaging Conference,0.157,-,30.0,"21692629, 21669635"
+Proceedings of the International Conference on Electrical Engineering and Informatics,0.157,-,30.0,21556830
+Computer Fraud and Security,0.156,Q3,60.0,"13613723, 18737056"
+In Silico Biology,0.156,Q4,30.0,"13866338, 14343207"
+Journal of Cybersecurity and Information Management,0.156,Q4,30.0,"27697851, 26906775"
+Yingyong Kexue Xuebao/Journal of Applied Sciences,0.156,Q4,30.0,02558297
+"Proceedings - International Symposium on Parallel Architectures, Algorithms and Programming, PAAP",0.156,-,30.0,"21683042, 21683034"
+"Proceedings of the International Conference on Software Engineering and Knowledge Engineering, SEKE",0.156,-,30.0,"23259086, 23259000"
+Jusletter IT,0.155,Q3,60.0,1664848X
+Complex Systems,0.155,Q4,30.0,08912513
+El-Cezeri Journal of Science and Engineering,0.155,Q4,30.0,21483736
+International Journal of System of Systems Engineering,0.155,Q4,30.0,"1748068X, 17480671"
+Jordan Journal of Electrical Engineering,0.155,Q4,30.0,"24099619, 24099600"
+Journal of Cellular Automata,0.155,Q4,30.0,"15575977, 15575969"
+Journal of Cyber Security,0.155,Q4,30.0,20961146
+"Scientific and Technical Journal of Information Technologies, Mechanics and Optics",0.155,Q4,30.0,"22261494, 25000373"
+"International Conference on Research and Innovation in Information Systems, ICRIIS",0.155,-,30.0,"23248149, 23248157"
+"Proceedings of International Conference of the Learning Sciences, ICLS",0.155,-,30.0,18149316
+Informatsionno-Upravliaiushchie Sistemy,0.154,Q4,30.0,"25418610, 16848853"
+International Journal of Computer Aided Engineering and Technology,0.154,Q4,30.0,"17572665, 17572657"
+"International Conference on Geographical Information Systems Theory, Applications and Management, GISTAM - Proceedings",0.154,-,30.0,2184500X
+Proceedings of the International Ship Control Systems Symposium,0.154,-,30.0,26318741
+Journal of Cognitive Science,0.153,Q3,60.0,"15982327, 19766939"
+Biometric Technology Today,0.153,Q4,30.0,"18731880, 09694765"
+"International Journal of Services, Technology and Management",0.153,Q4,30.0,"14606720, 1741525X"
+International Journal of Wireless and Mobile Computing,0.153,Q4,30.0,"17411092, 17411084"
+Jisuanji Fuzhu Sheji Yu Tuxingxue Xuebao/Journal of Computer-Aided Design and Computer Graphics,0.153,Q4,30.0,10039775
+Moshi Shibie yu Rengong Zhineng/Pattern Recognition and Artificial Intelligence,0.153,Q4,30.0,10036059
+ICSBT International Conference on Smart Business Technologies,0.153,-,30.0,2184772X
+Proceedings - RoEduNet IEEE International Conference,0.153,-,30.0,20681038
+Journal of Open Humanities Data,0.152,Q3,60.0,2059481X
+AIS Transactions on Replication Research,0.152,Q4,30.0,24733458
+"Journal of Mechatronics, Electrical Power, and Vehicular Technology",0.152,Q4,30.0,"20886985, 20873379"
+Medijske Studije,0.152,Q4,30.0,"18479758, 18485030"
+Proceedings of the Pakistan Academy of Sciences: Part A,0.152,Q4,30.0,"25184245, 25184253"
+International Conference on Embedded Wireless Systems and Networks,0.152,-,30.0,25622331
+"Software Engineering Education Conference, Proceedings",0.152,-,30.0,10930175
+"AAPP Atti della Accademia Peloritana dei Pericolanti, Classe di Scienze Fisiche, Matematiche e Naturali",0.151,Q3,60.0,"03650359, 18251242"
+Experience of Designing and Application of CAD Systems in Microelectronics,0.151,Q4,30.0,25727591
+Brazilian Symposium of Computer Graphic and Image Processing,0.151,-,30.0,15301834
+"European Conference on Information Warfare and Security, ECCWS",0.151,-,30.0,"20488602, 20488610"
+"International Conference on Advanced Robotics and Intelligent Systems, ARIS",0.151,-,30.0,"25726919, 23743255"
+"International Conference on Web Information Systems and Technologies, WEBIST - Proceedings",0.151,-,30.0,21843252
+AUT Journal of Electrical Engineering,0.150,Q4,30.0,"25882910, 25882929"
+Journal of Design Research,0.150,Q4,30.0,"17483050, 15691551"
+Journal of Educational Multimedia and Hypermedia,0.150,Q4,30.0,"19435916, 10558896"
+Studies in Big Data,0.150,Q4,30.0,"21976511, 21976503"
+IEEE AFRICON Conference,0.150,-,30.0,"21530033, 21530025"
+"International Conference on Space Science and Communication, IconSpace",0.150,-,30.0,"21654301, 2165431X"
+"International Workshop on System Level Interconnect Prediction, SLIP",0.150,-,30.0,15445631
+Proceedings of the International Conference on Virtual Learning,0.150,-,30.0,"18448933, 29719291"
+"Body, Space and Technology",0.149,Q3,60.0,14709120
+"Aibi, Revista de Investigacion Administracion e Ingenierias",0.149,Q4,30.0,2346030X
+Innovative Biosystems and Bioengineering,0.149,Q4,30.0,2616177X
+International Journal of Information Technology and Management,0.149,Q4,30.0,"14614111, 17415179"
+Proceedings of the I-ESA Conferences,0.149,Q4,30.0,"21992533, 21992541"
+Revista Colombiana de Computacion,0.149,Q4,30.0,"16572831, 25392115"
+Video-Assisted Thoracic Surgery,0.149,Q4,30.0,25190792
+"Computer-Supported Collaborative Learning Conference, CSCL",0.149,-,30.0,15734552
+Proceedings of the IEEE International Conference Image Information Processing,0.149,-,30.0,2640074X
+"Proceedings of the International Conference on Informatics in Control, Automation and Robotics",0.149,-,30.0,21842809
+Applications of Modelling and Simulation,0.148,Q4,30.0,26008084
+"Iberian Conference on Information Systems and Technologies, CISTI",0.148,-,30.0,"21660735, 21660727"
+"Tekst, Kniga, Knigoizdaniye",0.147,Q2,80.0,"23062061, 23113774"
+EAI/Springer Innovations in Communication and Computing,0.147,Q4,30.0,"25228595, 25228609"
+International Journal of Computer Theory and Engineering,0.147,Q4,30.0,17938201
+Journal of Machine and Computing,0.147,Q4,30.0,"27887669, 27891801"
+"Brazilian Symposium on Games and Digital Entertainment, SBGAMES",0.147,-,30.0,"21596662, 21596654"
+International Journal of Technologies in Learning,0.146,Q4,30.0,"23272686, 23270144"
+SAE International Journal of Advances and Current Practices in Mobility,0.146,Q4,30.0,26419645
+Abel Symposia,0.146,-,30.0,"21932808, 21978549"
+"IEEE Symposium on Wireless Technology and Applications, ISWTA",0.146,-,30.0,"23247843, 23247851"
+International Conference on Wavelet Analysis and Pattern Recognition,0.146,-,30.0,"21585709, 21585695"
+"National Conference with International Participation, TELECOM",0.146,-,30.0,"28375246, 28375238"
+Proceedings of International Conference on Artificial Life and Robotics,0.146,-,30.0,24359157
+Proceedings of SPIE - The International Society for Optical Engineering,0.146,-,30.0,"1996756X, 0277786X"
+"Wave Electronics and its Application in Information and Telecommunication Systems, WECONF - Conference Proceedings",0.146,-,30.0,"27693538, 2769352X"
+Temes de Disseny,0.145,Q2,80.0,"26049155, 26046032"
+International Journal of Cyber Warfare and Terrorism,0.145,Q4,30.0,"19473435, 19473443"
+International Journal of Mechatronics and Automation,0.145,Q4,30.0,"20451059, 20451067"
+"International Conference on Sport Sciences Research and Technology Support, icSPORTS - Proceedings",0.145,-,30.0,21843201
+"International Joint Conference on Knowledge Discovery, Knowledge Engineering and Knowledge Management, IC3K - Proceedings",0.145,-,30.0,21843228
+International Workshop on Visual Analytics,0.145,-,30.0,26644487
+Asia-Pacific Journal of Information Technology and Multimedia,0.144,Q4,30.0,22892192
+International Journal of Intelligent Information and Database Systems,0.144,Q4,30.0,"17515866, 17515858"
+"IEEE Conference on Antenna Measurements and Applications, CAMA",0.144,-,30.0,"26436795, 24741760"
+Grafica,0.143,Q2,80.0,"23397500, 20149298"
+Electronic Communications of the EASST,0.143,Q4,30.0,18632122
+International Journal for Engineering Modelling,0.143,Q4,30.0,"13301365, 18498671"
+International Journal of Internet Protocol Technology,0.143,Q4,30.0,"17438209, 17438217"
+International Journal of Reconfigurable Computing,0.143,Q4,30.0,"16877209, 16877195"
+Turkish Computational and Theoretical Chemistry,0.143,Q4,30.0,"26023237, 25871722"
+International Conference on Operations Research and Enterprise Systems,0.143,-,30.0,21844372
+"Proceedings - IEEE International Symposium on Rapid System Prototyping, RSP",0.143,-,30.0,"21505519, 21505500"
+"Proceedings of the International Conference on Anti-Counterfeiting, Security and Identification, ASID",0.143,-,30.0,"21635048, 21635056"
+ITE Transactions on Media Technology and Applications,0.142,Q3,60.0,21867364
+Chinese Journal on Internet of Things,0.142,Q4,30.0,20963750
+IEEE Electrical Design of Advanced Packaging and Systems Symposium,0.142,-,30.0,"21511225, 21511233"
+"Proceedings - International Conference of the Chilean Computer Science Society, SCCC",0.142,-,30.0,15224902
+"Proceedings of the International Conference on Simulation and Modeling Methodologies, Technologies and Applications",0.142,-,30.0,21842841
+Sistemi Intelligenti,0.141,Q3,60.0,"11209550, 19738226"
+International Journal of Systematic Innovation,0.141,Q4,30.0,"20778767, 20777973"
+Revista Cientifica de Sistemas e Informatica,0.141,Q4,30.0,2709992X
+International Conference on Model-Driven Engineering and Software Development,0.141,-,30.0,21844348
+"Proceedings of World Multi-Conference on Systemics, Cybernetics and Informatics, WMSCI",0.141,-,30.0,27710947
+Journal of Geomatics,0.140,Q4,30.0,20956045
+WSEAS Transactions on Computer Research,0.140,Q4,30.0,19918755
+"Proceedings - International Conference on Education and Technology, ICET",0.140,-,30.0,27704807
+"Proceedings - International Conference on Field-Programmable Technology, ICFPT",0.140,-,30.0,"28370430, 28370449"
+Advances in Parallel Computing,0.139,Q4,30.0,"1879808X, 09275452"
+Bulletin of TICMI,0.139,Q4,30.0,15120082
+Computer Science Journal of Moldova,0.139,Q4,30.0,15614042
+Electronics and Communications in Japan,0.139,Q4,30.0,"19429541, 19429533"
+International Journal of Autonomous and Adaptive Communications Systems,0.139,Q4,30.0,"17548640, 17548632"
+International Journal of Web Engineering and Technology,0.139,Q4,30.0,"17419212, 14761289"
+Network Security,0.139,Q4,30.0,"18729371, 13534858"
+"Lecture Notes in Informatics (LNI), Proceedings - Series of the Gesellschaft fur Informatik (GI)",0.139,-,30.0,"29447682, 16175468"
+International Journal of Computational Geometry and Applications,0.138,Q4,30.0,"17936357, 02181959"
+International Conference on ICT and Knowledge Engineering,0.138,-,30.0,"2157099X, 21570981"
+Journal of Mathematics and the Arts,0.137,Q2,80.0,"17513480, 17513472"
+International Journal of Manufacturing Technology and Management,0.137,Q4,30.0,"13682148, 17415195"
+Visible Language,0.137,Q4,30.0,"00222224, 26915529"
+Proceedings of the Australasian Language Technology Workshop,0.137,-,30.0,18347037
+Artifact,0.136,Q2,80.0,"17493471, 17493463"
+International Journal of Applied Systemic Studies,0.136,Q4,30.0,"17510597, 17510589"
+International Journal of Information and Communication Technology,0.136,Q4,30.0,"14666642, 17418070"
+Journal of Cryptologic Research,0.136,Q4,30.0,20957025
+Journal of Korean Institute of Communications and Information Sciences,0.136,Q4,30.0,"12264717, 22873880"
+Web Intelligence,0.136,Q4,30.0,"24056464, 24056456"
+Proceedings of International Conference on Computational Thinking Education,0.136,-,30.0,26645661
+Information Services and Use,0.135,Q4,30.0,"01675265, 18758789"
+International Journal of Computational Economics and Econometrics,0.135,Q4,30.0,"17571170, 17571189"
+Prikladnaya Diskretnaya Matematika,0.135,Q4,30.0,"23112263, 20710410"
+"International Conference on Software, Knowledge Information, Industrial Management and Applications, SKIMA",0.135,-,30.0,"25733214, 2373082X"
+International Symposium on Advances in Computational Heat Transfer,0.135,-,30.0,25785486
+"Proceedings IMCIC - International Multi-Conference on Complexity, Informatics and Cybernetics",0.135,-,30.0,"27715914, 27715922"
+Proceedings of the Sound and Music Computing Conferences,0.135,-,30.0,25183672
+International Journal of Automation and Smart Technology,0.134,Q4,30.0,22239766
+International Journal of Computers and their Applications,0.134,Q4,30.0,10765204
+"Proceedings - International Symposium on Discharges and Electrical Insulation in Vacuum, ISDEIV",0.134,-,30.0,10932941
+Foundations and Trends in Electronic Design Automation,0.133,Q4,30.0,"15513947, 15513939"
+International Journal of Mobile Communications,0.133,Q4,30.0,"17415217, 1470949X"
+Journal of Information Technology Education: Discussion Cases,0.133,Q4,30.0,"21661324, 21661316"
+Lecture Notes in Computational Vision and Biomechanics,0.133,Q4,30.0,"22129391, 22129413"
+Scientific Annals of Computer Science,0.133,Q4,30.0,"18438121, 22482695"
+"Synthesis Lectures on Image, Video, and Multimedia Processing",0.133,Q4,30.0,15598136
+Synthesis Lectures on Signal Processing,0.133,Q4,30.0,19321236
+CBMS-NSF Regional Conference Series in Applied Mathematics,0.133,-,30.0,01639439
+Proceedings of the AAAI Conference on Artificial Intelligence,0.133,-,30.0,"21595399, 23743468"
+"Studies in Classification, Data Analysis, and Knowledge Organization",0.132,Q4,30.0,"21983321, 14318814"
+Building Simulation Conference Proceedings,0.132,-,30.0,25222708
+SESAR Innovation Days,0.132,-,30.0,07701268
+Bulletin of the Technical Committee on Learning Technology,0.131,Q4,30.0,23060212
+International Journal of Critical Computer-Based Systems,0.131,Q4,30.0,"17578779, 17578787"
+"International Journal of Metadata, Semantics and Ontologies",0.131,Q4,30.0,"1744263X, 17442621"
+Komp'juternaja Lingvistika i Intellektual'nye Tehnologii,0.131,-,30.0,"20757182, 22217932"
+Proceedings of International Conference on ASIC,0.131,-,30.0,"2162755X, 21627541"
+Austral Comunicacion,0.130,Q3,60.0,"23139129, 23139137"
+International Journal of Data Mining and Bioinformatics,0.130,Q4,30.0,"17485681, 17485673"
+International Journal of Open Source Software and Processes,0.130,Q4,30.0,"19423934, 19423926"
+Pakistan Journal of Information Management and Libraries,0.130,Q4,30.0,24097462
+Telfor Journal,0.130,Q4,30.0,"23349905, 18213251"
+"Australasian Conference on Robotics and Automation, ACRA",0.130,-,30.0,14482053
+"International Conference of Control, Dynamic Systems, and Robotics",0.130,-,30.0,23685433
+International Conference on Geoinformatics,0.130,-,30.0,"2161024X, 21610258"
+International Joint Conference on Computational Intelligence,0.130,-,30.0,21843236
+Advances in Transdisciplinary Engineering,0.129,Q4,30.0,"23527528, 2352751X"
+Journal of Engineering and Technology for Industrial Applications,0.129,Q4,30.0,24470228
+Journal of Information Systems Security,0.129,Q4,30.0,"15510123, 15510808"
+Reliable Computing,0.129,Q4,30.0,"13853139, 15731340"
+"International Conference on Complexity, Future Information Systems and Risk, COMPLEXIS - Proceedings",0.129,-,30.0,21845034
+"International Conference on Computer-Human Interaction Research and Applications, CHIRA - Proceedings",0.129,-,30.0,21843244
+International Symposium on Graphic Engineering and Design,0.129,-,30.0,"26201437, 26201429"
+International Workshop on Cellular Nanoscale Networks and their Applications,0.129,-,30.0,"21650179, 21650160"
+Applied Sciences,0.128,Q4,30.0,14545101
+"International Journal on E-Learning: Corporate, Government, Healthcare, and Higher Education",0.128,Q4,30.0,"15372456, 19435932"
+Proceedings of the International Conference on Electronic Business (ICEB),0.128,-,30.0,16830040
+Journal of Science and Technology of the Arts,0.127,Q2,80.0,"16469798, 21830088"
+AtoZ,0.127,Q4,30.0,2237826X
+Actes (IFSTTAR),0.127,-,30.0,2115418X
+"IEEE International Symposium for Design and Technology of Electronics Packages, SIITME - Conference Proceedings",0.127,-,30.0,"26427036, 2641287X"
+Technoetic Arts,0.126,Q2,80.0,"1477965X, 17589533"
+Environmental Science and Engineering,0.126,Q4,30.0,"18635520, 18635539"
+European Biomass Conference and Exhibition Proceedings,0.126,-,30.0,22825819
+"International Conference on Smart Cities and Green ICT Systems, SMARTGREENS - Proceedings",0.126,-,30.0,21844968
+Astrophysics and Space Science Proceedings,0.125,Q4,30.0,"15706605, 15706591"
+Computers in Libraries,0.125,Q4,30.0,10417915
+"Groups, Complexity, Cryptology",0.125,Q4,30.0,"18696104, 18671144"
+High Technology Letters,0.125,Q4,30.0,10066748
+International Journal of High Speed Electronics and Systems,0.125,Q4,30.0,"17936438, 01291564"
+International Journal of Internet Manufacturing and Services,0.125,Q4,30.0,"17516056, 17516048"
+"Proceedings of the IEEE International Conference on Intelligent Data Acquisition and Advanced Computing Systems: Technology and Applications, IDAACS",0.125,-,30.0,"27704262, 27704254"
+TAL Traitement Automatique des Langues,0.124,Q3,60.0,"12489433, 19650906"
+Journal of WSCG,0.124,Q4,30.0,"12136964, 12136972"
+Machine Graphics and Vision,0.124,Q4,30.0,"2720250X, 12300535"
+"Proceedings ICSIT, International Conference on Society and Information Technologies",0.124,-,30.0,"27716368, 27716376"
+Proceedings of the International Conference on Dublin Core and Metadata Applications,0.124,-,30.0,"19391358, 19391366"
+Stuttgarter Symposium fur Produktentwicklung,0.124,-,30.0,23644885
+UNCECOMP Proceedings,0.124,-,30.0,26233339
+Lecture Notes on Data Engineering and Communications Technologies,0.123,Q4,30.0,"23674512, 23674520"
+Transactions of the Japanese Society for Artificial Intelligence,0.123,Q4,30.0,13460714
+"Colloquium in Information Science and Technology, CIST",0.123,-,30.0,"2327185X, 23271884"
+"Moratuwa Engineering Research Conference, MERCon",0.123,-,30.0,"2691364X, 28315537"
+Horizon. Studies in Phenomenology,0.122,Q3,60.0,"23116986, 22265260"
+International Journal of COMADEM,0.120,Q4,30.0,13637681
+Journal of Computing and Information Technology,0.120,Q4,30.0,"13301136, 18463908"
+"IEEE Workshop on Microelectronics and Electron Devices, WMED",0.120,-,30.0,"19473834, 19473842"
+Iranian Journal of Information Processing Management,0.119,Q4,30.0,"22518231, 22518223"
+Proceedings of the International Display Workshops,0.119,-,30.0,18832490
+International Journal of Asia Digital Art and Design,0.118,Q3,60.0,"21897441, 17388074"
+AGIT- Journal fur Angewandte Geoinformatik,0.118,Q4,30.0,"2509713X, 23649283"
+Lecture Notes in Engineering and Computer Science,0.118,-,30.0,"20780958, 20780966"
+Virtual Creativity,0.117,Q3,60.0,"23979712, 23979704"
+Annual of Sofia University,0.117,Q4,30.0,"26035529, 13139215"
+Journal of China Universities of Posts and Telecommunications,0.117,Q4,30.0,10058885
+Pakistan Journal of Engineering and Applied Sciences,0.117,Q4,30.0,"19951302, 24150584"
+"Proceedings of the Information Systems Education Conference, ISECON",0.117,-,30.0,21671435
+Synthesis Lectures on Human Language Technologies,0.116,Q3,60.0,19474040
+Reference and User Services Quarterly,0.116,Q4,30.0,10949054
+Schedae Informaticae,0.116,Q4,30.0,"17323916, 20838476"
+"Studies in Systems, Decision and Control",0.116,Q4,30.0,"21984182, 21984190"
+"Synthesis Lectures on Information Concepts, Retrieval, and Services",0.116,Q4,30.0,"1947945X, 19479468"
+International Conference on Optical MEMS and Nanophotonics,0.115,-,30.0,"21605033, 21605041"
+Proceedings - Ivannikov ISPRAS Open Conference,0.115,-,30.0,27679535
+"International Journal of Technology, Knowledge and Society",0.114,Q4,30.0,"28350391, 18323669"
+Building Simulation Applications,0.114,-,30.0,25316702
+"International Conference on Structural Health Monitoring of Intelligent Infrastructure: Transferring Research into Practice, SHMII",0.114,-,30.0,25643738
+Connections,0.113,Q4,30.0,"18121098, 18122973"
+International Journal of Mobile Network Design and Innovation,0.113,Q4,30.0,"17442869, 17442850"
+International Journal of Space Science and Engineering,0.113,Q4,30.0,"20488459, 20488467"
+Journal of Advanced Research Design,0.113,Q4,30.0,22897984
+Scripta and E-Scripta,0.112,Q3,60.0,"1312238X, 26033364"
+ITNOW,0.112,Q4,30.0,17465702
+Kartograficke Listy,0.112,Q4,30.0,"13365274, 27298094"
+Kyokai Joho Imeji Zasshi/Journal of the Institute of Image Information and Television Engineers,0.112,Q4,30.0,13426907
+"IEEE International Conference on Adaptive Science and Technology, ICAST",0.112,-,30.0,"23269413, 23269448"
+Proceedings of the Brazilian Symposium on GeoInformatics,0.112,-,30.0,21794847
+Bibliothecae.it,0.111,Q3,60.0,"22807934, 22839364"
+International Journal of Mobile Human Computer Interaction,0.111,Q4,30.0,"1942390X, 19423918"
+Lecture Notes in Applied and Computational Mechanics,0.111,Q4,30.0,"16137736, 18600816"
+Mathematics and Education in Mathematics,0.111,Q4,30.0,"13133330, 28154002"
+SSRG International Journal of Electronics and Communication Engineering,0.111,Q4,30.0,23488549
+Computers in Education Journal,0.110,Q4,30.0,10693769
+International Journal of Standardization Research,0.110,Q4,30.0,"24708550, 24708542"
+Lecture Notes of TICMI,0.110,Q4,30.0,15120511
+"Deutsche Gesellschaft fur Medizinische Informatik, Biometrie und Epidemiologie e.V. (GMDS)",0.110,-,30.0,"18609171, 18608779"
+Revista de Informatica Teorica e Aplicada,0.109,Q4,30.0,"21752745, 01034308"
+Asia Pacific Conference on Postgraduate Research in Microelectronics and Electronics,0.109,-,30.0,"21592144, 21592160"
+Atas da Conferencia da Associacao Portuguesa de Sistemas de Informacao,0.109,-,30.0,2183489X
+Forum Bildverarbeitung,0.109,-,30.0,25107224
+Recent Advances in Slavonic Natural Language Processing,0.109,-,30.0,23364289
+ZEMCH International Conference,0.109,-,30.0,26522926
+International Journal of Applied Cryptography,0.108,Q4,30.0,"17530571, 17530563"
+Mathematics in Industry,0.108,Q4,30.0,"21983283, 16123956"
+eLearning and Software for Education Conference,0.108,-,30.0,"20668821, 2066026X"
+GMM-Fachberichte,0.108,-,30.0,14323419
+"Proceedings - IEEE CHILEAN Conference on Electrical, Electronics Engineering, Information and Communication Technologies, ChileCon",0.108,-,30.0,"28321537, 28321529"
+"American, British and Canadian Studies",0.107,Q3,60.0,"18411487, 1841964X"
+Algorithmic Finance,0.107,Q4,30.0,"21576203, 21585571"
+AUT Journal of Modeling and Simulation,0.107,Q4,30.0,"25882953, 25882961"
+Journal of Automation and Information Sciences,0.107,Q4,30.0,10642315
+Learning and Analytics in Intelligent Systems,0.107,Q4,30.0,"26623455, 26623447"
+Revista de la Facultad de Ciencias,0.107,Q4,30.0,"0121747X, 23575549"
+Proceedings of the World Congress on Electrical Engineering and Computer Systems and Science,0.107,-,30.0,2369811X
+Hellenic Journal of Radiology,0.106,Q4,30.0,"26541629, 25290568"
+International Journal of Web Portals,0.106,Q4,30.0,"19380208, 19380194"
+Journal of Forensic Document Examination,0.106,Q4,30.0,"08950849, 26400677"
+Transactions of the Japan Society for Computational Engineering and Science,0.106,Q4,30.0,"13449443, 13478826"
+"Proceedings of the International Conference on Sensing Technology, ICST",0.106,-,30.0,"21568065, 21568073"
+Ada User Journal,0.105,Q4,30.0,13816551
+"Proceedings - International Conference on Smart-Green Technology in Electrical and Information Systems, ICSGTEIS",0.105,-,30.0,"28313992, 2831400X"
+Proceedings of International Conference on Research in Education and Science,0.105,-,30.0,28336747
+Cutter Business Technology Journal,0.104,Q4,30.0,"24753718, 24753742"
+International Conference on Concept Lattices and Their Applications,0.104,Q4,30.0,2311701X
+International Journal of Computer Science and Applications,0.104,Q4,30.0,09729038
+Iraqi Journal of Architecture and Planning,0.104,Q4,30.0,"26179555, 26179547"
+NEC Technical Journal,0.104,Q4,30.0,18805884
+International Conference on Digital Printing Technologies,0.104,-,30.0,21694362
+Technische Berichte des Hasso-Plattner-Instituts fur Softwaresystemtechnik an der Universitat Potsdam,0.104,-,30.0,"16135652, 21911665"
+Musica Tecnologia,0.103,Q4,30.0,"19740042, 19740050"
+"Proceedings of International Conference on Computers and Industrial Engineering, CIE",0.103,-,30.0,21648689
+Proceedings of the International Telemetering Conference,0.103,-,30.0,08845123
+Ka and Broadband Communications Conference,0.102,-,30.0,25736124
+Journal of the Institute of Image Electronics Engineers of Japan,0.101,Q4,30.0,"02859831, 13480316"
+Mondo Digitale,0.101,Q4,30.0,1720898X
+Moving Image Review and Art Journal,0.101,Q4,30.0,"20456301, 20456298"
+"Music, Sound and the Moving Image",0.101,Q4,30.0,"17530776, 17530768"
+RIDE - Review Journal for Digital Editions and Resources,0.101,Q4,30.0,23634952
+Balisage Series on Markup Technologies,0.101,-,30.0,19472609
+International Conference on Design and Semantics of Form and Movement,0.101,-,30.0,27066150
+Simulation Series,0.101,-,30.0,07359276
+Computer Software,0.100,Q4,30.0,02896540
+Digital Textile,0.100,Q4,30.0,17421128
+Fabriksoftware,0.100,Q4,30.0,25697692
+Foundry Trade Journal International,0.100,Q4,30.0,17589789
+ITU News,0.100,Q4,30.0,10204148
+Journal of the Institute of Telecommunications Professionals,0.100,Q4,30.0,17559278

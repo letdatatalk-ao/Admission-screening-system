@@ -2,18 +2,20 @@
 backend/app/db/repositories/applicant_repo.py
 
 CRUD pour Applicant et ExtractedMetrics.
-Remplace/complète le fichier existant en s'appuyant sur models.py.
 """
 
 from __future__ import annotations
 
 import uuid
+import logging
 from typing import Optional
 
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.app.db.models import Applicant, ExtractedMetrics
+
+logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
@@ -68,10 +70,9 @@ async def get_applicant_by_ref(
 async def list_applicants(
     db:         AsyncSession,
     session_id: uuid.UUID,
-    status:     Optional[str] = None,      # "pending" | "processed" | "error"
+    status:     Optional[str] = None,
     needs_review: Optional[bool] = None,
 ) -> list[Applicant]:
-    """Liste les candidats d'une session avec filtres optionnels."""
     q = select(Applicant).where(Applicant.session_id == session_id)
     if status is not None:
         q = q.where(Applicant.status == status)
@@ -87,7 +88,6 @@ async def update_applicant_status(
     applicant_id: uuid.UUID,
     status:       str,
 ) -> None:
-    """Met à jour le statut de traitement d'un candidat."""
     await db.execute(
         update(Applicant)
         .where(Applicant.id == applicant_id)
@@ -101,7 +101,6 @@ async def update_applicant_documents(
     cv_document_id:         Optional[uuid.UUID] = None,
     transcript_document_id: Optional[uuid.UUID] = None,
 ) -> None:
-    """Lie les documents uploadés au candidat et marque le pairing complet."""
     values: dict = {}
     if cv_document_id is not None:
         values["cv_document_id"] = cv_document_id
@@ -123,10 +122,6 @@ async def update_applicant_score(
     config_id:        uuid.UUID,
     needs_review:     bool = False,
 ) -> None:
-    """
-    Met à jour le dernier score composite et le rang du candidat.
-    Appelé par scoring_repo après chaque run de ranking.
-    """
     await db.execute(
         update(Applicant)
         .where(Applicant.id == applicant_id)
@@ -145,7 +140,6 @@ async def flag_review(
     applicant_id: uuid.UUID,
     flag:         bool = True,
 ) -> None:
-    """Active ou désactive le flag needs_human_review."""
     await db.execute(
         update(Applicant)
         .where(Applicant.id == applicant_id)
@@ -157,6 +151,21 @@ async def flag_review(
 # ExtractedMetrics
 # ---------------------------------------------------------------------------
 
+# ✅ Colonnes valides dans ExtractedMetrics
+_VALID_METRICS_COLUMNS = {
+    "applicant_id", "cv_document_id", "transcript_document_id",
+    "bsc_uni_name", "bsc_qs_rank", "bsc_qs_normalised",
+    "bsc_gpa_raw", "bsc_gpa_scale", "bsc_gpa_normalised",
+    "bsc_gpa_normalised_done", "bsc_gpa_source",
+    "msc_uni_name", "msc_qs_rank", "msc_qs_normalised",
+    "msc_gpa_raw", "msc_gpa_scale", "msc_gpa_normalised",
+    "msc_gpa_normalised_done", "msc_gpa_source", "msc_absent",
+    "global_confidence", "nlp_confidence_detail",
+    "llm_used", "llm_confidence_detail", "extraction_source_detail",
+    "model_used", "extracted_at"
+}
+
+
 async def upsert_extracted_metrics(
     db:           AsyncSession,
     applicant_id: uuid.UUID,
@@ -164,31 +173,17 @@ async def upsert_extracted_metrics(
 ) -> ExtractedMetrics:
     """
     Crée ou met à jour les métriques extraites pour un candidat.
-    `data` est un dict dont les clés correspondent aux colonnes d'ExtractedMetrics.
-
-    Exemple de `data` produit par le pipeline NLP + fusion :
-    {
-        "bsc_uni_name":        "AlHosn University",
-        "bsc_qs_rank":         None,
-        "bsc_qs_normalised":   0.150,
-        "bsc_gpa_raw":         3.50,
-        "bsc_gpa_scale":       4.0,
-        "bsc_gpa_normalised":  3.500,
-        "bsc_gpa_source":      "explicit_scale",
-        "msc_uni_name":        "New York University",
-        "msc_qs_rank":         32,
-        "msc_qs_normalised":   0.972,
-        "msc_gpa_raw":         3.80,
-        "msc_gpa_scale":       4.0,
-        "msc_gpa_normalised":  3.800,
-        "msc_gpa_source":      "explicit_scale",
-        "global_confidence":   0.85,
-        "nlp_confidence_detail": {...},
-        "llm_used":            True,
-        "model_used":          "mistral:7b-instruct",
-    }
+    Filtre automatiquement les champs invalides.
     """
-    # Cherche si une ligne existe déjà (unique sur applicant_id)
+    # Filtrer les champs invalides
+    filtered_data = {k: v for k, v in data.items() if k in _VALID_METRICS_COLUMNS}
+    
+    # Log si des champs ont été ignorés
+    ignored_keys = set(data.keys()) - set(filtered_data.keys())
+    if ignored_keys:
+        logger.warning(f"Ignored invalid fields for ExtractedMetrics: {ignored_keys}")
+    
+    # Cherche si une ligne existe déjà
     result = await db.execute(
         select(ExtractedMetrics).where(
             ExtractedMetrics.applicant_id == applicant_id
@@ -197,11 +192,10 @@ async def upsert_extracted_metrics(
     existing = result.scalar_one_or_none()
 
     if existing:
-        # UPDATE — on écrase avec les nouvelles valeurs
         await db.execute(
             update(ExtractedMetrics)
             .where(ExtractedMetrics.applicant_id == applicant_id)
-            .values(**data)
+            .values(**filtered_data)
         )
         await db.flush()
         result2 = await db.execute(
@@ -211,8 +205,7 @@ async def upsert_extracted_metrics(
         )
         return result2.scalar_one()
     else:
-        # INSERT
-        metrics = ExtractedMetrics(applicant_id=applicant_id, **data)
+        metrics = ExtractedMetrics(applicant_id=applicant_id, **filtered_data)
         db.add(metrics)
         await db.flush()
         await db.refresh(metrics)
