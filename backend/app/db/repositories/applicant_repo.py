@@ -9,9 +9,11 @@ from __future__ import annotations
 import uuid
 import logging
 from typing import Optional
+from datetime import datetime
 
-from sqlalchemy import select, update
+from sqlalchemy import select, update, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql import func
 
 from backend.app.db.models import Applicant, ExtractedMetrics
 
@@ -30,7 +32,6 @@ async def create_applicant(
     email:           Optional[str] = None,
     nationality:     Optional[str] = None,
 ) -> Applicant:
-    """Crée un candidat dans une session d'évaluation."""
     applicant = Applicant(
         session_id=session_id,
         application_ref=application_ref,
@@ -68,9 +69,9 @@ async def get_applicant_by_ref(
 
 
 async def list_applicants(
-    db:         AsyncSession,
-    session_id: uuid.UUID,
-    status:     Optional[str] = None,
+    db:           AsyncSession,
+    session_id:   uuid.UUID,
+    status:       Optional[str] = None,
     needs_review: Optional[bool] = None,
 ) -> list[Applicant]:
     q = select(Applicant).where(Applicant.session_id == session_id)
@@ -148,10 +149,70 @@ async def flag_review(
 
 
 # ---------------------------------------------------------------------------
+# Gestion des reprises (retry)
+# ---------------------------------------------------------------------------
+
+async def increment_retry_count(
+    db:            AsyncSession,
+    applicant_id:  uuid.UUID,
+    error_message: Optional[str] = None,
+) -> None:
+    """Incrémente le compteur de tentatives et enregistre l'erreur."""
+    await db.execute(
+        update(Applicant)
+        .where(Applicant.id == applicant_id)
+        .values(
+            retry_count=Applicant.retry_count + 1,
+            last_error=error_message,
+            last_attempt_at=func.now(),
+            status="error"
+        )
+    )
+
+
+async def reset_retry_count(
+    db:           AsyncSession,
+    applicant_id: uuid.UUID,
+) -> None:
+    """Réinitialise le compteur de tentatives après un succès."""
+    await db.execute(
+        update(Applicant)
+        .where(Applicant.id == applicant_id)
+        .values(
+            retry_count=0,
+            last_error=None,
+            status="processed"
+        )
+    )
+
+
+async def get_pending_applicants(
+    db:         AsyncSession,
+    session_id: uuid.UUID,
+    max_retry: int = 5,
+) -> list[Applicant]:
+    """Récupère les CV à traiter (pending ou error avec retry_count < max_retry)."""
+    result = await db.execute(
+        select(Applicant)
+        .where(Applicant.session_id == session_id)
+        .where(
+            or_(
+                Applicant.status == "pending",
+                and_(
+                    Applicant.status == "error",
+                    Applicant.retry_count < max_retry
+                )
+            )
+        )
+        .order_by(Applicant.retry_count.asc(), Applicant.created_at.asc())
+    )
+    return list(result.scalars().all())
+
+
+# ---------------------------------------------------------------------------
 # ExtractedMetrics
 # ---------------------------------------------------------------------------
 
-# ✅ Colonnes valides dans ExtractedMetrics
 _VALID_METRICS_COLUMNS = {
     "applicant_id", "cv_document_id", "transcript_document_id",
     "bsc_uni_name", "bsc_qs_rank", "bsc_qs_normalised",
@@ -171,19 +232,12 @@ async def upsert_extracted_metrics(
     applicant_id: uuid.UUID,
     data:         dict,
 ) -> ExtractedMetrics:
-    """
-    Crée ou met à jour les métriques extraites pour un candidat.
-    Filtre automatiquement les champs invalides.
-    """
-    # Filtrer les champs invalides
     filtered_data = {k: v for k, v in data.items() if k in _VALID_METRICS_COLUMNS}
     
-    # Log si des champs ont été ignorés
     ignored_keys = set(data.keys()) - set(filtered_data.keys())
     if ignored_keys:
         logger.warning(f"Ignored invalid fields for ExtractedMetrics: {ignored_keys}")
     
-    # Cherche si une ligne existe déjà
     result = await db.execute(
         select(ExtractedMetrics).where(
             ExtractedMetrics.applicant_id == applicant_id

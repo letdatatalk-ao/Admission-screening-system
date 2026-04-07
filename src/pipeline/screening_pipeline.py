@@ -1,10 +1,20 @@
+"""
+src/pipeline/screening_pipeline.py
+
+FIX: Each call to run_pipeline() uses asyncio.run(), which creates a new event loop.
+asyncpg connection pools are bound to a specific event loop, so we must create
+a fresh engine/session per asyncio.run() call — never reuse a pool across loops.
+"""
+
 import asyncio
 import logging
 import os
 import pandas as pd
 from uuid import UUID
 
-from backend.app.db.database import SessionLocal
+# ✅ FIX: Import create_engine factory, NOT the shared SessionLocal
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+
 from backend.app.db.repositories import applicant_repo, document_repo, publication_repo
 
 from src.ingestion.pdf_reader import PDFReader
@@ -33,6 +43,26 @@ except Exception as e:
     qs_names = []
 
 
+def _make_session_factory():
+    """
+    ✅ FIX: Create a brand-new engine + session factory tied to the CURRENT event loop.
+    Called once per asyncio.run() invocation, so the pool is always loop-compatible.
+    """
+    database_url = os.getenv(
+        "DATABASE_URL",
+        "postgresql+asyncpg://postgres:password@postgres:5432/pg_screening"
+    )
+    engine = create_async_engine(
+        database_url,
+        # Small pool — this engine is short-lived (one task)
+        pool_size=2,
+        max_overflow=0,
+        pool_pre_ping=True,
+        pool_recycle=60,
+    )
+    return async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False), engine
+
+
 def _compute_confidence(validated: ExtractedCandidate) -> float:
     scores = [
         0.9 if validated.bsc_uni else 0.1,
@@ -44,7 +74,6 @@ def _compute_confidence(validated: ExtractedCandidate) -> float:
 
 
 def _clean_publications(publications):
-    """Filtre les publications invalides (sans titre ou avec année invalide)."""
     cleaned = []
     for pub in publications:
         if not pub.get('title') or pub.get('title') == "Untitled":
@@ -56,16 +85,46 @@ def _clean_publications(publications):
 
 
 async def run_pipeline_logic(applicant_id: str) -> bool:
-    async with SessionLocal() as db:
-        app_uuid = UUID(applicant_id)
+    """
+    ✅ FIX: Create a fresh session factory for THIS event loop invocation.
+    This avoids the asyncpg 'another operation is in progress' error caused
+    by reusing a connection pool across different event loops.
+    """
+    SessionLocal, engine = _make_session_factory()
+
+    try:
+        async with SessionLocal() as db:
+            app_uuid = UUID(applicant_id)
+
+            app = await applicant_repo.get_applicant(db, app_uuid)
+            if not app:
+                logger.error(f"❌ Applicant {applicant_id} not found")
+                return False
+
+            if app.status == "processed":
+                logger.info(f"✅ Applicant {applicant_id} already processed")
+                return True
+
+            if app.retry_count >= 5:
+                logger.error(f"❌ Applicant {applicant_id} exceeded max retries (5)")
+                await applicant_repo.update_applicant_status(db, app_uuid, "failed")
+                await db.commit()
+                return False
+
+            await applicant_repo.update_applicant_status(db, app_uuid, "processing")
+            await db.commit()
+            logger.info(f"🟡 [STATUS] {applicant_id} → processing (attempt {app.retry_count + 1})")
+
         orchestrator = get_llm_orchestrator()
 
         try:
             logger.info(f"🚀 [PIPELINE START] Applicant: {applicant_id}")
 
-            docs = await document_repo.get_documents_for_applicant(db, app_uuid)
-            cv_doc = next((d for d in docs if d.document_type == 'cv'), None)
-            tr_doc = next((d for d in docs if d.document_type == 'transcript'), None)
+            # ✅ Open a fresh connection for the main work
+            async with SessionLocal() as db:
+                docs = await document_repo.get_documents_for_applicant(db, app_uuid)
+                cv_doc = next((d for d in docs if d.document_type == 'cv'), None)
+                tr_doc = next((d for d in docs if d.document_type == 'transcript'), None)
 
             if not cv_doc or not tr_doc:
                 raise FileNotFoundError("CV ou Transcript manquant")
@@ -93,7 +152,6 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
                 candidate_name=cv_doc.original_filename
             )
 
-            # Nettoyer les publications avant validation
             if 'publications' in raw_results:
                 raw_results['publications'] = _clean_publications(raw_results['publications'])
 
@@ -135,62 +193,68 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
                 })
 
             pubs_to_save = []
-            for idx, p in enumerate(validated.publications):
-                if not p.title or p.title == "Untitled":
-                    continue
-                if p.venue:
-                    pub_type, scopus_pct, core_rank, core_score = enrich_publication({"venue": p.venue}, df_scopus, df_core)
-                else:
-                    pub_type, scopus_pct, core_rank, core_score = "journal", None, None, None
+            async with SessionLocal() as db:
+                for idx, p in enumerate(validated.publications):
+                    if not p.title or p.title == "Untitled":
+                        continue
+                    if p.venue:
+                        pub_type, scopus_pct, core_rank, core_score = enrich_publication({"venue": p.venue}, df_scopus, df_core)
+                    else:
+                        pub_type, scopus_pct, core_rank, core_score = "journal", None, None, None
 
-                pos = to_float(p.author_position, 1)
-                tot = to_float(p.total_authors, 1)
-                contrib = round((tot - pos + 1) / tot, 3) if tot > 0 else 0.5
-                if pos == tot and tot > 1:
-                    contrib = 0.85
+                    pos = to_float(p.author_position, 1)
+                    tot = to_float(p.total_authors, 1)
+                    contrib = round((tot - pos + 1) / tot, 3) if tot > 0 else 0.5
+                    if pos == tot and tot > 1:
+                        contrib = 0.85
 
-                venue_obj = await publication_repo.get_or_create_venue(db, venue_type=pub_type, name=(p.venue or "Unknown")[:250])
+                    venue_obj = await publication_repo.get_or_create_venue(
+                        db, venue_type=pub_type, name=(p.venue or "Unknown")[:250]
+                    )
 
-                pubs_to_save.append({
-                    "title": (p.title or "Untitled")[:250],
-                    "authors_raw": (p.authors or "Unknown")[:250],
-                    "year": p.year,
-                    "author_position": int(pos),
-                    "total_authors": int(tot),
-                    "first_author": int(pos) == 1,
-                    "venue_id": venue_obj.id,
-                    "pub_type": pub_type,
-                    "contribution_score": contrib,
-                    "scopus_pct_at_extraction": scopus_pct,
-                    "core_score_at_extraction": core_score,
-                    "extraction_source": "llm",
-                    "position_in_cv": idx + 1,
-                })
+                    pubs_to_save.append({
+                        "title": (p.title or "Untitled")[:250],
+                        "authors_raw": (p.authors or "Unknown")[:250],
+                        "year": p.year,
+                        "author_position": int(pos),
+                        "total_authors": int(tot),
+                        "first_author": int(pos) == 1,
+                        "venue_id": venue_obj.id,
+                        "pub_type": pub_type,
+                        "contribution_score": contrib,
+                        "scopus_pct_at_extraction": scopus_pct,
+                        "core_score_at_extraction": core_score,
+                        "extraction_source": "llm",
+                        "position_in_cv": idx + 1,
+                    })
+                await db.commit()
 
-            await applicant_repo.update_applicant_status(db, app_uuid, "processing")
-            await applicant_repo.upsert_extracted_metrics(db, app_uuid, metrics_payload)
-
-            if pubs_to_save:
-                await publication_repo.save_publications_batch(db, app_uuid, pubs_to_save)
-
-            await applicant_repo.update_applicant_status(db, app_uuid, "processed")
-            await db.commit()
+            # ✅ Final writes in a clean session
+            async with SessionLocal() as db:
+                await applicant_repo.upsert_extracted_metrics(db, app_uuid, metrics_payload)
+                if pubs_to_save:
+                    await publication_repo.save_publications_batch(db, app_uuid, pubs_to_save)
+                await applicant_repo.reset_retry_count(db, app_uuid)
+                await db.commit()
 
             logger.info(f"✅ [PIPELINE SUCCESS] {applicant_id} — confidence={confidence} pubs={len(pubs_to_save)}")
             return True
 
         except Exception as e:
-            await db.rollback()
-            logger.error(f"❌ [PIPELINE CRASH] {applicant_id}: {e}", exc_info=True)
-            try:
-                await applicant_repo.update_applicant_status(db, app_uuid, "error")
+            error_msg = str(e)
+            logger.error(f"❌ [PIPELINE CRASH] {applicant_id}: {error_msg}", exc_info=True)
+            async with SessionLocal() as db:
+                await applicant_repo.increment_retry_count(db, app_uuid, error_msg[:500])
                 await db.commit()
-            except Exception:
-                pass
+            logger.info(f"🔴 [STATUS] {applicant_id} → error")
             return False
 
         finally:
             await orchestrator.close()
+
+    finally:
+        # ✅ Always dispose the engine to free connections
+        await engine.dispose()
 
 
 def run_pipeline(applicant_id: str) -> bool:

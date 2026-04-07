@@ -21,7 +21,7 @@ class User(Base):
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
     full_name: Mapped[str] = mapped_column(String(300), nullable=False)
-    role: Mapped[str] = mapped_column(String(20), nullable=False)  # admin | evaluateur
+    role: Mapped[str] = mapped_column(String(20), nullable=False)
     hashed_password: Mapped[str] = mapped_column(Text, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(
@@ -71,6 +71,13 @@ class Applicant(Base):
         UUID(as_uuid=True), ForeignKey("ranking_configs.id"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now())
+    
+    # ✅ NOUVEAUX CHAMPS POUR LA GESTION DES REPRISES
+    retry_count: Mapped[int] = mapped_column(Integer, default=0)
+    last_error: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    last_attempt_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
 
     __table_args__ = (
         Index("idx_applicants_session", "session_id"),
@@ -85,9 +92,9 @@ class Document(Base):
     applicant_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("applicants.id"), nullable=False)
     document_type: Mapped[str] = mapped_column(
-        String(20), nullable=False)  # cv | transcript
+        String(20), nullable=False)
     file_type: Mapped[str] = mapped_column(
-        String(20), nullable=False)  # native_pdf | scanned_pdf | docx | error
+        String(20), nullable=False)
     original_filename: Mapped[str] = mapped_column(String(500), nullable=False)
     storage_path: Mapped[str] = mapped_column(Text, nullable=False)
     file_hash: Mapped[str] = mapped_column(String(64), nullable=False)
@@ -117,7 +124,6 @@ class ExtractedMetrics(Base):
         UUID(as_uuid=True), ForeignKey("documents.id"), nullable=True)
     transcript_document_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("documents.id"), nullable=True)
-    # Education — BSc
     bsc_uni_name: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     bsc_qs_rank: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     bsc_qs_normalised: Mapped[Optional[float]] = mapped_column(
@@ -131,7 +137,6 @@ class ExtractedMetrics(Base):
     bsc_gpa_normalised_done: Mapped[bool] = mapped_column(Boolean, default=False)
     bsc_gpa_source: Mapped[Optional[str]] = mapped_column(
         String(40), nullable=True)
-    # Education — MSc
     msc_uni_name: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     msc_qs_rank: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     msc_qs_normalised: Mapped[Optional[float]] = mapped_column(
@@ -146,7 +151,6 @@ class ExtractedMetrics(Base):
     msc_gpa_source: Mapped[Optional[str]] = mapped_column(
         String(40), nullable=True)
     msc_absent: Mapped[bool] = mapped_column(Boolean, default=False)
-    # Confidence & extraction traceability
     global_confidence: Mapped[Optional[float]] = mapped_column(
         Numeric(3, 2), nullable=True)
     nlp_confidence_detail: Mapped[Optional[dict]] = mapped_column(
@@ -171,7 +175,7 @@ class Venue(Base):
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     venue_type: Mapped[str] = mapped_column(
-        String(20), nullable=False)  # journal | conference
+        String(20), nullable=False)
     name: Mapped[str] = mapped_column(Text, nullable=False)
     acronym: Mapped[Optional[str]] = mapped_column(String(80), nullable=True)
     issn: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
@@ -206,7 +210,7 @@ class Publication(Base):
     venue_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("venues.id"), nullable=True)
     pub_type: Mapped[str] = mapped_column(
-        String(20), nullable=False)  # journal | conference
+        String(20), nullable=False)
     position_in_cv: Mapped[int] = mapped_column(Integer, nullable=False)
     title: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     authors_raw: Mapped[Optional[str]] = mapped_column(Text, nullable=True)

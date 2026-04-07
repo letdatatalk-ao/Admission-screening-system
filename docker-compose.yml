@@ -62,10 +62,24 @@ services:
       - .:/app
       - ./storage:/app/storage
       - ./data:/app/data  
-
     environment:
       - PYTHONPATH=/app
+    restart: unless-stopped
 
+  # ✅ NOUVEAU SERVICE : Celery Beat (planificateur de tâches périodiques)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: pgars-celery-beat
+    command: celery -A backend.app.tasks beat --loglevel=info
+    env_file: .env
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
     restart: unless-stopped
     
   streamlit:
