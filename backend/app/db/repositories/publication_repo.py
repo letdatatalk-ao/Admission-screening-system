@@ -1,101 +1,74 @@
 """
 backend/app/db/repositories/publication_repo.py
 
-CRUD pour Publication et Venue.
+CRUD pour Publications et Venues.
 """
 
 from __future__ import annotations
 
 import uuid
-from typing import Optional
+from typing import Optional, List
 
-from sqlalchemy import select, delete
+from sqlalchemy import select, update, delete, func
+from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.app.db.models import Publication, Venue
 
 
-# ---------------------------------------------------------------------------
-# Venue  (journaux / conférences référencés)
-# ---------------------------------------------------------------------------
+# ============================================================================
+# Venue
+# ============================================================================
 
 async def get_or_create_venue(
-    db:               AsyncSession,
-    venue_type:       str,              # "journal" | "conference"
-    name:             str,
-    acronym:          Optional[str]  = None,
-    scopus_pct:       Optional[float] = None,
-    scopus_quartile:  Optional[str]  = None,
-    core_ranking:     Optional[str]  = None,
-    core_score:       Optional[int]  = None,
-    lookup_source:    Optional[str]  = None,
-    lookup_confidence: Optional[float] = None,
+    db: AsyncSession,
+    venue_type: str,
+    name: str,
+    acronym: Optional[str] = None
 ) -> Venue:
-    """
-    Retourne un Venue existant (même type + nom) ou en crée un nouveau.
-    Évite les doublons dans la table venues.
-    """
+    """Récupère un venue existant ou en crée un nouveau."""
     result = await db.execute(
-        select(Venue).where(
-            Venue.venue_type == venue_type,
-            Venue.name == name,
+        select(Venue).where(Venue.name == name, Venue.venue_type == venue_type)
+    )
+    venue = result.scalar_one_or_none()
+    
+    if not venue:
+        venue = Venue(
+            venue_type=venue_type,
+            name=name,
+            acronym=acronym
         )
-    )
-    existing = result.scalar_one_or_none()
-    if existing:
-        return existing
-
-    venue = Venue(
-        venue_type=venue_type,
-        name=name,
-        acronym=acronym,
-        scopus_pct=scopus_pct,
-        scopus_quartile=scopus_quartile,
-        core_ranking=core_ranking,
-        core_score=core_score,
-        lookup_source=lookup_source,
-        lookup_confidence=lookup_confidence,
-    )
-    db.add(venue)
-    await db.flush()
-    await db.refresh(venue)
+        db.add(venue)
+        await db.flush()
+    
     return venue
 
 
-async def get_venue(
-    db:       AsyncSession,
-    venue_id: uuid.UUID,
-) -> Optional[Venue]:
-    result = await db.execute(
-        select(Venue).where(Venue.id == venue_id)
-    )
+async def get_venue(db: AsyncSession, venue_id: uuid.UUID) -> Optional[Venue]:
+    """Récupère un venue par son ID."""
+    result = await db.execute(select(Venue).where(Venue.id == venue_id))
     return result.scalar_one_or_none()
 
 
-# ---------------------------------------------------------------------------
+# ============================================================================
 # Publication
-# ---------------------------------------------------------------------------
+# ============================================================================
 
-async def save_publication(
-    db:                       AsyncSession,
-    applicant_id:             uuid.UUID,
-    pub_type:                 str,           # "journal" | "conference"
-    position_in_cv:           int,
-    title:                    Optional[str]   = None,
-    authors_raw:              Optional[str]   = None,
-    author_position:          Optional[int]   = None,
-    total_authors:            Optional[int]   = None,
-    first_author:             Optional[bool]  = None,
-    contribution_score:       Optional[float] = None,
-    year:                     Optional[int]   = None,
-    raw_citation:             Optional[str]   = None,
-    venue_id:                 Optional[uuid.UUID] = None,
-    scopus_pct_at_extraction: Optional[float] = None,
-    core_score_at_extraction: Optional[int]   = None,
-    confidence:               Optional[float] = None,
-    extraction_source:        str             = "nlp",
+async def create_publication(
+    db: AsyncSession,
+    applicant_id: uuid.UUID,
+    venue_id: Optional[uuid.UUID],
+    pub_type: str,
+    position_in_cv: int,
+    title: Optional[str] = None,
+    authors_raw: Optional[str] = None,
+    author_position: Optional[int] = None,
+    total_authors: Optional[int] = None,
+    contribution_score: Optional[float] = None,
+    year: Optional[int] = None,
+    extraction_source: str = "nlp"
 ) -> Publication:
-    """Insère une publication extraite pour un candidat."""
+    """Crée une nouvelle publication."""
     pub = Publication(
         applicant_id=applicant_id,
         venue_id=venue_id,
@@ -105,14 +78,9 @@ async def save_publication(
         authors_raw=authors_raw,
         author_position=author_position,
         total_authors=total_authors,
-        first_author=first_author,
         contribution_score=contribution_score,
         year=year,
-        raw_citation=raw_citation,
-        scopus_pct_at_extraction=scopus_pct_at_extraction,
-        core_score_at_extraction=core_score_at_extraction,
-        confidence=confidence,
-        extraction_source=extraction_source,
+        extraction_source=extraction_source
     )
     db.add(pub)
     await db.flush()
@@ -120,83 +88,96 @@ async def save_publication(
     return pub
 
 
-async def save_publications_batch(
-    db:           AsyncSession,
-    applicant_id: uuid.UUID,
-    publications: list[dict],
-) -> list[Publication]:
-    """
-    Insère toutes les publications d'un candidat en un seul appel.
-    Supprime d'abord les anciennes (re-extraction).
-
-    Chaque dict dans `publications` doit avoir les clés :
-        pub_type, position_in_cv, venue_id (optionnel),
-        title, authors_raw, author_position, total_authors,
-        first_author, contribution_score, year, raw_citation,
-        scopus_pct_at_extraction, core_score_at_extraction,
-        confidence, extraction_source
-
-    Usage depuis tasks.py (Celery) :
-        pubs_data = [
-            {
-                "pub_type": "conference",
-                "position_in_cv": 1,
-                "title": "Enhancing IoT Security...",
-                "author_position": 1,
-                "total_authors": 2,
-                "first_author": True,
-                "contribution_score": 1.0,
-                "year": 2023,
-                "venue_id": venue.id,
-                "core_score_at_extraction": 3,
-                "confidence": 0.59,
-                "extraction_source": "nlp",
-            }
-        ]
-        await save_publications_batch(db, applicant_id, pubs_data)
-    """
-    # Supprime les publications existantes pour ce candidat (re-run propre)
-    await db.execute(
-        delete(Publication).where(Publication.applicant_id == applicant_id)
+async def save_publication(db: AsyncSession, publication_data: dict) -> Publication:
+    """Alias pour create_publication - utilisé par l'import __init__.py"""
+    return await create_publication(
+        db=db,
+        applicant_id=publication_data.get("applicant_id"),
+        venue_id=publication_data.get("venue_id"),
+        pub_type=publication_data.get("pub_type", "journal"),
+        position_in_cv=publication_data.get("position_in_cv", 999),
+        title=publication_data.get("title"),
+        authors_raw=publication_data.get("authors_raw"),
+        author_position=publication_data.get("author_position"),
+        total_authors=publication_data.get("total_authors"),
+        contribution_score=publication_data.get("contribution_score", 0.5),
+        year=publication_data.get("year"),
+        extraction_source=publication_data.get("extraction_source", "manual")
     )
 
-    saved = []
-    for i, pub_data in enumerate(publications):
-        pub = await save_publication(
-            db=db,
-            applicant_id=applicant_id,
-            position_in_cv=pub_data.get("position_in_cv", i + 1),
-            **{k: v for k, v in pub_data.items() if k != "position_in_cv"},
-        )
-        saved.append(pub)
 
-    return saved
+async def get_publication(db: AsyncSession, publication_id: uuid.UUID) -> Optional[Publication]:
+    """Récupère une publication par son ID."""
+    result = await db.execute(
+        select(Publication).where(Publication.id == publication_id)
+    )
+    return result.scalar_one_or_none()
 
 
 async def list_publications(
-    db:           AsyncSession,
-    applicant_id: uuid.UUID,
-    pub_type:     Optional[str] = None,   # "journal" | "conference" | None
-) -> list[Publication]:
-    """Liste les publications d'un candidat, filtrées par type si fourni."""
-    q = (
+    db: AsyncSession,
+    applicant_id: uuid.UUID
+) -> List[Publication]:
+    """Liste toutes les publications d'un candidat avec la relation venue chargée."""
+    result = await db.execute(
         select(Publication)
+        .options(selectinload(Publication.venue))  # ✅ Charge la relation venue
         .where(Publication.applicant_id == applicant_id)
         .order_by(Publication.position_in_cv)
     )
-    if pub_type:
-        q = q.where(Publication.pub_type == pub_type)
-    result = await db.execute(q)
     return list(result.scalars().all())
 
 
 async def count_publications(
-    db:           AsyncSession,
+    db: AsyncSession,
+    applicant_id: uuid.UUID
+) -> int:
+    """Compte le nombre de publications d'un candidat."""
+    result = await db.execute(
+        select(func.count(Publication.id)).where(Publication.applicant_id == applicant_id)
+    )
+    return result.scalar() or 0
+
+
+async def update_publication(
+    db: AsyncSession,
+    publication_id: uuid.UUID,
+    data: dict
+) -> bool:
+    """Met à jour une publication."""
+    result = await db.execute(
+        update(Publication)
+        .where(Publication.id == publication_id)
+        .values(**data)
+    )
+    return result.rowcount > 0
+
+
+async def delete_publication(
+    db: AsyncSession,
+    publication_id: uuid.UUID
+) -> bool:
+    """Supprime une publication."""
+    result = await db.execute(
+        delete(Publication).where(Publication.id == publication_id)
+    )
+    return result.rowcount > 0
+
+
+async def save_publications_batch(
+    db: AsyncSession,
     applicant_id: uuid.UUID,
-) -> dict[str, int]:
-    """Retourne {"journal": N, "conference": M} pour un candidat."""
-    all_pubs = await list_publications(db, applicant_id)
-    return {
-        "journal":    sum(1 for p in all_pubs if p.pub_type == "journal"),
-        "conference": sum(1 for p in all_pubs if p.pub_type == "conference"),
-    }
+    pubs_data: List[dict]
+) -> List[Publication]:
+    """Sauvegarde un lot de publications en une seule transaction."""
+    publications = []
+    for pub_data in pubs_data:
+        pub = Publication(
+            applicant_id=applicant_id,
+            **pub_data
+        )
+        db.add(pub)
+        publications.append(pub)
+    
+    await db.flush()
+    return publications

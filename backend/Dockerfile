@@ -18,7 +18,12 @@ WORKDIR /app
 
 COPY backend/requirements.txt .
 RUN pip install --prefer-binary --no-cache-dir -r requirements.txt
-RUN python -m spacy download en_core_web_lg
+
+# Installation Groq uniquement (pas python-magic-bin)
+RUN pip install groq
+
+# Modèle spacy small
+RUN python -m spacy download en_core_web_sm
 
 COPY . .
 

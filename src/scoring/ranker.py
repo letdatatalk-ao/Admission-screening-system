@@ -5,6 +5,7 @@ from typing import Optional, List
 import statistics
 from src.scoring.engine import ScoringResult
 
+
 @dataclass
 class RankedResult:
     rank: int
@@ -36,10 +37,7 @@ class RankingReport:
 
 
 def rank(results: List[ScoringResult], session_id: str) -> RankingReport:
-    """
-    Classe les candidats selon leur score final.
-    Gère les égalités avec tie-break sur MSc academic puis journal score.
-    """
+    """Classe les candidats selon leur score final."""
     if not results:
         return RankingReport(
             session_id=session_id,
@@ -50,19 +48,17 @@ def rank(results: List[ScoringResult], session_id: str) -> RankingReport:
             needs_review_count=0
         )
     
-    # Tri complexe (Score final desc, puis tie-break)
     sorted_res = sorted(
         results, 
         key=lambda r: (
-            -round(r.final_score, 2),   # Score final décroissant
-            -r.msc_academic,            # Tie-break 1: MSc academic
-            -r.journal_score            # Tie-break 2: Journal score
+            -round(r.final_score, 2),
+            -r.msc_academic,
+            -r.journal_score
         )
     )
     
     ranked = []
     for i, r in enumerate(sorted_res):
-        # Déterminer le tie-break utilisé
         tiebreak_used = None
         if i > 0 and sorted_res[i-1].final_score == r.final_score:
             if sorted_res[i-1].msc_academic == r.msc_academic:
@@ -89,7 +85,6 @@ def rank(results: List[ScoringResult], session_id: str) -> RankingReport:
             tiebreak_used=tiebreak_used
         ))
     
-    # Calcul des statistiques des scores
     scores = [r.final_score for r in results]
     score_stats = {
         "min": round(min(scores), 2),

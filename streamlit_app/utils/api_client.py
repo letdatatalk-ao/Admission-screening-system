@@ -7,7 +7,6 @@ from typing import List, Dict, Any, Optional, Tuple
 API_BASE_URL = os.getenv("API_BASE_URL", "http://backend:8000/api/v1")
 
 # URL pour le navigateur de l'utilisateur (Externe - utilisé pour l'Iframe PDF et les téléchargements)
-# Sur votre machine locale, c'est localhost. En production, ce sera l'IP du serveur.
 EXTERNAL_API_BASE_URL = "http://localhost:8000/api/v1"
 
 # --- 1. AUTHENTIFICATION ---
@@ -22,6 +21,7 @@ def login_user(email, password) -> Tuple[int, Dict]:
     except Exception as e:
         return 503, {"detail": f"Backend unreachable: {str(e)}"}
 
+
 # --- 2. GESTION DES SESSIONS ---
 
 def get_sessions(token: str) -> List[Dict]:
@@ -33,6 +33,7 @@ def get_sessions(token: str) -> List[Dict]:
         return response.json() if response.status_code == 200 else []
     except:
         return []
+
 
 # --- 3. UPLOAD ET INGESTION ---
 
@@ -46,11 +47,11 @@ def upload_paired_documents(session_id: str, cv_file, tr_file, token: str) -> Tu
         "transcript": (tr_file.name, tr_file.getvalue(), tr_file.type)
     }
     try:
-        # Timeout long car l'upload de gros PDF peut prendre du temps
         response = requests.post(url, params=params, headers=headers, files=files, timeout=60)
         return response.status_code, response.json()
     except Exception as e:
         return 500, {"detail": str(e)}
+
 
 # --- 4. CONSULTATION DES CANDIDATS ---
 
@@ -65,6 +66,7 @@ def get_applicants(session_id: str, token: str) -> Tuple[int, List]:
     except:
         return 500, []
 
+
 def get_applicant_detail(applicant_id: str, token: str) -> Optional[Dict]:
     """Récupère le profil complet (métriques + publications) d'un candidat."""
     url = f"{API_BASE_URL}/applicants/{applicant_id}"
@@ -75,6 +77,7 @@ def get_applicant_detail(applicant_id: str, token: str) -> Optional[Dict]:
     except:
         return None
 
+
 def get_multiple_applicants(applicant_ids: List[str], token: str) -> List[Dict]:
     """Récupère une liste de détails candidats (utile pour la comparaison)."""
     results = []
@@ -83,6 +86,7 @@ def get_multiple_applicants(applicant_ids: List[str], token: str) -> List[Dict]:
         if data:
             results.append(data)
     return results
+
 
 # --- 5. CORRECTIONS MANUELLES ---
 
@@ -95,6 +99,62 @@ def update_applicant_metrics(applicant_id: str, metrics_dict: Dict, token: str) 
         return response.status_code == 200
     except:
         return False
+
+
+# ============================================================================
+# 5.bis PUBLICATION MANAGEMENT FUNCTIONS (NOUVEAU)
+# ============================================================================
+
+def update_publication(publication_id: str, data: dict, token: str) -> bool:
+    """Met à jour une publication existante."""
+    url = f"{API_BASE_URL}/publications/{publication_id}"
+    headers = {"Authorization": f"Bearer {token}"}
+    try:
+        response = requests.put(url, json=data, headers=headers, timeout=10)
+        return response.status_code == 200
+    except Exception as e:
+        st.error(f"Error updating publication: {e}")
+        return False
+
+
+def delete_publication(publication_id: str, token: str) -> bool:
+    """Supprime une publication."""
+    url = f"{API_BASE_URL}/publications/{publication_id}"
+    headers = {"Authorization": f"Bearer {token}"}
+    try:
+        response = requests.delete(url, headers=headers, timeout=10)
+        return response.status_code == 200
+    except Exception as e:
+        st.error(f"Error deleting publication: {e}")
+        return False
+
+
+def add_publication(applicant_id: str, publication_data: dict, token: str) -> bool:
+    """Ajoute une nouvelle publication à un candidat."""
+    url = f"{API_BASE_URL}/publications"
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    payload = {"applicant_id": applicant_id, **publication_data}
+    try:
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
+        return response.status_code == 201
+    except Exception as e:
+        st.error(f"Error adding publication: {e}")
+        return False
+
+
+def get_publications(applicant_id: str, token: str) -> list:
+    """Récupère toutes les publications d'un candidat."""
+    url = f"{API_BASE_URL}/applicants/{applicant_id}/publications"
+    headers = {"Authorization": f"Bearer {token}"}
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        if response.status_code == 200:
+            return response.json()
+        return []
+    except Exception as e:
+        st.error(f"Error fetching publications: {e}")
+        return []
+
 
 # --- 6. MOTEUR DE CLASSEMENT (RANKING) ---
 
@@ -113,6 +173,7 @@ def create_ranking_config(session_id: str, name: str, weights: Dict, token: str)
     except:
         return None
 
+
 def trigger_ranking_computation(session_id: str, config_id: str, token: str) -> Tuple[int, Optional[Dict]]:
     """Déclenche le calcul réel du score et du rang pour tous les candidats."""
     url = f"{API_BASE_URL}/ranking"
@@ -124,6 +185,7 @@ def trigger_ranking_computation(session_id: str, config_id: str, token: str) -> 
     except:
         return 500, None
 
+
 def get_latest_ranking_results(session_id: str, token: str) -> Optional[Dict]:
     """Récupère le dernier snapshot de classement calculé."""
     url = f"{API_BASE_URL}/ranking/latest"
@@ -134,6 +196,7 @@ def get_latest_ranking_results(session_id: str, token: str) -> Optional[Dict]:
         return response.json() if response.status_code == 200 else None
     except:
         return None
+
 
 # --- 7. AUDIT ET EXPORTS ---
 
@@ -147,6 +210,7 @@ def get_audit_logs(session_id: str, token: str) -> List[Dict]:
         return response.json() if response.status_code == 200 else []
     except:
         return []
+
 
 def get_export_url(session_id: str) -> str:
     """Génère l'URL de téléchargement direct du fichier Excel (Browser-side)."""

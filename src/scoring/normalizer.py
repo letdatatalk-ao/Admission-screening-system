@@ -3,11 +3,7 @@ from dataclasses import dataclass, field
 from typing import Optional, List
 
 def to_float(val, default: Optional[float] = None) -> Optional[float]:
-    """
-    Convertit Decimal, None, str → float Python.
-    
-    FIX: Si default=None, retourne None pour les valeurs manquantes (au lieu de 0.0)
-    """
+    """Convertit Decimal, None, str → float Python."""
     if val is None:
         return default
     try:
@@ -30,6 +26,7 @@ class NormAcademic:
     gpa: NormGPA
     qs_score: float
     academic_score: float
+    missing: bool = False  
 
 
 @dataclass
@@ -50,63 +47,86 @@ class NormCandidate:
 
 def normalise_gpa_to_4(raw: Optional[float], scale: Optional[float]) -> Optional[float]:
     """
-    Utilisé par le pipeline pour transformer les données brutes LLM.
+    Transforme les données brutes LLM en GPA normalisé sur 4.0.
     
-    FIX: Retourne None si raw ou scale est None (au lieu de 0.0)
+    FIX: Plafonne la valeur à 4.0 pour éviter les erreurs PostgreSQL
     """
     if raw is None or scale is None:
         return None
-    
     r = to_float(raw)
     s = to_float(scale, 4.0)
-    
     if r is None or s is None or s <= 0:
         return None
     
-    return round((r / s) * 4.0, 3)
+    # Calcul du GPA normalisé
+    gpa_normalised = (r / s) * 4.0
+    
+    # FIX: Plafonner à 4.0 (évite les valeurs > 4.0 comme 8.833)
+    gpa_normalised = min(gpa_normalised, 4.0)
+    
+    # FIX: Arrondir à 3 décimales pour correspondre à NUMERIC(4,3)
+    return round(gpa_normalised, 3)
+
+
+# Constantes pour la normalisation QS
+QS_MAX_RANK = 1500
+QS_DEFAULT_SCORE = 5.0
+
+
+def normalise_qs_score(rank: Optional[float]) -> float:
+    """Convertit un rang QS en score normalisé (0-100)."""
+    if rank is None or rank <= 0:
+        return QS_DEFAULT_SCORE
+    score = max(0.0, 100.0 - (rank - 1.0) * (100.0 / QS_MAX_RANK))
+    return round(score, 2)
 
 
 def norm_academic_from_db(gpa_raw, gpa_scale, qs_rank) -> NormAcademic:
     """
     Normalise les données académiques depuis la base de données.
+    
+    FIX: La valeur GPA normalisée est maintenant correctement plafonnée
     """
     raw = to_float(gpa_raw)
     scale = to_float(gpa_scale, 4.0)
     rank = to_float(qs_rank)
     
-    # Calcul GPA normalisé (0-1)
     gpa_norm = 0.0
     needs_review = False
     missing = (raw is None)
     
     if raw is not None and scale is not None and scale > 0:
-        gpa_norm = round((raw / scale), 4)
-        # Si GPA normalisé > 1.0, c'est suspect (ex: GPA sur 20 converti en 4 sans ajustement)
-        needs_review = (gpa_norm > 1.01)
-        gpa_norm = min(gpa_norm, 1.0)  # Cap à 1.0
+        # Calcul du GPA normalisé sur 4.0
+        gpa_calc = (raw / scale) * 4.0
+        
+        # FIX: Plafonner à 4.0 (évite les valeurs comme 8.833)
+        gpa_calc = min(gpa_calc, 4.0)
+        
+        # Normaliser sur 0-1 pour le scoring
+        gpa_norm = round(gpa_calc / 4.0, 4)
+        
+        # Vérifier si la valeur est suspecte (GPA > 4.0 avant plafonnement)
+        raw_gpa_calc = (raw / scale) * 4.0
+        needs_review = (raw_gpa_calc > 4.1)
     
     n_gpa = NormGPA(gpa_score=gpa_norm, missing=missing, needs_review=needs_review)
+    qs_score = normalise_qs_score(rank)
+    qs_normalised = qs_score / 100.0
+    academic_score = round(n_gpa.gpa_score * 60.0 + qs_normalised * 40.0, 3)
     
-    # Calcul score QS (0-100)
-    qs_score = 15.0  # Valeur par défaut pour université non classée
-    if rank is not None and rank > 0:
-        # Formule: rank 1 → 100, rank 100 → 91, rank 1000 → 10
-        qs_score = round(max(10.0, 100.0 - (rank - 1.0) * 0.09), 2)
-    
-    # Score académique composite (60% GPA, 40% QS)
-    academic_score = round(n_gpa.gpa_score * 60.0 + qs_score * 0.40, 3)
-    
-    return NormAcademic(gpa=n_gpa, qs_score=qs_score, academic_score=academic_score)
+    return NormAcademic(
+        gpa=n_gpa, 
+        qs_score=qs_score, 
+        academic_score=academic_score,
+        missing=missing
+    )
 
 
 def normalise_candidate(m, db_pubs: list) -> NormCandidate:
-    """
-    Normalise un candidat complet avec ses publications.
-    """
+    """Normalise un candidat complet avec ses publications."""
     bsc = norm_academic_from_db(m.bsc_gpa_raw, m.bsc_gpa_scale, m.bsc_qs_rank)
     msc = norm_academic_from_db(m.msc_gpa_raw, m.msc_gpa_scale, m.msc_qs_rank)
     
-    # Calcul des scores de publications
     j_tot = 0.0
     c_tot = 0.0
     
@@ -119,22 +139,30 @@ def normalise_candidate(m, db_pubs: list) -> NormCandidate:
             scopus = to_float(p.scopus_pct_at_extraction, 0.0)
             if scopus is None:
                 scopus = 0.0
-            j_tot += contrib * scopus
+            j_tot += contrib * (scopus / 100.0)
         elif p.pub_type == "conference":
             core = to_float(p.core_score_at_extraction, 0.0)
             if core is None:
                 core = 0.0
-            c_tot += contrib * (core / 10.0)  # Normalise core score (0-10) → (0-1)
+            c_tot += contrib * (core / 10.0)
     
-    # Normalisation des scores (max 100)
-    j_score = round(min(j_tot * 100, 100), 2) if j_tot > 0 else 0.0
-    c_score = round(min(c_tot * 100, 100), 2) if c_tot > 0 else 0.0
+    journal_count = len([p for p in db_pubs if p.pub_type == "journal"])
+    conference_count = len([p for p in db_pubs if p.pub_type == "conference"])
     
-    # Champs manquants
+    if journal_count > 0:
+        j_score = round(min(j_tot / journal_count * 100, 100), 2)
+    else:
+        j_score = 0.0
+    
+    if conference_count > 0:
+        c_score = round(min(c_tot / conference_count * 100, 100), 2)
+    else:
+        c_score = 0.0
+    
     missing = []
     if bsc.gpa.missing:
         missing.append("bsc_gpa")
-    if msc.gpa.missing and not msc.missing:  # Si MSc présent mais GPA manquant
+    if msc.gpa.missing and not msc.missing:
         missing.append("msc_gpa")
     
     needs_review = bsc.gpa.needs_review or msc.gpa.needs_review or len(missing) > 0
@@ -142,8 +170,8 @@ def normalise_candidate(m, db_pubs: list) -> NormCandidate:
     return NormCandidate(
         bsc=bsc,
         msc=msc,
-        journals=NormPublication(normalised_score=j_score, count=len([p for p in db_pubs if p.pub_type == "journal"])),
-        conferences=NormPublication(normalised_score=c_score, count=len([p for p in db_pubs if p.pub_type == "conference"])),
+        journals=NormPublication(normalised_score=j_score, count=journal_count),
+        conferences=NormPublication(normalised_score=c_score, count=conference_count),
         needs_review=needs_review,
         missing_fields=missing
     )

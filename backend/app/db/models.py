@@ -235,12 +235,12 @@ class Publication(Base):
     extraction_source: Mapped[str] = mapped_column(
         String(10), default="nlp")
 
+    venue: Mapped[Optional["Venue"]] = relationship("Venue", foreign_keys=[venue_id])
+
     __table_args__ = (
         Index("idx_publications_applicant", "applicant_id"),
         Index("idx_publications_venue", "venue_id"),
     )
-
-
 class RankingConfig(Base):
     __tablename__ = "ranking_configs"
 

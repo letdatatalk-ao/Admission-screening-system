@@ -5,8 +5,8 @@ import uuid
 
 st.set_page_config(page_title="Mass Upload - KU Screening", layout="wide")
 
-st.title("🚀 Smart Mass Document Upload")
-st.info("💡 **Instructions:** Drop all your files together. The system matches '[ID] CV' with '[ID] T'. If a file is missing, you can upload it specifically for that candidate below.")
+st.title(" Smart Mass Document Upload")
+st.info(" **Instructions:** Drop all your files together. The system matches '[ID] CV' with '[ID] T'. If a file is missing, you can upload it specifically for that candidate below.")
 
 if "token" not in st.session_state:
     st.error("Please login first on the Home page.")
@@ -45,7 +45,7 @@ selected_session = st.selectbox("Target Session", options=list(session_options.k
 session_id = session_options[selected_session]
 
 # --- 3. ZONE D'UPLOAD MASSIF ---
-st.subheader("📁 1. Bulk Upload (Drop everything here)")
+st.subheader(" 1. Bulk Upload (Drop everything here)")
 bulk_files = st.file_uploader("Drag and drop all CVs and Transcripts", accept_multiple_files=True, type=['pdf', 'docx'])
 
 if bulk_files:
@@ -54,7 +54,7 @@ if bulk_files:
 
 # --- 4. ANALYSE ET AFFICHAGE DES PAIRES ---
 st.divider()
-st.subheader("🔍 2. Pairing Analysis & Fixes")
+st.subheader(" 2. Pairing Analysis & Fixes")
 
 matched_list = []
 incomplete_list = []
@@ -75,14 +75,14 @@ for fid in sorted(st.session_state.upload_registry.keys()):
 
 # --- AFFICHAGE DES COMPLETS ---
 if matched_list:
-    st.success(f"✅ {len(matched_list)} complete pairs ready.")
+    st.success(f" {len(matched_list)} complete pairs ready.")
     st.table(pd.DataFrame(matched_list)[["ID", "CV File", "Transcript File"]])
 else:
     st.info("No complete pairs yet.")
 
 # --- AFFICHAGE DES INCOMPLETS (AVEC BOUTONS DE FIX) ---
 if incomplete_list:
-    st.warning(f"⚠️ {len(incomplete_list)} candidates have missing files.")
+    st.warning(f" {len(incomplete_list)} candidates have missing files.")
     
     for fid in incomplete_list:
         docs = st.session_state.upload_registry[fid]
@@ -92,8 +92,8 @@ if incomplete_list:
             st.markdown(f"**ID: {fid}**")
         
         with col_status:
-            if not docs["cv"]: st.error("❌ Missing CV")
-            if not docs["tr"]: st.error("❌ Missing Transcript")
+            if not docs["cv"]: st.error(" Missing CV")
+            if not docs["tr"]: st.error(" Missing Transcript")
             
         with col_fix:
             label = "Upload CV" if not docs["cv"] else "Upload Transcript"
@@ -118,7 +118,7 @@ with col_btn:
             status_code, response = upload_paired_documents(
                 session_id, pair['cv_obj'], pair['tr_obj'], st.session_state.token
             )
-            results.append({"ID": pair['ID'], "Status": "✅ Success" if status_code == 200 else "❌ Failed"})
+            results.append({"ID": pair['ID'], "Status": "Success" if status_code == 200 else "❌ Failed"})
             progress_bar.progress((i + 1) / len(matched_list))
         
         status_text.success("🏁 Batch processing complete!")

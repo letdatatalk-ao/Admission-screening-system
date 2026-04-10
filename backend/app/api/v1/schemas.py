@@ -51,7 +51,7 @@ class RankingConfigRead(RankingConfigRequest):
 class DocumentRead(BaseModel):
     id: UUID
     applicant_id: UUID
-    document_type: str  # cv | transcript
+    document_type: str
     file_type: str
     original_filename: str
     ocr_quality_score: Optional[float] = None
@@ -59,21 +59,18 @@ class DocumentRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 class MetricsRead(BaseModel):
-    applicant_id: UUID
-    # BSc — complet
+    applicant_id: Optional[UUID] = None
     bsc_uni_name: Optional[str] = None
     bsc_qs_rank: Optional[int] = None
     bsc_gpa_raw: Optional[float] = None
     bsc_gpa_scale: Optional[float] = None
     bsc_gpa_normalised: Optional[float] = None
-    # MSc — complet
     msc_uni_name: Optional[str] = None
     msc_qs_rank: Optional[int] = None
     msc_gpa_raw: Optional[float] = None
     msc_gpa_scale: Optional[float] = None
     msc_gpa_normalised: Optional[float] = None
     msc_absent: Optional[bool] = False
-    # Méta extraction
     global_confidence: float = 0.0
     llm_used: bool = False
     extraction_source_detail: Optional[Dict[str, Any]] = None
@@ -93,6 +90,7 @@ class PublicationRead(BaseModel):
     contribution_score: float = 0.0
     scopus_pct_at_extraction: Optional[float] = None
     core_score_at_extraction: Optional[int] = None
+    venue_name: Optional[str] = None  # ✅ AJOUTÉ
     model_config = ConfigDict(from_attributes=True)
 
 # --- 5. CANDIDATS (VUES DASHBOARD ET DÉTAILS) ---
@@ -107,32 +105,54 @@ class ApplicantRead(BaseModel):
     pairing_complete: bool
     last_composite_score: Optional[float] = None
     last_rank: Optional[int] = None
-    # BSc — complet
     bsc_uni_name: Optional[str] = None
     bsc_qs_rank: Optional[int] = None
     bsc_gpa_raw: Optional[float] = None
     bsc_gpa_scale: Optional[float] = None
     bsc_gpa_normalised: Optional[float] = None
-    # MSc — complet
     msc_uni_name: Optional[str] = None
     msc_qs_rank: Optional[int] = None
     msc_gpa_raw: Optional[float] = None
     msc_gpa_scale: Optional[float] = None
     msc_gpa_normalised: Optional[float] = None
     msc_absent: Optional[bool] = False
-    # Méta extraction
     global_confidence: Optional[float] = 0.0
     llm_used: Optional[bool] = False
     model_used: Optional[str] = None
     pub_count: int = 0
     model_config = ConfigDict(from_attributes=True)
 
-class ApplicantDetail(ApplicantRead):
-    cv_document_id: Optional[UUID] = None
-    transcript_document_id: Optional[UUID] = None
-    created_at: datetime
-    metrics: Optional[MetricsRead] = None
-    publications: List[PublicationRead] = []
+class ApplicantDetail(BaseModel):
+    id: str
+    application_ref: Optional[str] = None
+    full_name: str
+    email: Optional[str] = None
+    nationality: Optional[str] = None
+    status: str
+    needs_human_review: bool
+    pairing_complete: Optional[bool] = False
+    last_composite_score: Optional[float] = None
+    last_rank: Optional[int] = None
+    bsc_uni_name: Optional[str] = None
+    bsc_qs_rank: Optional[int] = None
+    bsc_gpa_raw: Optional[float] = None
+    bsc_gpa_scale: Optional[float] = None
+    bsc_gpa_normalised: Optional[float] = None
+    msc_uni_name: Optional[str] = None
+    msc_qs_rank: Optional[int] = None
+    msc_gpa_raw: Optional[float] = None
+    msc_gpa_scale: Optional[float] = None
+    msc_gpa_normalised: Optional[float] = None
+    msc_absent: Optional[bool] = False
+    global_confidence: Optional[float] = 0.0
+    llm_used: Optional[bool] = False
+    model_used: Optional[str] = None
+    pub_count: Optional[int] = 0
+    cv_document_id: Optional[str] = None
+    transcript_document_id: Optional[str] = None
+    created_at: Optional[datetime] = None
+    metrics: Optional[Dict[str, Any]] = None
+    publications: List[Dict[str, Any]] = []
     model_config = ConfigDict(from_attributes=True)
 
 # --- 6. RÉSULTATS ET AUDIT ---

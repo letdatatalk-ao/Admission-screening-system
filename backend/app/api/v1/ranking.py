@@ -8,12 +8,15 @@ from sqlalchemy import select
 
 from backend.app.db.database import get_db
 from backend.app.db.models import Applicant, ExtractedMetrics, Publication, RankingConfig as DBRankingConfig
-from backend.app.db.repositories.scoring_repo import save_ranking_and_update_applicants, get_latest_ranking
+from backend.app.db.repositories.scoring_repo import save_ranking_and_update_applicants, get_latest_ranking, list_ranking_history
 from src.scoring.engine import compute_scores_batch, RankingConfig as EngineConfig
 from src.scoring.normalizer import normalise_candidate
 from src.scoring.ranker import rank
 
 router = APIRouter(tags=["Ranking"])
+
+# Verrou pour éviter les race conditions
+_calculating_sessions: set = set()
 
 
 @router.post("/ranking")
@@ -23,6 +26,11 @@ async def compute_ranking(
     db: AsyncSession = Depends(get_db)
 ):
     """Calcule le classement des candidats pour une session donnée."""
+    
+    session_key = str(session_id)
+    if session_key in _calculating_sessions:
+        raise HTTPException(409, "Ranking calculation already in progress for this session")
+    
     config_res = await db.execute(select(DBRankingConfig).where(DBRankingConfig.id == config_id))
     db_c = config_res.scalar_one_or_none()
     if not db_c:
@@ -40,49 +48,52 @@ async def compute_ranking(
     if not applicants:
         raise HTTPException(400, "No processed applicants found for this session")
 
-    engine_input = []
-    for app in applicants:
-        m_res = await db.execute(select(ExtractedMetrics).where(ExtractedMetrics.applicant_id == app.id))
-        m = m_res.scalar_one_or_none()
-        p_res = await db.execute(select(Publication).where(Publication.applicant_id == app.id))
-        db_p = p_res.scalars().all()
-        if m:
-            engine_input.append((normalise_candidate(m, list(db_p)), str(app.id), app.full_name))
-
-    # Calcul des scores
-    scoring_results = compute_scores_batch(engine_input, engine_cfg)
-    report = rank(scoring_results, session_id=str(session_id))
-
-    # Conversion en dict pour le repository
-    ranked_dicts = [{
-        "rank": r.rank,
-        "applicant_id": r.applicant_id,
-        "applicant_name": r.applicant_name,
-        "final_score": r.final_score,
-        "bsc_academic": r.bsc_academic,
-        "msc_academic": r.msc_academic,
-        "journal_score": r.journal_score,
-        "conf_score": r.conf_score,
-        "needs_review": r.needs_review,
-        "missing_fields": r.missing_fields,
-        "tiebreak_used": r.tiebreak_used,
-        "justification": r.justification,
-        "bsc_gpa_norm": r.bsc_gpa_norm,
-        "msc_gpa_norm": r.msc_gpa_norm,
-        "bsc_qs_score": r.bsc_qs_score,
-        "msc_qs_score": r.msc_qs_score
-    } for r in report.ranked]
-
-    ranking_log = await save_ranking_and_update_applicants(db, session_id, config_id, ranked_dicts)
-    await db.commit()
+    _calculating_sessions.add(session_key)
     
-    return {
-        "ranking_id": str(ranking_log.id), 
-        "total": report.total_candidates,
-        "generated_at": report.generated_at,
-        "score_stats": report.score_stats,
-        "needs_review_count": report.needs_review_count
-    }
+    try:
+        engine_input = []
+        for app in applicants:
+            m_res = await db.execute(select(ExtractedMetrics).where(ExtractedMetrics.applicant_id == app.id))
+            m = m_res.scalar_one_or_none()
+            p_res = await db.execute(select(Publication).where(Publication.applicant_id == app.id))
+            db_p = p_res.scalars().all()
+            if m:
+                engine_input.append((normalise_candidate(m, list(db_p)), str(app.id), app.full_name))
+
+        scoring_results = compute_scores_batch(engine_input, engine_cfg)
+        report = rank(scoring_results, session_id=str(session_id))
+
+        ranked_dicts = [{
+            "rank": r.rank,
+            "applicant_id": r.applicant_id,
+            "applicant_name": r.applicant_name,
+            "final_score": r.final_score,
+            "bsc_academic": r.bsc_academic,
+            "msc_academic": r.msc_academic,
+            "journal_score": r.journal_score,
+            "conf_score": r.conf_score,
+            "needs_review": r.needs_review,
+            "missing_fields": r.missing_fields,
+            "tiebreak_used": r.tiebreak_used,
+            "justification": r.justification,
+            "bsc_gpa_norm": r.bsc_gpa_norm,
+            "msc_gpa_norm": r.msc_gpa_norm,
+            "bsc_qs_score": r.bsc_qs_score,
+            "msc_qs_score": r.msc_qs_score
+        } for r in report.ranked]
+
+        ranking_log = await save_ranking_and_update_applicants(db, session_id, config_id, ranked_dicts)
+        await db.commit()
+        
+        return {
+            "ranking_id": str(ranking_log.id), 
+            "total": report.total_candidates,
+            "generated_at": report.generated_at,
+            "score_stats": report.score_stats,
+            "needs_review_count": report.needs_review_count
+        }
+    finally:
+        _calculating_sessions.discard(session_key)
 
 
 @router.get("/ranking/latest")
@@ -115,16 +126,53 @@ async def export_ranking_excel(
     latest_res = await get_latest_ranking(db, session_id)
     if not latest_res:
         raise HTTPException(404, "No ranking found for this session")
-
-    # Création du DataFrame à partir du snapshot JSONB
-    df = pd.DataFrame(latest_res.scores_snapshot)
     
-    # Création du fichier Excel en mémoire
+    df = pd.DataFrame(latest_res.scores_snapshot)
+    df = df.sort_values("rank")
+    
     output = io.BytesIO()
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-        df.to_excel(writer, index=False, sheet_name='Shortlist Official')
+        df.to_excel(writer, sheet_name='Shortlist', index=False)
+        
+        workbook = writer.book
+        worksheet = writer.sheets['Shortlist']
+        
+        header_format = workbook.add_format({'bold': True, 'bg_color': '#1E3A8A', 'font_color': 'white'})
+        score_format = workbook.add_format({'num_format': '0.00'})
+        review_format = workbook.add_format({'bg_color': '#FEE2E2'})
+        
+        worksheet.set_column('A:A', 8)
+        worksheet.set_column('B:B', 40)
+        worksheet.set_column('C:C', 12, score_format)
+        worksheet.set_column('D:H', 12, score_format)
+        
+        for col_num, value in enumerate(df.columns.values):
+            worksheet.write(0, col_num, value, header_format)
+        
+        if 'needs_review' in df.columns:
+            review_rows = df[df['needs_review'] == True].index.tolist()
+            for row in review_rows:
+                worksheet.set_row(row + 1, None, review_format)
+        
+        stats_df = pd.DataFrame([
+            {"Metric": "Total Candidates", "Value": len(df)},
+            {"Metric": "Needs Review", "Value": df['needs_review'].sum() if 'needs_review' in df.columns else 0},
+            {"Metric": "Average Score", "Value": df['final_score'].mean() if 'final_score' in df.columns else 0},
+            {"Metric": "Min Score", "Value": df['final_score'].min() if 'final_score' in df.columns else 0},
+            {"Metric": "Max Score", "Value": df['final_score'].max() if 'final_score' in df.columns else 0},
+            {"Metric": "Median Score", "Value": df['final_score'].median() if 'final_score' in df.columns else 0},
+        ])
+        stats_df.to_excel(writer, sheet_name='Statistics', index=False)
+        
+        if latest_res.config_id:
+            config_df = pd.DataFrame([
+                {"Parameter": "Session ID", "Value": str(session_id)},
+                {"Parameter": "Configuration ID", "Value": str(latest_res.config_id)},
+                {"Parameter": "Computed At", "Value": latest_res.computed_at.isoformat()},
+            ])
+            config_df.to_excel(writer, sheet_name='Configuration', index=False)
+    
     output.seek(0)
-
     headers = {'Content-Disposition': f'attachment; filename="Ranking_Report_{session_id}.xlsx"'}
     return StreamingResponse(
         output, 
@@ -140,8 +188,6 @@ async def get_ranking_history(
     db: AsyncSession = Depends(get_db)
 ):
     """Récupère l'historique des classements pour une session."""
-    from backend.app.db.repositories.scoring_repo import list_ranking_history
-    
     history = await list_ranking_history(db, session_id)
     
     return {

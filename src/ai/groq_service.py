@@ -111,39 +111,81 @@ class GroqOrchestrator:
         Previously using asyncio.gather() caused burst traffic → HTTP 429.
         """
         academic_prompt = f"""
-Extract academic information from CV and TRANSCRIPT.
-BSc is usually in CV, MSc in TRANSCRIPT.
+You are an academic transcript and CV parser. Extract BOTH Bachelor (BSc) and Master (MSc) degrees.
 
-Return JSON:
+IMPORTANT SOURCES:
+- BSc (Bachelor) information is in the CV (Education section)
+- MSc (Master) information is in the TRANSCRIPT
+
+Return ONLY a JSON object with these exact keys:
 {{
-  "bsc_uni": "<university name or null>",
-  "msc_uni": "<university name or null>",
-  "msc_gpa_raw": <float or null>,
-  "msc_gpa_scale": <float, default 4.0>
+  "bsc_uni": "<Bachelor university name or null>",
+  "msc_uni": "<Master university name or null>",
+  "msc_gpa_raw": <cumulative GPA as float, or null>,
+  "msc_gpa_scale": <denominator as float, default 4.0>
 }}
 
-CV: {cv_text[:3000]}
-TRANSCRIPT: {tr_text[:3000]}
+RULES FOR BSc (from CV only):
+- Look for: "Bachelor of Science", "BSc", "Bachelor's degree", "Licence", "B.S."
+- Extract the university name (e.g., "AlHosn University")
+- Do NOT look for BSc in the transcript
+
+RULES FOR MSc (from TRANSCRIPT only):
+- Look for: "Master of Science", "MSc", "Master's degree", "M.S."
+- Extract the university name (e.g., "New York University")
+- msc_gpa_scale: the denominator (e.g., 3.5/4.0 → 4.0 ; 14/20 → 20.0)
+- Cumulative GPA is usually near the end of the transcript
+- Do NOT look for MSc in the CV
+
+If a degree is not found, use null for all its fields.
+
+--- CV (Education section — BSc source) ---
+{cv_text[:3000]}
+
+--- TRANSCRIPT (MSc source only) ---
+{tr_text[:3000]}
 """
 
         research_prompt = f"""
-Extract publications from this CV.
-Return JSON: {{"publications": [...]}}
+You are a research publications extractor. Extract all academic publications from this CV.
+
+Return ONLY a JSON object with this exact structure:
+{{"publications": []}}
 
 Each publication object must have:
-  title   (string)
-  year    (integer or null — NEVER a string)
-  venue   (string)
-  authors (string)
+  "title"          : full title as a string
+  "year"           : publication year as an INTEGER (e.g., 2023) — NEVER a string, null if not found
+  "venue"          : journal or conference name as a string
+  "authors"        : full authors string as listed
+  "author_position": integer position of the candidate in the author list (1 = first author)
+  "total_authors"  : total number of authors as integer
 
-CV: {cv_text[:3500]}
+RULES:
+- Look in sections named: "Publications", "Research", "Papers", "Journal Articles", "Conference Papers"
+- If the section is absent or empty, return {{"publications": []}}
+- Never invent or guess publications not explicitly listed
+
+--- CV ---
+{cv_text[:3500]}
 """
 
         identity_prompt = f"""
-Extract personal identity from this CV.
-Return JSON: {{"full_name": "", "email": "", "nationality": ""}}
+You are a CV identity extractor. Extract the candidate's personal information from the CV header.
 
-CV: {cv_text[:1500]}
+Return ONLY a JSON object with these exact keys:
+{{
+  "full_name"  : "First and last name as written, or empty string",
+  "email"      : "email address or empty string",
+  "nationality": "nationality or country of origin if mentioned, or empty string"
+}}
+
+RULES:
+- full_name: look at the very top of the CV (name is usually the largest text)
+- email: look for @ symbol
+- nationality: look for "Nationality:", "Citizen of", or country mentions in the header
+
+--- CV ---
+{cv_text[:1500]}
 """
 
         logger.info("🧠 Groq sequential extraction (rate-limit safe)...")

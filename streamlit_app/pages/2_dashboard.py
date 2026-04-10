@@ -98,10 +98,6 @@ existing_cols = [c for c in display_map if c in df_filtered.columns]
 df_display = df_filtered[existing_cols].rename(columns=display_map)
 
 # Formater la confiance en %
-if "AI Confidence" in df_display.columns:
-    df_display["AI Confidence"] = df_display["AI Confidence"].apply(
-        lambda x: f"{x * 100:.1f}%" if pd.notna(x) else "N/A"
-    )
 
 # ── 6. Tableau principal ──────────────────────────────────────────────────────
 st.dataframe(
@@ -124,9 +120,6 @@ st.dataframe(
             min_value=0, max_value=1, format="%.3f"
         ),
         "Publications":   st.column_config.NumberColumn(format="%d"),
-        "MSc Absent":     st.column_config.CheckboxColumn(),
-        "LLM Used":       st.column_config.CheckboxColumn(),
-        "Review?":        st.column_config.CheckboxColumn(),
     }
 )
 
