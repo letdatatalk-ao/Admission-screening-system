@@ -98,7 +98,7 @@ async def compute_ranking(
 
         ranking_log = await save_ranking_and_update_applicants(db, session_id, config_id, ranked_dicts)
         await log_action(
-            db, action_type="ranking_computed", session_id=session_id,
+            db, action_type="COMPUTE_RANKING", session_id=session_id,
             user_id=current_user.get("id"), entity_type="ranking_result", entity_id=ranking_log.id,
             new_state={"config_id": str(config_id), "total": report.total_candidates},
         )

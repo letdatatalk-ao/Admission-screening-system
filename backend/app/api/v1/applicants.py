@@ -288,7 +288,7 @@ async def update_metrics(
     if new_state:
         await log_action(
             db,
-            action_type="manual_metrics_update",
+            action_type="MANUAL_CORRECTION",
             session_id=applicant.session_id,
             user_id=current_user.get("id"),
             entity_type="applicant",
@@ -371,7 +371,7 @@ async def update_publication_endpoint(
     await update_publication(db, publication_id, update_data)
     owner = await get_applicant(db, pub.applicant_id)
     await log_action(
-        db, action_type="publication_updated", session_id=owner.session_id if owner else None,
+        db, action_type="PUBLICATION_CORRECTION", session_id=owner.session_id if owner else None,
         user_id=current_user.get("id"), entity_type="publication", entity_id=publication_id,
         new_state=update_data,
     )
@@ -401,7 +401,7 @@ async def delete_publication_endpoint(
         raise HTTPException(404, "Publication not found")
 
     await log_action(
-        db, action_type="publication_deleted", session_id=session_id,
+        db, action_type="PUBLICATION_DELETED", session_id=session_id,
         user_id=current_user.get("id"), entity_type="publication", entity_id=publication_id,
         old_state={"applicant_id": str(applicant_id), "title": pub.title},
     )
@@ -457,7 +457,7 @@ async def create_publication(
     )
 
     await log_action(
-        db, action_type="publication_created", session_id=applicant.session_id,
+        db, action_type="PUBLICATION_CREATED", session_id=applicant.session_id,
         user_id=current_user.get("id"), entity_type="publication", entity_id=pub.id,
         new_state={"title": data.title, "pub_type": data.pub_type},
     )

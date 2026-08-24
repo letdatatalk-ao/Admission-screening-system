@@ -1,120 +1,114 @@
 import streamlit as st
 import pandas as pd
-import json
 from utils.api_client import get_sessions, get_audit_logs
+from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
 
-# Configuration de la page
-st.set_page_config(page_title="Audit Trail - KU Screening", layout="wide")
+st.set_page_config(page_title="Audit Trail — KU Screening", page_icon="🛡️", layout="wide", initial_sidebar_state="expanded")
+apply_theme()
+sidebar_nav(current_page="pages/6_audit.py")
+require_auth()
 
-st.title("🛡️ System Audit & Transparency")
-st.write("Complete history of system actions and human interventions.")
+st.title("System Audit and Transparency")
+institution_header("Tamper-Evident Action Log")
 
-if "token" not in st.session_state:
-    st.error("🔒 Please login on the Home page first.")
-    st.stop()
-
-# --- 1. FILTRES DE RECHERCHE ---
-st.sidebar.header("Filter Logs")
+# ── Sidebar filters ────────────────────────────────────────────────────────────
+st.sidebar.subheader("Filter Logs")
 sessions = get_sessions(st.session_state.token)
 
 if not sessions:
     st.warning("No active sessions found.")
     st.stop()
 
-session_options = {s['name']: s['id'] for s in sessions}
+session_options = {s["name"]: s["id"] for s in sessions}
 sel_session_name = st.sidebar.selectbox("Session", list(session_options.keys()))
 session_id = session_options[sel_session_name]
 
-# --- 2. RÉCUPÉRATION DES LOGS ---
+# ── Fetch audit logs ───────────────────────────────────────────────────────────
 logs = get_audit_logs(session_id, st.session_state.token)
 
 if not logs:
     st.info(f"No audit records found for session: {sel_session_name}")
-else:
-    df_logs = pd.DataFrame(logs)
+    st.stop()
 
-    # Nettoyage des colonnes pour l'affichage
-    # Conversion du timestamp en format lisible
-    df_logs['occurred_at'] = pd.to_datetime(df_logs['occurred_at']).dt.strftime('%Y-%m-%d %H:%M:%S')
+df_logs = pd.DataFrame(logs)
+df_logs["occurred_at"] = pd.to_datetime(df_logs["occurred_at"]).dt.strftime("%Y-%m-%d %H:%M:%S")
 
-    # --- 3. VUE D'ENSEMBLE (KPIs) ---
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Total Actions", len(df_logs))
-    
-    # On compte les corrections humaines
-    manual_fixes = len(df_logs[df_logs['action_type'].str.contains('CORRECTION|OVERRIDE', case=False, na=False)])
-    c2.metric("Human Corrections", manual_fixes)
-    
-    # On compte les uploads
-    uploads = len(df_logs[df_logs['action_type'].str.contains('UPLOAD', case=False, na=False)])
-    c3.metric("Document Batches", uploads)
+# ── KPI metrics ────────────────────────────────────────────────────────────────
+c1, c2, c3 = st.columns(3)
+c1.metric("Total Actions", len(df_logs))
 
-    st.divider()
+manual_fixes = len(
+    df_logs[df_logs["action_type"].str.contains("CORRECTION|OVERRIDE", case=False, na=False)]
+)
+c2.metric("Human Corrections", manual_fixes)
 
-    # --- 4. LE JOURNAL D'AUDIT INTERACTIF ---
-    st.subheader("📋 Chronological Activity Log")
-    
-    # Mapping des noms d'actions pour Mr Werghi
-    action_labels = {
-        "UPLOAD_PAIRED_DOCS": "📥 Batch Upload",
-        "MANUAL_CORRECTION": "✏️ Manual Override",
-        "COMPUTE_RANKING": "🏆 Ranking Generation",
-        "VIEW_DOCUMENT": "👁️ File Access",
-        "LOGIN": "🔑 User Login"
-    }
-    
-    # Appliquer le mapping si possible
-    df_display = df_logs.copy()
-    df_display['action_type'] = df_display['action_type'].map(lambda x: action_labels.get(x, x))
+uploads = len(df_logs[df_logs["action_type"].str.contains("UPLOAD", case=False, na=False)])
+c3.metric("Document Batches", uploads)
 
-    # Sélecteur de type d'action pour filtrer le tableau
-    all_actions = ["All Actions"] + list(df_display['action_type'].unique())
-    selected_action = st.selectbox("Filter by action type", all_actions)
+st.markdown("---")
 
-    if selected_action != "All Actions":
-        df_display = df_display[df_display['action_type'] == selected_action]
+# ── Action log ─────────────────────────────────────────────────────────────────
+st.subheader("Chronological Activity Log")
 
-    # Affichage du tableau principal
-    st.dataframe(
-        df_display[['occurred_at', 'action_type', 'user_id', 'entity_type', 'entity_id']],
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "occurred_at": "Timestamp",
-            "action_type": "Action",
-            "user_id": "Author (User ID)",
-            "entity_type": "Target",
-            "entity_id": "Object ID"
-        }
-    )
+action_labels = {
+    "UPLOAD_PAIRED_DOCS":     "Batch Upload",
+    "MANUAL_CORRECTION":      "Manual Override",
+    "COMPUTE_RANKING":        "Ranking Generation",
+    "VIEW_DOCUMENT":          "File Access",
+    "LOGIN":                  "User Login",
+    "PUBLICATION_CORRECTION": "Publication Edited",
+    "PUBLICATION_DELETED":    "Publication Removed",
+    "PUBLICATION_CREATED":    "Publication Added",
+}
 
-    # --- 5. DÉTAILS DE L'ACTION (L'inspecteur de JSON) ---
-    st.divider()
-    st.subheader("🔍 Deep Inspection")
-    st.write("Select a log entry ID below to see exactly what changed (JSON diff).")
+df_display = df_logs.copy()
+df_display["action_type"] = df_display["action_type"].map(lambda x: action_labels.get(x, x))
 
-    log_id_list = df_logs['id'].tolist()
-    selected_log_id = st.selectbox("Select Log ID to inspect", log_id_list)
+all_actions = ["All Actions"] + list(df_display["action_type"].unique())
+selected_action = st.selectbox("Filter by action type", all_actions)
 
-    if selected_log_id:
-        log_detail = df_logs[df_logs['id'] == selected_log_id].iloc[0]
-        
-        col_old, col_new = st.columns(2)
-        with col_old:
-            st.markdown("**Previous State:**")
-            st.json(log_detail.get('old_state') or {})
-        
-        with col_new:
-            st.markdown("**New State:**")
-            st.json(log_detail.get('new_state') or {})
+if selected_action != "All Actions":
+    df_display = df_display[df_display["action_type"] == selected_action]
 
-    # --- 6. BOUTON D'EXPORT LÉGAL ---
-    st.divider()
-    csv_audit = df_logs.to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="📥 Export Full Audit Trail (CSV)",
-        data=csv_audit,
-        file_name=f"audit_trail_{sel_session_name}.csv",
-        mime="text/csv",
-        help="Download this for official university compliance records."
-    )
+st.dataframe(
+    df_display[["occurred_at", "action_type", "user_id", "entity_type", "entity_id"]],
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "occurred_at":  "Timestamp",
+        "action_type":  "Action",
+        "user_id":      "User",
+        "entity_type":  "Target",
+        "entity_id":    "Object ID",
+    },
+)
+
+# ── Deep inspection ────────────────────────────────────────────────────────────
+st.markdown("---")
+st.subheader("Record Inspection")
+st.caption("Select a log entry to examine the before/after state of the changed record.")
+
+log_id_list = df_logs["id"].tolist()
+selected_log_id = st.selectbox("Log entry ID", log_id_list)
+
+if selected_log_id:
+    log_detail = df_logs[df_logs["id"] == selected_log_id].iloc[0]
+
+    col_old, col_new = st.columns(2)
+    with col_old:
+        st.markdown("**Previous State**")
+        st.json(log_detail.get("old_state") or {})
+    with col_new:
+        st.markdown("**New State**")
+        st.json(log_detail.get("new_state") or {})
+
+# ── Export ─────────────────────────────────────────────────────────────────────
+st.markdown("---")
+csv_audit = df_logs.to_csv(index=False).encode("utf-8")
+st.download_button(
+    label="Export Full Audit Trail (CSV)",
+    data=csv_audit,
+    file_name=f"audit_trail_{sel_session_name}.csv",
+    mime="text/csv",
+    help="Download for official university compliance records.",
+)
