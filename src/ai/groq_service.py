@@ -261,6 +261,12 @@ DEGREE TYPE RULES:
   Use the program's exit field for both bsc_field and msc_field.
 - If only a BSc is present (no postgraduate degree), set msc_present=false.
 - If the candidate is currently enrolled in an MSc (not yet graduated), set msc_present=true.
+- If the candidate holds TWO OR MORE separate Master's degrees, msc_uni/msc_field/msc_year/msc_gpa
+  hold only ONE of them — NEVER combine multiple universities/degrees into a single string
+  (e.g. never "Uni A; Uni B" or "Uni A and Uni B"). Pick whichever Master's is the strongest
+  admissions signal, in this priority order: (1) the one with a research component/thesis over
+  a coursework-only degree, (2) the more recent one, (3) the one at the higher-ranked university
+  if you can judge that. Report only that single degree's fields.
 
 GPA RULES:
 - "3.7/4.0" → raw=3.7, scale=4.0 | "17.5/20" → raw=17.5, scale=20.0 | "88%" → raw=88, scale=100
