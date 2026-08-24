@@ -91,7 +91,7 @@ with col_left:
         st.markdown(
             f'<iframe src="{EXTERNAL_API_BASE_URL}/files/{doc_id}" '
             'width="100%" height="860px" '
-            'style="border:1px solid #e0e6f0;border-radius:6px;"></iframe>',
+            'style="border:1px solid var(--color-divider);border-radius:4px;"></iframe>',
             unsafe_allow_html=True,
         )
     else:
@@ -226,18 +226,12 @@ with col_right:
                     pos    = pub.get("author_position") or "?"
                     tot    = pub.get("total_authors") or "?"
 
-                    badge_color = {"journal": "#1a2744", "conference": "#7c3aed",
-                                   "book_chapter": "#0891b2", "preprint": "#9ca3af"
-                                   }.get(pub.get("pub_type", ""), "#6b7a99")
-
                     col_t, col_b = st.columns([6, 1])
                     with col_t:
                         st.markdown(f"**{pub.get('title', 'Untitled')}**")
                     with col_b:
                         st.markdown(
-                            f'<span style="background:{badge_color};color:#fff;padding:2px 8px;'
-                            f'border-radius:4px;font-size:0.7rem;font-weight:600;">'
-                            f'{pub.get("pub_type","").upper()}</span>',
+                            f'<span class="tag tag-outline">{pub.get("pub_type","").upper()}</span>',
                             unsafe_allow_html=True,
                         )
 
@@ -248,11 +242,9 @@ with col_right:
                     # Rank badges
                     if scopus is not None:
                         q = "Q1" if scopus >= 75 else "Q2" if scopus >= 50 else "Q3" if scopus >= 25 else "Q4"
-                        q_color = {"Q1": "#10b981", "Q2": "#3b82f6", "Q3": "#f59e0b", "Q4": "#ef4444"}[q]
                         st.markdown(
-                            f'<span style="background:{q_color};color:#fff;padding:1px 6px;'
-                            f'border-radius:3px;font-size:0.68rem;font-weight:600;">{q}</span>'
-                            f' <span style="font-size:0.72rem;color:#6b7a99;">Scopus {scopus:.0f}th pct</span>',
+                            f'<span class="tag tag-accent">{q}</span>'
+                            f' <span class="num" style="font-size:0.72rem;color:rgba(32,31,29,.55);">Scopus {scopus:.0f}th pct</span>',
                             unsafe_allow_html=True,
                         )
                     if core is not None:

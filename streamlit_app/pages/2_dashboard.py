@@ -7,38 +7,33 @@ from utils.styles import apply_theme, institution_header, sidebar_nav, require_a
 st.set_page_config(page_title="Applicant Dashboard — KU Screening", page_icon="📊", layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 
-# Extra dashboard-specific styles
+# Extra dashboard-specific styles — Classical: hairline rows, no cards/shadows,
+# state read as text (italic) rather than colour-coded chips.
 st.markdown("""
 <style>
-/* Pipeline status card */
-.pipeline-card {
-    background:#ffffff;border:1px solid #e0e6f0;border-radius:8px;
-    padding:1rem 1.2rem;margin-bottom:0.6rem;
+.pipeline-row {
+    border-bottom:1px solid var(--color-divider);
+    padding:0.68rem 0.25rem;
     display:flex;align-items:center;gap:0.9rem;
 }
-.pulse { display:inline-block;width:10px;height:10px;border-radius:50%; }
-.pulse-orange  { background:#f59e0b;animation:pulse 1.2s infinite; }
-.pulse-blue    { background:#3b82f6;animation:pulse 1.2s infinite; }
-.pulse-green   { background:#10b981; }
-.pulse-red     { background:#ef4444; }
-@keyframes pulse {
-    0%,100% { opacity:1; transform:scale(1); }
-    50%      { opacity:.4; transform:scale(1.4); }
-}
+.pmark { display:inline-block;width:9px;height:9px;flex:none; }
+.pmark-processing { border-radius:50%;border:1.5px solid var(--color-accent);background:var(--color-accent); }
+.pmark-pending    { border-radius:50%;border:1.5px solid rgba(32,31,29,.45); }
+.pmark-error      { border:1.5px solid var(--color-text);transform:rotate(45deg); }
 /* Extraction card */
 .ext-section {
-    background:#f8fafc;border-left:3px solid #c8a028;
-    border-radius:0 6px 6px 0;padding:0.8rem 1rem;margin-bottom:0.6rem;
+    border-left:1px solid var(--color-divider);
+    padding:0.2rem 0 0.2rem 0.9rem;margin-bottom:0.6rem;
 }
-.ext-label { font-size:0.7rem;letter-spacing:.1em;text-transform:uppercase;color:#8a9ab5;font-weight:600; }
-.ext-value { font-size:1rem;color:#1a2744;font-weight:600;margin-top:0.15rem; }
-.ext-sub   { font-size:0.78rem;color:#6b7a99; }
-.conf-bar-wrap { background:#e8edf5;border-radius:4px;height:8px;overflow:hidden; }
-.conf-bar-fill { height:8px;border-radius:4px; }
+.ext-label { font-size:0.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(32,31,29,.48);font-family:'Lora',serif; }
+.ext-value { font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--color-text);font-weight:600;margin-top:0.1rem; }
+.ext-sub   { font-size:0.8rem;color:rgba(32,31,29,.68);font-family:'Lora',serif; }
+.conf-bar-wrap { background:var(--color-divider);border-radius:0;height:2px;overflow:hidden; }
+.conf-bar-fill { height:2px;border-radius:0; }
 /* Publication row */
 .pub-row {
-    background:#ffffff;border:1px solid #e8edf5;border-radius:6px;
-    padding:0.65rem 0.9rem;margin-bottom:0.4rem;
+    border-bottom:1px solid var(--color-divider);
+    padding:0.7rem 0.1rem;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -122,14 +117,13 @@ k7.metric("Need Review", n_review)
 if total > 0:
     pct = n_proc / total
     st.markdown(
-        f"""<div style="margin:0.4rem 0 1rem;">
-            <div style="font-size:0.72rem;color:#8a9ab5;margin-bottom:4px;">
-                Extraction progress — {n_proc}/{total} candidates processed ({pct*100:.0f}%)
+        f"""<div style="margin:0.6rem 0 1.2rem;display:flex;align-items:center;gap:14px;">
+            <div style="flex:1;height:2px;background:var(--color-divider);position:relative;">
+                <div style="position:absolute;left:0;top:0;width:{pct*100:.1f}%;height:2px;
+                            background:var(--color-accent);"></div>
             </div>
-            <div style="background:#e0e6f0;border-radius:6px;height:10px;overflow:hidden;">
-                <div style="width:{pct*100:.1f}%;height:10px;
-                            background:{'#10b981' if pct==1 else '#1a2744'};
-                            border-radius:6px;transition:width .4s;"></div>
+            <div class="num" style="font-size:0.72rem;color:rgba(32,31,29,.55);white-space:nowrap;">
+                {n_proc} of {total} extracted &middot; {pct*100:.0f}%
             </div>
         </div>""",
         unsafe_allow_html=True,
@@ -156,35 +150,35 @@ else:
         f"Processing: {n_running} &nbsp;|&nbsp; Pending: {n_pending} &nbsp;|&nbsp; Errors: {n_error}"
     )
 
-    # Per-candidate status cards
+    # Per-candidate status rows — state read as italic text, not colour-coded chips
     for _, row in active_df.iterrows():
         status = row.get("status", "pending")
         name   = row.get("full_name") or row.get("application_ref") or "Unknown"
         ref    = row.get("application_ref", "")
 
         if status == "processing":
-            dot   = '<span class="pulse pulse-orange"></span>'
-            label = '<span style="color:#b45309;font-weight:600;">Extracting with AI...</span>'
+            mark  = '<span class="pmark pmark-processing"></span>'
+            label = '<span style="font-style:italic;font-size:0.85rem;">Extracting with AI</span>'
         elif status == "pending":
-            dot   = '<span class="pulse pulse-blue"></span>'
-            label = '<span style="color:#3949ab;font-weight:600;">Queued</span>'
+            mark  = '<span class="pmark pmark-pending"></span>'
+            label = '<span style="font-style:italic;font-size:0.85rem;">Queued</span>'
         else:  # error
-            dot   = '<span class="pulse pulse-red"></span>'
+            mark  = '<span class="pmark pmark-error"></span>'
             err   = str(row.get("last_error", ""))[:80] if "last_error" in row else ""
-            label = f'<span style="color:#b71c1c;font-weight:600;">Error</span>' + (
-                f' <span style="color:#8a9ab5;font-size:0.78rem;">— {err}</span>' if err else ""
+            label = '<span style="font-style:italic;font-size:0.85rem;">Retrying</span>' + (
+                f' <span style="font-size:0.76rem;color:rgba(32,31,29,.5);">— {err}</span>' if err else ""
             )
 
         retry = int(row.get("retry_count", 0)) if "retry_count" in row.index else 0
         st.markdown(
-            f'<div class="pipeline-card">'
-            f'{dot}'
-            f'<div style="flex:1;">'
-            f'  <div style="font-weight:600;color:#1a2744;">{name}</div>'
-            f'  <div style="font-size:0.75rem;color:#8a9ab5;">{ref}</div>'
+            f'<div class="pipeline-row">'
+            f'{mark}'
+            f'<div style="flex:1;min-width:0;">'
+            f'  <div style="font-size:0.9rem;">{name}</div>'
+            f'  <div class="num" style="font-size:0.7rem;color:rgba(32,31,29,.45);">{ref}</div>'
             f'</div>'
-            f'<div style="text-align:right;">{label}'
-            f'  {"&nbsp; <span style=\"font-size:0.72rem;color:#8a9ab5;\">retry " + str(retry) + "</span>" if retry > 0 else ""}'
+            f'<div style="text-align:right;max-width:60%;">{label}'
+            f'  {"&nbsp; <span class=\"num\" style=\"font-size:0.72rem;color:rgba(32,31,29,.45);\">attempt " + str(retry) + " of 5</span>" if retry > 0 else ""}'
             f'</div></div>',
             unsafe_allow_html=True,
         )
@@ -293,27 +287,26 @@ conf    = float(metrics.get("global_confidence") or 0)
 
 # ── Confidence banner ──────────────────────────────────────────────────────────
 if conf >= 0.80:
-    conf_color, conf_label = "#10b981", "High confidence"
+    conf_color, conf_label = "var(--color-text)", "High confidence"
 elif conf >= 0.60:
-    conf_color, conf_label = "#f59e0b", "Medium confidence"
+    conf_color, conf_label = "var(--color-accent-700)", "Medium confidence"
 else:
-    conf_color, conf_label = "#ef4444", "Low confidence — review recommended"
+    conf_color, conf_label = "var(--color-accent-700)", "Low confidence — review recommended"
 
 st.markdown(
-    f"""<div style="background:#f8fafc;border:1px solid #e0e6f0;border-radius:8px;
-                    padding:0.9rem 1.2rem;margin-bottom:1rem;display:flex;
+    f"""<div style="border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);
+                    padding:0.9rem 0.1rem;margin-bottom:1rem;display:flex;
                     align-items:center;gap:1rem;">
         <div style="flex:1;">
-            <div style="font-size:0.72rem;color:#8a9ab5;text-transform:uppercase;
-                        letter-spacing:.08em;margin-bottom:2px;">AI Extraction Confidence</div>
+            <div class="ext-label" style="margin-bottom:5px;">AI Extraction Confidence</div>
             <div class="conf-bar-wrap" style="width:100%;">
                 <div class="conf-bar-fill" style="width:{conf*100:.1f}%;background:{conf_color};"></div>
             </div>
         </div>
-        <div style="font-size:1.4rem;font-weight:700;color:{conf_color};min-width:4rem;text-align:right;">
+        <div class="num" style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:{conf_color};min-width:4rem;text-align:right;">
             {conf*100:.0f}%
         </div>
-        <div style="font-size:0.82rem;color:{conf_color};min-width:10rem;">{conf_label}</div>
+        <div style="font-size:0.82rem;color:{conf_color};min-width:10rem;font-family:'Lora',serif;">{conf_label}</div>
     </div>""",
     unsafe_allow_html=True,
 )
@@ -369,7 +362,7 @@ with col_bsc:
         f'<div class="ext-sub">{gpa_str}</div>'
         f'<div class="ext-label" style="margin-top:.5rem;">Normalised GPA (0–1)</div>'
         f'<div class="conf-bar-wrap" style="margin-top:4px;">'
-        f'  <div class="conf-bar-fill" style="width:{bsc_norm*100:.1f}%;background:#1a2744;"></div>'
+        f'  <div class="conf-bar-fill" style="width:{bsc_norm*100:.1f}%;background:var(--color-accent);"></div>'
         f'</div>'
         f'<div class="ext-sub" style="text-align:right;">{bsc_norm:.3f}</div>'
         f'</div>',
@@ -381,7 +374,7 @@ with col_msc:
     st.markdown("**Master (MSc)**")
     if metrics.get("msc_absent"):
         st.markdown(
-            '<div class="ext-section"><div class="ext-sub" style="color:#8a9ab5;">'
+            '<div class="ext-section"><div class="ext-sub" style="color:rgba(32,31,29,.5);">'
             'No Master degree recorded.</div></div>',
             unsafe_allow_html=True,
         )
@@ -406,7 +399,7 @@ with col_msc:
             f'<div class="ext-sub">{gpa_str}</div>'
             f'<div class="ext-label" style="margin-top:.5rem;">Normalised GPA (0–1)</div>'
             f'<div class="conf-bar-wrap" style="margin-top:4px;">'
-            f'  <div class="conf-bar-fill" style="width:{msc_norm*100:.1f}%;background:#1a2744;"></div>'
+            f'  <div class="conf-bar-fill" style="width:{msc_norm*100:.1f}%;background:var(--color-accent);"></div>'
             f'</div>'
             f'<div class="ext-sub" style="text-align:right;">{msc_norm:.3f}</div>'
             f'</div>',
@@ -473,33 +466,29 @@ else:
         pos      = pub.get("author_position") or "?"
         tot      = pub.get("total_authors") or "?"
         first    = pos == 1 or pos == "1"
-        tag_color = "#1a2744" if pub_type == "Journal" else "#7c3aed"
 
         st.markdown(
             f'<div class="pub-row">'
             f'  <div style="display:flex;justify-content:space-between;align-items:flex-start;">'
             f'    <div style="flex:1;margin-right:1rem;">'
-            f'      <div style="font-weight:600;color:#1a2744;font-size:0.88rem;">'
+            f'      <div style="font-size:0.92rem;">'
             f'        {pub.get("title") or "Untitled"}'
             f'      </div>'
-            f'      <div style="font-size:0.76rem;color:#6b7a99;margin-top:2px;">'
+            f'      <div class="num" style="font-size:0.76rem;color:rgba(32,31,29,.55);margin-top:2px;">'
             f'        {pub.get("venue_name") or "Unknown venue"} &nbsp;·&nbsp; {pub.get("year") or "N/A"}'
             f'      </div>'
             f'    </div>'
             f'    <div style="text-align:right;white-space:nowrap;">'
-            f'      <span style="background:{tag_color};color:#fff;padding:2px 7px;'
-            f'                   border-radius:4px;font-size:0.7rem;font-weight:600;">'
-            f'        {pub_type}</span>'
-            f'      {"&nbsp;<span style=\"background:#10b981;color:#fff;padding:2px 7px;border-radius:4px;font-size:0.7rem;\">1st Author</span>" if first else ""}'
+            f'      <span class="tag tag-outline">{pub_type}</span>'
+            f'      {"&nbsp;<span class=\"tag tag-accent\">1st author</span>" if first else ""}'
             f'    </div>'
             f'  </div>'
-            f'  <div style="margin-top:6px;display:flex;align-items:center;gap:0.6rem;">'
-            f'    <div style="font-size:0.72rem;color:#8a9ab5;">Author {pos}/{tot}</div>'
-            f'    <div style="flex:1;background:#e8edf5;border-radius:3px;height:5px;">'
-            f'      <div style="width:{contrib*100:.0f}%;height:5px;'
-            f'                  background:#c8a028;border-radius:3px;"></div>'
+            f'  <div style="margin-top:8px;display:flex;align-items:center;gap:0.6rem;">'
+            f'    <div class="num" style="font-size:0.72rem;color:rgba(32,31,29,.5);">Author {pos}/{tot}</div>'
+            f'    <div style="flex:1;background:var(--color-divider);height:2px;">'
+            f'      <div style="width:{contrib*100:.0f}%;height:2px;background:var(--color-accent);"></div>'
             f'    </div>'
-            f'    <div style="font-size:0.72rem;color:#8a9ab5;">Contribution {contrib*100:.0f}%</div>'
+            f'    <div class="num" style="font-size:0.72rem;color:rgba(32,31,29,.5);">Contribution {contrib*100:.0f}%</div>'
             f'  </div>'
             f'</div>',
             unsafe_allow_html=True,
