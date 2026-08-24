@@ -12,7 +12,7 @@ from utils.api_client import (
 )
 from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
 
-st.set_page_config(page_title="Review & Validate — KU Screening", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Review & Validate — KU Screening", page_icon="✅", layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 sidebar_nav(current_page="pages/3_review.py")
 require_auth()

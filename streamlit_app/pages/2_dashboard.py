@@ -4,7 +4,7 @@ import pandas as pd
 from utils.api_client import get_sessions, get_applicants, get_applicant_detail, create_session
 from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
 
-st.set_page_config(page_title="Applicant Dashboard — KU Screening", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Applicant Dashboard — KU Screening", page_icon="📊", layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 
 # Extra dashboard-specific styles
