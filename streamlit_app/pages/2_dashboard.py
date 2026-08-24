@@ -1,140 +1,506 @@
+import time
 import streamlit as st
 import pandas as pd
-from utils.api_client import get_sessions, get_applicants
+from utils.api_client import get_sessions, get_applicants, get_applicant_detail, create_session
+from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
 
-st.set_page_config(page_title="Applicants Dashboard", layout="wide")
-st.title("Applicants Dashboard")
+st.set_page_config(page_title="Applicant Dashboard — KU Screening", layout="wide", initial_sidebar_state="expanded")
+apply_theme()
 
-if "token" not in st.session_state:
-    st.error("Authentication required. Please login on the Home page.")
-    st.stop()
+# Extra dashboard-specific styles
+st.markdown("""
+<style>
+/* Pipeline status card */
+.pipeline-card {
+    background:#ffffff;border:1px solid #e0e6f0;border-radius:8px;
+    padding:1rem 1.2rem;margin-bottom:0.6rem;
+    display:flex;align-items:center;gap:0.9rem;
+}
+.pulse { display:inline-block;width:10px;height:10px;border-radius:50%; }
+.pulse-orange  { background:#f59e0b;animation:pulse 1.2s infinite; }
+.pulse-blue    { background:#3b82f6;animation:pulse 1.2s infinite; }
+.pulse-green   { background:#10b981; }
+.pulse-red     { background:#ef4444; }
+@keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:.4; transform:scale(1.4); }
+}
+/* Extraction card */
+.ext-section {
+    background:#f8fafc;border-left:3px solid #c8a028;
+    border-radius:0 6px 6px 0;padding:0.8rem 1rem;margin-bottom:0.6rem;
+}
+.ext-label { font-size:0.7rem;letter-spacing:.1em;text-transform:uppercase;color:#8a9ab5;font-weight:600; }
+.ext-value { font-size:1rem;color:#1a2744;font-weight:600;margin-top:0.15rem; }
+.ext-sub   { font-size:0.78rem;color:#6b7a99; }
+.conf-bar-wrap { background:#e8edf5;border-radius:4px;height:8px;overflow:hidden; }
+.conf-bar-fill { height:8px;border-radius:4px; }
+/* Publication row */
+.pub-row {
+    background:#ffffff;border:1px solid #e8edf5;border-radius:6px;
+    padding:0.65rem 0.9rem;margin-bottom:0.4rem;
+}
+</style>
+""", unsafe_allow_html=True)
 
-# ── 1. Sélection de la Session ──────────────────────────────────────────────
+sidebar_nav(current_page="pages/2_dashboard.py")
+require_auth()
+
+st.title("Applicant Dashboard")
+institution_header("Pipeline Monitor & Extraction Results")
+
+# ── Session selection / creation ───────────────────────────────────────────────
 sessions = get_sessions(st.session_state.token)
+
 if not sessions:
-    st.warning("No evaluation sessions available.")
+    st.warning("No evaluation sessions exist yet.")
+    with st.expander("Create New Admission Session", expanded=True):
+        with st.form("create_session_form"):
+            col_n, col_y, col_q = st.columns(3)
+            s_name    = col_n.text_input("Session Name", placeholder="Fall 2025 Admissions")
+            s_year    = col_y.text_input("Academic Year", placeholder="2025-2026")
+            s_qs_year = col_q.number_input("QS Rankings Year", value=2025, min_value=2020, max_value=2030)
+            if st.form_submit_button("Create Session", type="primary"):
+                if not s_name or not s_year:
+                    st.error("Session name and academic year are required.")
+                else:
+                    code, data = create_session(s_name, s_year, int(s_qs_year), st.session_state.token)
+                    if code in (200, 201):
+                        st.success(f"Session '{s_name}' created.")
+                        st.rerun()
+                    else:
+                        st.error(f"Failed: {data.get('detail', 'Unknown error')}")
     st.stop()
 
-session_dict = {s['name']: s['id'] for s in sessions}
-selected_session = st.selectbox("Current Session", list(session_dict.keys()))
+session_dict = {s["name"]: s["id"] for s in sessions}
+col_s, col_r = st.columns([4, 1])
+with col_s:
+    selected_session = st.selectbox("Admission Session", list(session_dict.keys()), label_visibility="collapsed")
+with col_r:
+    if st.button("Refresh now", type="secondary", use_container_width=True):
+        st.rerun()
+
 session_id = session_dict[selected_session]
 
-# ── 2. Récupération des données ──────────────────────────────────────────────
+# ── Fetch applicants ───────────────────────────────────────────────────────────
 status_code, applicants = get_applicants(session_id, st.session_state.token)
 
 if status_code != 200:
-    st.error("Error: Could not retrieve data from the backend.")
+    st.error("Unable to reach the backend API. Check the connection.")
     st.stop()
 
 if not applicants:
-    st.info("No candidates processed yet for this session.")
+    st.info("No candidates uploaded yet. Go to Document Upload to add CV and transcript pairs.")
     st.stop()
 
 df = pd.DataFrame(applicants)
 
-# ── 3. KPIs ──────────────────────────────────────────────────────────────────
-c1, c2, c3, c4, c5 = st.columns(5)
-c1.metric("Total Applicants", len(df))
-c2.metric("Processed",   int((df['status'] == 'processed').sum()))
-c3.metric("Pending",     int((df['status'] == 'pending').sum()))
-c4.metric("Review Required", int(df['needs_human_review'].sum()))
-if 'global_confidence' in df and not df['global_confidence'].isna().all():
-    c5.metric("Avg AI Confidence", f"{df['global_confidence'].mean() * 100:.1f}%")
+# Counts
+total      = len(df)
+n_proc     = int((df["status"] == "processed").sum())
+n_running  = int((df["status"] == "processing").sum())
+n_pending  = int((df["status"] == "pending").sum())
+n_error    = int((df["status"] == "error").sum())
+# "failed" = retries exhausted (terminal) — distinct from "error" (still
+# retryable, retry_count < 5). Previously not counted anywhere on this
+# dashboard, so candidates that permanently failed extraction were invisible.
+n_failed   = int((df["status"] == "failed").sum())
+n_review   = int(df["needs_human_review"].sum()) if "needs_human_review" in df.columns else 0
+n_active   = n_running + n_pending
+
+# ── KPI strip ──────────────────────────────────────────────────────────────────
+k1, k2, k3, k4, k5, k6, k7 = st.columns(7)
+k1.metric("Total",       total)
+k2.metric("Processed",   n_proc)
+k3.metric("Processing",  n_running)
+k4.metric("Pending",     n_pending)
+k5.metric("Errors",      n_error)
+k6.metric("Failed",      n_failed)
+k7.metric("Need Review", n_review)
+
+# Global progress bar
+if total > 0:
+    pct = n_proc / total
+    st.markdown(
+        f"""<div style="margin:0.4rem 0 1rem;">
+            <div style="font-size:0.72rem;color:#8a9ab5;margin-bottom:4px;">
+                Extraction progress — {n_proc}/{total} candidates processed ({pct*100:.0f}%)
+            </div>
+            <div style="background:#e0e6f0;border-radius:6px;height:10px;overflow:hidden;">
+                <div style="width:{pct*100:.1f}%;height:10px;
+                            background:{'#10b981' if pct==1 else '#1a2744'};
+                            border-radius:6px;transition:width .4s;"></div>
+            </div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
+
+st.markdown("---")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1: LIVE PIPELINE MONITOR
+# ══════════════════════════════════════════════════════════════════════════════
+st.subheader("Live Pipeline Monitor")
+
+active_df = df[df["status"].isin(["pending", "processing", "error"])].copy()
+
+if active_df.empty and n_proc == total:
+    st.success(f"All {total} candidate(s) processed successfully.")
+elif active_df.empty:
+    st.info("No candidates currently in the pipeline.")
 else:
-    c5.metric("Avg AI Confidence", "N/A")
+    # Auto-refresh banner
+    countdown_slot = st.empty()
+    countdown_slot.info(
+        f"**{n_active} candidate(s) in pipeline** — page will auto-refresh in 5 seconds. "
+        f"Processing: {n_running} &nbsp;|&nbsp; Pending: {n_pending} &nbsp;|&nbsp; Errors: {n_error}"
+    )
 
-st.divider()
+    # Per-candidate status cards
+    for _, row in active_df.iterrows():
+        status = row.get("status", "pending")
+        name   = row.get("full_name") or row.get("application_ref") or "Unknown"
+        ref    = row.get("application_ref", "")
 
-# ── 4. Filtres ────────────────────────────────────────────────────────────────
+        if status == "processing":
+            dot   = '<span class="pulse pulse-orange"></span>'
+            label = '<span style="color:#b45309;font-weight:600;">Extracting with AI...</span>'
+        elif status == "pending":
+            dot   = '<span class="pulse pulse-blue"></span>'
+            label = '<span style="color:#3949ab;font-weight:600;">Queued</span>'
+        else:  # error
+            dot   = '<span class="pulse pulse-red"></span>'
+            err   = str(row.get("last_error", ""))[:80] if "last_error" in row else ""
+            label = f'<span style="color:#b71c1c;font-weight:600;">Error</span>' + (
+                f' <span style="color:#8a9ab5;font-size:0.78rem;">— {err}</span>' if err else ""
+            )
+
+        retry = int(row.get("retry_count", 0)) if "retry_count" in row.index else 0
+        st.markdown(
+            f'<div class="pipeline-card">'
+            f'{dot}'
+            f'<div style="flex:1;">'
+            f'  <div style="font-weight:600;color:#1a2744;">{name}</div>'
+            f'  <div style="font-size:0.75rem;color:#8a9ab5;">{ref}</div>'
+            f'</div>'
+            f'<div style="text-align:right;">{label}'
+            f'  {"&nbsp; <span style=\"font-size:0.72rem;color:#8a9ab5;\">retry " + str(retry) + "</span>" if retry > 0 else ""}'
+            f'</div></div>',
+            unsafe_allow_html=True,
+        )
+
+    # Auto-refresh after 5 s
+    time.sleep(5)
+    st.rerun()
+
+st.markdown("---")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 2: CANDIDATES TABLE WITH FILTERS
+# ══════════════════════════════════════════════════════════════════════════════
+st.subheader("Candidate List")
+
 col_f1, col_f2, col_f3 = st.columns(3)
 with col_f1:
     status_filter = st.multiselect(
-        "Filter by status",
-        options=df['status'].unique().tolist(),
-        default=df['status'].unique().tolist()
+        "Status", options=df["status"].unique().tolist(),
+        default=df["status"].unique().tolist(),
     )
 with col_f2:
-    review_only = st.checkbox("Show only candidates requiring review")
+    review_only = st.checkbox("Review-flagged only")
 with col_f3:
-    hide_msc_absent = st.checkbox("Hide candidates without MSc")
+    hide_no_msc = st.checkbox("Hide candidates without MSc")
 
-df_filtered = df[df['status'].isin(status_filter)].copy()
+df_filt = df[df["status"].isin(status_filter)].copy()
 if review_only:
-    df_filtered = df_filtered[df_filtered['needs_human_review'] == True]
-if hide_msc_absent and 'msc_absent' in df_filtered.columns:
-    df_filtered = df_filtered[df_filtered['msc_absent'] == False]
+    df_filt = df_filt[df_filt["needs_human_review"] == True]
+if hide_no_msc and "msc_absent" in df_filt.columns:
+    df_filt = df_filt[df_filt["msc_absent"] == False]
 
-# ── 5. Mapping complet des colonnes ──────────────────────────────────────────
 display_map = {
-    # Classement
-    "last_rank":             "Rank",
-    "last_composite_score":  "Final Score",
-    # Identité
-    "full_name":             "Full Name",
-    "nationality":           "Nationality",
-    # BSc
-    "bsc_uni_name":          "BSc University",
-    "bsc_qs_rank":           "BSc QS Rank",
-    "bsc_gpa_raw":           "BSc GPA (raw)",
-    "bsc_gpa_scale":         "BSc Scale",
-    "bsc_gpa_normalised":    "BSc GPA (norm)",
-    # MSc
-    "msc_absent":            "MSc Absent",
-    "msc_uni_name":          "MSc University",
-    "msc_qs_rank":           "MSc QS Rank",
-    "msc_gpa_raw":           "MSc GPA (raw)",
-    "msc_gpa_scale":         "MSc Scale",
-    "msc_gpa_normalised":    "MSc GPA (norm)",
-    # Publications & Méta
-    "pub_count":             "Publications",
-    "global_confidence":     "AI Confidence",
-    "llm_used":              "LLM Used",
-    "model_used":            "Model",
-    "status":                "Status",
-    "needs_human_review":    "Review?",
+    "last_rank":            "Rank",
+    "last_composite_score": "Score",
+    "full_name":            "Full Name",
+    "nationality":          "Nationality",
+    "status":               "Status",
+    "bsc_uni_name":         "BSc University",
+    "bsc_gpa_normalised":   "BSc GPA",
+    "msc_absent":           "No MSc",
+    "msc_uni_name":         "MSc University",
+    "msc_gpa_normalised":   "MSc GPA",
+    "pub_count":            "Pubs",
+    "global_confidence":    "AI Conf.",
+    "model_used":           "Model",
+    "needs_human_review":   "Review?",
 }
+existing = [c for c in display_map if c in df_filt.columns]
+df_show  = df_filt[existing].rename(columns=display_map)
 
-existing_cols = [c for c in display_map if c in df_filtered.columns]
-df_display = df_filtered[existing_cols].rename(columns=display_map)
-
-# Formater la confiance en %
-
-# ── 6. Tableau principal ──────────────────────────────────────────────────────
 st.dataframe(
-    df_display,
+    df_show,
     use_container_width=True,
     hide_index=True,
     column_config={
-        "Rank":           st.column_config.NumberColumn(format="%d"),
-        "Final Score":    st.column_config.NumberColumn(format="%.2f"),
-        "BSc QS Rank":    st.column_config.NumberColumn(format="#%d"),
-        "BSc GPA (raw)":  st.column_config.NumberColumn(format="%.2f"),
-        "BSc Scale":      st.column_config.NumberColumn(format="%.1f"),
-        "BSc GPA (norm)": st.column_config.ProgressColumn(
-            min_value=0, max_value=1, format="%.3f"
-        ),
-        "MSc QS Rank":    st.column_config.NumberColumn(format="#%d"),
-        "MSc GPA (raw)":  st.column_config.NumberColumn(format="%.2f"),
-        "MSc Scale":      st.column_config.NumberColumn(format="%.1f"),
-        "MSc GPA (norm)": st.column_config.ProgressColumn(
-            min_value=0, max_value=1, format="%.3f"
-        ),
-        "Publications":   st.column_config.NumberColumn(format="%d"),
-    }
+        "Rank":    st.column_config.NumberColumn(format="%d"),
+        "Score":   st.column_config.NumberColumn(format="%.2f"),
+        "BSc GPA": st.column_config.ProgressColumn(min_value=0, max_value=1, format="%.3f"),
+        "MSc GPA": st.column_config.ProgressColumn(min_value=0, max_value=1, format="%.3f"),
+        "AI Conf.":st.column_config.ProgressColumn(min_value=0, max_value=1, format="%.0%"),
+        "Pubs":    st.column_config.NumberColumn(format="%d"),
+    },
+)
+st.caption(f"{len(df_show)} candidate(s) shown · {n_proc} processed · {n_active} in pipeline")
+
+col_dl, _ = st.columns([1, 3])
+with col_dl:
+    st.download_button(
+        "Export CSV", data=df_show.to_csv(index=False).encode("utf-8"),
+        file_name=f"dashboard_{selected_session}.csv", mime="text/csv",
+    )
+
+st.markdown("---")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 3: EXTRACTION RESULTS INSPECTOR
+# ══════════════════════════════════════════════════════════════════════════════
+st.subheader("Extraction Results Inspector")
+st.caption("Select any processed candidate to view the full AI extraction result.")
+
+processed_df = df[df["status"] == "processed"]
+
+if processed_df.empty:
+    st.info("No processed candidates yet. The pipeline must complete before extraction results appear here.")
+    st.stop()
+
+# Build candidate selector
+name_map = {}
+for _, row in processed_df.iterrows():
+    label = f"{row.get('full_name') or 'Unknown'} — {row.get('application_ref','')}"
+    name_map[label] = row["id"]
+
+selected_label = st.selectbox("Candidate", list(name_map.keys()), key="inspector_select")
+applicant_id   = name_map[selected_label]
+
+detail = get_applicant_detail(applicant_id, st.session_state.token)
+
+if not detail:
+    st.error("Could not load candidate details from the API.")
+    st.stop()
+
+metrics = detail.get("metrics") or {}
+pubs    = detail.get("publications") or []
+conf    = float(metrics.get("global_confidence") or 0)
+
+# ── Confidence banner ──────────────────────────────────────────────────────────
+if conf >= 0.80:
+    conf_color, conf_label = "#10b981", "High confidence"
+elif conf >= 0.60:
+    conf_color, conf_label = "#f59e0b", "Medium confidence"
+else:
+    conf_color, conf_label = "#ef4444", "Low confidence — review recommended"
+
+st.markdown(
+    f"""<div style="background:#f8fafc;border:1px solid #e0e6f0;border-radius:8px;
+                    padding:0.9rem 1.2rem;margin-bottom:1rem;display:flex;
+                    align-items:center;gap:1rem;">
+        <div style="flex:1;">
+            <div style="font-size:0.72rem;color:#8a9ab5;text-transform:uppercase;
+                        letter-spacing:.08em;margin-bottom:2px;">AI Extraction Confidence</div>
+            <div class="conf-bar-wrap" style="width:100%;">
+                <div class="conf-bar-fill" style="width:{conf*100:.1f}%;background:{conf_color};"></div>
+            </div>
+        </div>
+        <div style="font-size:1.4rem;font-weight:700;color:{conf_color};min-width:4rem;text-align:right;">
+            {conf*100:.0f}%
+        </div>
+        <div style="font-size:0.82rem;color:{conf_color};min-width:10rem;">{conf_label}</div>
+    </div>""",
+    unsafe_allow_html=True,
 )
 
-st.caption(f"{len(df_display)} candidate(s) shown")
+# ── Four-column layout: identity / BSc / MSc / PhD+Research ──────────────────
+col_id, col_bsc, col_msc, col_phd = st.columns(4)
 
-# ── 7. Export CSV ─────────────────────────────────────────────────────────────
-col_r, col_e = st.columns([1, 1])
-with col_r:
-    if st.button("🔄 Refresh Dashboard"):
-        st.rerun()
-with col_e:
-    csv = df_display.to_csv(index=False).encode("utf-8")
-    st.download_button(
-        label="⬇ Export CSV",
-        data=csv,
-        file_name=f"dashboard_{selected_session}.csv",
-        mime="text/csv"
+# Identity
+with col_id:
+    st.markdown("**Identity**")
+    phone_val   = detail.get("phone") or metrics.get("phone") or "—"
+    linkedin_val = detail.get("linkedin") or metrics.get("linkedin") or "—"
+    st.markdown(
+        f'<div class="ext-section">'
+        f'<div class="ext-label">Full Name</div>'
+        f'<div class="ext-value">{detail.get("full_name") or "—"}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Email</div>'
+        f'<div class="ext-sub">{detail.get("email") or "—"}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Nationality</div>'
+        f'<div class="ext-sub">{detail.get("nationality") or "—"}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Phone</div>'
+        f'<div class="ext-sub">{phone_val}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">LinkedIn</div>'
+        f'<div class="ext-sub" style="word-break:break-all;">{linkedin_val}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Model Used</div>'
+        f'<div class="ext-sub">{metrics.get("model_used") or "—"}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
     )
+    if detail.get("needs_human_review"):
+        st.warning("Flagged for human review")
+
+# BSc
+with col_bsc:
+    st.markdown("**Bachelor (BSc)**")
+    bsc_norm    = float(metrics.get("bsc_gpa_normalised") or 0)
+    bsc_raw     = metrics.get("bsc_gpa_raw")
+    bsc_scl     = metrics.get("bsc_gpa_scale")
+    bsc_qs      = metrics.get("bsc_qs_rank")
+    bsc_field   = metrics.get("bsc_field") or "—"
+    bsc_country = metrics.get("bsc_country") or "—"
+    bsc_year    = metrics.get("bsc_year") or "—"
+    gpa_str     = f"{bsc_raw}/{bsc_scl}" if bsc_raw else "—"
+    st.markdown(
+        f'<div class="ext-section">'
+        f'<div class="ext-label">University</div>'
+        f'<div class="ext-value">{metrics.get("bsc_uni_name") or "—"}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Field · Country · Year</div>'
+        f'<div class="ext-sub">{bsc_field} · {bsc_country} · {bsc_year}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">QS World Rank</div>'
+        f'<div class="ext-sub">{"#" + str(bsc_qs) if bsc_qs else "Not ranked"}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">GPA</div>'
+        f'<div class="ext-sub">{gpa_str}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Normalised GPA (0–1)</div>'
+        f'<div class="conf-bar-wrap" style="margin-top:4px;">'
+        f'  <div class="conf-bar-fill" style="width:{bsc_norm*100:.1f}%;background:#1a2744;"></div>'
+        f'</div>'
+        f'<div class="ext-sub" style="text-align:right;">{bsc_norm:.3f}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+# MSc
+with col_msc:
+    st.markdown("**Master (MSc)**")
+    if metrics.get("msc_absent"):
+        st.markdown(
+            '<div class="ext-section"><div class="ext-sub" style="color:#8a9ab5;">'
+            'No Master degree recorded.</div></div>',
+            unsafe_allow_html=True,
+        )
+    else:
+        msc_norm    = float(metrics.get("msc_gpa_normalised") or 0)
+        msc_raw     = metrics.get("msc_gpa_raw")
+        msc_scl     = metrics.get("msc_gpa_scale")
+        msc_qs      = metrics.get("msc_qs_rank")
+        msc_field   = metrics.get("msc_field") or "—"
+        msc_country = metrics.get("msc_country") or "—"
+        msc_year    = metrics.get("msc_year") or "—"
+        gpa_str     = f"{msc_raw}/{msc_scl}" if msc_raw else "—"
+        st.markdown(
+            f'<div class="ext-section">'
+            f'<div class="ext-label">University</div>'
+            f'<div class="ext-value">{metrics.get("msc_uni_name") or "—"}</div>'
+            f'<div class="ext-label" style="margin-top:.5rem;">Field · Country · Year</div>'
+            f'<div class="ext-sub">{msc_field} · {msc_country} · {msc_year}</div>'
+            f'<div class="ext-label" style="margin-top:.5rem;">QS World Rank</div>'
+            f'<div class="ext-sub">{"#" + str(msc_qs) if msc_qs else "Not ranked"}</div>'
+            f'<div class="ext-label" style="margin-top:.5rem;">GPA</div>'
+            f'<div class="ext-sub">{gpa_str}</div>'
+            f'<div class="ext-label" style="margin-top:.5rem;">Normalised GPA (0–1)</div>'
+            f'<div class="conf-bar-wrap" style="margin-top:4px;">'
+            f'  <div class="conf-bar-fill" style="width:{msc_norm*100:.1f}%;background:#1a2744;"></div>'
+            f'</div>'
+            f'<div class="ext-sub" style="text-align:right;">{msc_norm:.3f}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+# PhD + Test scores + Research
+with col_phd:
+    st.markdown("**PhD & Research Profile**")
+    phd_uni  = metrics.get("phd_uni_name") or "—"
+    phd_fld  = metrics.get("phd_field") or "—"
+    phd_yr   = metrics.get("phd_year") or "—"
+    phd_qs   = metrics.get("phd_qs_rank")
+    work_yrs = metrics.get("work_exp_years")
+    ielts    = metrics.get("ielts_score")
+    toefl    = metrics.get("toefl_score")
+    gre_v    = metrics.get("gre_verbal")
+    gre_q    = metrics.get("gre_quant")
+    gre_a    = metrics.get("gre_awa")
+
+    # Research interests
+    interests = metrics.get("research_interests") or []
+    interests_str = " · ".join(interests[:4]) if interests else "—"
+    awards = metrics.get("awards") or []
+    awards_str = "; ".join(awards[:3]) if awards else "—"
+
+    gre_str = (f"V{gre_v}/Q{gre_q}/AWA{gre_a}"
+               if any(x for x in [gre_v, gre_q, gre_a]) else "—")
+    lang_str = " · ".join(filter(None, [
+        f"IELTS {ielts}" if ielts else "",
+        f"TOEFL {toefl}" if toefl else "",
+    ])) or "—"
+
+    st.markdown(
+        f'<div class="ext-section">'
+        f'<div class="ext-label">PhD University</div>'
+        f'<div class="ext-value">{phd_uni}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Field · Year · QS</div>'
+        f'<div class="ext-sub">{phd_fld} · {phd_yr}{"  #" + str(phd_qs) if phd_qs else ""}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Work Experience</div>'
+        f'<div class="ext-sub">{str(work_yrs) + " yrs" if work_yrs else "—"}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">GRE</div>'
+        f'<div class="ext-sub">{gre_str}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Language Tests</div>'
+        f'<div class="ext-sub">{lang_str}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Research Interests</div>'
+        f'<div class="ext-sub">{interests_str}</div>'
+        f'<div class="ext-label" style="margin-top:.5rem;">Awards</div>'
+        f'<div class="ext-sub">{awards_str}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+# ── Publications ───────────────────────────────────────────────────────────────
+st.markdown("---")
+st.markdown(f"**Publications &nbsp;·&nbsp; {len(pubs)} record(s)**")
+
+if not pubs:
+    st.info("No publications were extracted. Use Review & Validate to add records manually.")
+else:
+    for pub in pubs:
+        pub_type = pub.get("pub_type", "journal").capitalize()
+        contrib  = float(pub.get("contribution_score") or 0)
+        pos      = pub.get("author_position") or "?"
+        tot      = pub.get("total_authors") or "?"
+        first    = pos == 1 or pos == "1"
+        tag_color = "#1a2744" if pub_type == "Journal" else "#7c3aed"
+
+        st.markdown(
+            f'<div class="pub-row">'
+            f'  <div style="display:flex;justify-content:space-between;align-items:flex-start;">'
+            f'    <div style="flex:1;margin-right:1rem;">'
+            f'      <div style="font-weight:600;color:#1a2744;font-size:0.88rem;">'
+            f'        {pub.get("title") or "Untitled"}'
+            f'      </div>'
+            f'      <div style="font-size:0.76rem;color:#6b7a99;margin-top:2px;">'
+            f'        {pub.get("venue_name") or "Unknown venue"} &nbsp;·&nbsp; {pub.get("year") or "N/A"}'
+            f'      </div>'
+            f'    </div>'
+            f'    <div style="text-align:right;white-space:nowrap;">'
+            f'      <span style="background:{tag_color};color:#fff;padding:2px 7px;'
+            f'                   border-radius:4px;font-size:0.7rem;font-weight:600;">'
+            f'        {pub_type}</span>'
+            f'      {"&nbsp;<span style=\"background:#10b981;color:#fff;padding:2px 7px;border-radius:4px;font-size:0.7rem;\">1st Author</span>" if first else ""}'
+            f'    </div>'
+            f'  </div>'
+            f'  <div style="margin-top:6px;display:flex;align-items:center;gap:0.6rem;">'
+            f'    <div style="font-size:0.72rem;color:#8a9ab5;">Author {pos}/{tot}</div>'
+            f'    <div style="flex:1;background:#e8edf5;border-radius:3px;height:5px;">'
+            f'      <div style="width:{contrib*100:.0f}%;height:5px;'
+            f'                  background:#c8a028;border-radius:3px;"></div>'
+            f'    </div>'
+            f'    <div style="font-size:0.72rem;color:#8a9ab5;">Contribution {contrib*100:.0f}%</div>'
+            f'  </div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )

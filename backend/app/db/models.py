@@ -65,7 +65,7 @@ class Applicant(Base):
         UUID(as_uuid=True), ForeignKey("documents.id"), nullable=True)
     pairing_complete: Mapped[bool] = mapped_column(Boolean, default=False)
     last_composite_score: Mapped[Optional[float]] = mapped_column(
-        Numeric(5, 3), nullable=True)
+        Numeric(6, 3), nullable=True)
     last_rank: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     last_ranking_config_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("ranking_configs.id"), nullable=True)
@@ -76,8 +76,9 @@ class Applicant(Base):
     retry_count: Mapped[int] = mapped_column(Integer, default=0)
     last_error: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     last_attempt_at: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
+        DateTime(timezone=True), nullable=True)
+    phone: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    linkedin: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
 
     __table_args__ = (
         Index("idx_applicants_session", "session_id"),
@@ -150,7 +151,25 @@ class ExtractedMetrics(Base):
     msc_gpa_normalised_done: Mapped[bool] = mapped_column(Boolean, default=False)
     msc_gpa_source: Mapped[Optional[str]] = mapped_column(
         String(40), nullable=True)
+    bsc_field:   Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    bsc_country: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    bsc_year:    Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    msc_field:   Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    msc_country: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    msc_year:    Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     msc_absent: Mapped[bool] = mapped_column(Boolean, default=False)
+    phd_uni_name: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    phd_field:    Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    phd_year:     Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    phd_qs_rank:  Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    gre_verbal:   Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    gre_quant:    Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    gre_awa:      Mapped[Optional[float]] = mapped_column(Numeric(3, 1), nullable=True)
+    ielts_score:  Mapped[Optional[float]] = mapped_column(Numeric(3, 1), nullable=True)
+    toefl_score:  Mapped[Optional[int]]   = mapped_column(Integer, nullable=True)
+    work_exp_years: Mapped[Optional[float]] = mapped_column(Numeric(4, 1), nullable=True)
+    research_interests: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    awards:             Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
     global_confidence: Mapped[Optional[float]] = mapped_column(
         Numeric(3, 2), nullable=True)
     nlp_confidence_detail: Mapped[Optional[dict]] = mapped_column(
@@ -232,6 +251,7 @@ class Publication(Base):
         Integer, nullable=True)
     confidence: Mapped[Optional[float]] = mapped_column(
         Numeric(3, 2), nullable=True)
+    under_review: Mapped[bool] = mapped_column(Boolean, default=False)
     extraction_source: Mapped[str] = mapped_column(
         String(10), default="nlp")
 
@@ -300,6 +320,51 @@ class ManualOverride(Base):
 
     __table_args__ = (
         Index("idx_overrides_applicant", "applicant_id"),
+    )
+
+
+class SupervisorProfile(Base):
+    __tablename__ = "supervisor_profiles"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    faculty_name: Mapped[str] = mapped_column(String(300), nullable=False)
+    email: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    department: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    research_areas: Mapped[Optional[list]] = mapped_column(JSONB, nullable=True)
+    max_phd_students: Mapped[int] = mapped_column(Integer, default=2)
+    current_phd_count: Mapped[int] = mapped_column(Integer, default=0)
+    is_accepting_students: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+    matches: Mapped[list["ApplicantSupervisorMatch"]] = relationship(
+        "ApplicantSupervisorMatch", back_populates="supervisor",
+        cascade="all, delete-orphan")
+
+
+class ApplicantSupervisorMatch(Base):
+    __tablename__ = "applicant_supervisor_matches"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    applicant_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("applicants.id"), nullable=False)
+    supervisor_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("supervisor_profiles.id"), nullable=False)
+    match_score: Mapped[float] = mapped_column(Numeric(4, 3), nullable=False)
+    matched_keywords: Mapped[Optional[list]] = mapped_column(JSONB, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+    supervisor: Mapped["SupervisorProfile"] = relationship(
+        "SupervisorProfile", back_populates="matches")
+
+    __table_args__ = (
+        Index("idx_matches_applicant", "applicant_id"),
+        Index("idx_matches_supervisor", "supervisor_id"),
     )
 
 

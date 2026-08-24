@@ -9,8 +9,6 @@ from __future__ import annotations
 import uuid
 import logging
 from typing import Optional
-from datetime import datetime
-
 from sqlalchemy import select, update, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import func
@@ -89,10 +87,14 @@ async def update_applicant_status(
     applicant_id: uuid.UUID,
     status:       str,
 ) -> None:
+    # last_attempt_at is timestamped on every transition (not just error/retry)
+    # so a stuck "processing" row (worker died mid-pipeline) is never left with
+    # a NULL timestamp — the rescue query in tasks.py::retry_pending_cvs can't
+    # match `last_attempt_at < NOW() - INTERVAL '30 minutes'` against NULL.
     await db.execute(
         update(Applicant)
         .where(Applicant.id == applicant_id)
-        .values(status=status)
+        .values(status=status, last_attempt_at=func.now())
     )
 
 
@@ -186,6 +188,36 @@ async def reset_retry_count(
     )
 
 
+async def update_applicant_identity(
+    db:                 AsyncSession,
+    applicant_id:       uuid.UUID,
+    full_name:          Optional[str]  = None,
+    email:              Optional[str]  = None,
+    nationality:        Optional[str]  = None,
+    phone:              Optional[str]  = None,
+    linkedin:           Optional[str]  = None,
+    needs_human_review: Optional[bool] = None,
+) -> None:
+    """Update identity fields extracted by the LLM pipeline."""
+    values: dict = {}
+    if full_name:
+        values["full_name"] = full_name[:250]
+    if email:
+        values["email"] = email[:250]
+    if nationality:
+        values["nationality"] = nationality[:100]
+    if phone:
+        values["phone"] = phone[:50]
+    if linkedin:
+        values["linkedin"] = linkedin[:500]
+    if needs_human_review is not None:
+        values["needs_human_review"] = needs_human_review
+    if values:
+        await db.execute(
+            update(Applicant).where(Applicant.id == applicant_id).values(**values)
+        )
+
+
 async def get_pending_applicants(
     db:         AsyncSession,
     session_id: uuid.UUID,
@@ -215,15 +247,29 @@ async def get_pending_applicants(
 
 _VALID_METRICS_COLUMNS = {
     "applicant_id", "cv_document_id", "transcript_document_id",
+    # BSc
     "bsc_uni_name", "bsc_qs_rank", "bsc_qs_normalised",
     "bsc_gpa_raw", "bsc_gpa_scale", "bsc_gpa_normalised",
     "bsc_gpa_normalised_done", "bsc_gpa_source",
+    "bsc_field", "bsc_country", "bsc_year",
+    # MSc
     "msc_uni_name", "msc_qs_rank", "msc_qs_normalised",
     "msc_gpa_raw", "msc_gpa_scale", "msc_gpa_normalised",
     "msc_gpa_normalised_done", "msc_gpa_source", "msc_absent",
+    "msc_field", "msc_country", "msc_year",
+    # PhD
+    "phd_uni_name", "phd_field", "phd_year", "phd_qs_rank",
+    # Tests
+    "gre_verbal", "gre_quant", "gre_awa",
+    "ielts_score", "toefl_score",
+    # Professional
+    "work_exp_years",
+    # Research
+    "research_interests", "awards",
+    # Meta
     "global_confidence", "nlp_confidence_detail",
     "llm_used", "llm_confidence_detail", "extraction_source_detail",
-    "model_used", "extracted_at"
+    "model_used", "extracted_at",
 }
 
 

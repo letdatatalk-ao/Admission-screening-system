@@ -18,6 +18,7 @@ class RankedResult:
     msc_academic: float
     journal_score: float
     conf_score: float
+    research_score: float
     bsc_gpa_norm: float
     msc_gpa_norm: float
     bsc_qs_score: float
@@ -36,8 +37,20 @@ class RankingReport:
     needs_review_count: int
 
 
-def rank(results: List[ScoringResult], session_id: str) -> RankingReport:
-    """Classe les candidats selon leur score final."""
+def rank(
+    results: List[ScoringResult],
+    session_id: str,
+    tiebreak_field: Optional[str] = None,
+) -> RankingReport:
+    """
+    Classe les candidats selon leur score final.
+
+    tiebreak_field: name of a ScoringResult attribute (e.g. "msc_academic",
+    "journal_score", "research_score") to break ties on final_score, ahead of
+    the default msc_academic -> journal_score chain. Falls back to the default
+    chain if the field name is missing/invalid so a bad config value never
+    breaks ranking.
+    """
     if not results:
         return RankingReport(
             session_id=session_id,
@@ -47,25 +60,33 @@ def rank(results: List[ScoringResult], session_id: str) -> RankingReport:
             score_stats={"min": 0, "max": 0, "mean": 0, "median": 0, "std": 0},
             needs_review_count=0
         )
-    
-    sorted_res = sorted(
-        results, 
-        key=lambda r: (
-            -round(r.final_score, 2),
-            -r.msc_academic,
-            -r.journal_score
-        )
+
+    configured_field = (
+        tiebreak_field if tiebreak_field and hasattr(results[0], tiebreak_field) else None
     )
-    
+
+    def _sort_key(r: ScoringResult):
+        key = [-round(r.final_score, 2)]
+        if configured_field:
+            key.append(-(getattr(r, configured_field) or 0))
+        key.append(-r.msc_academic)
+        key.append(-r.journal_score)
+        return tuple(key)
+
+    sorted_res = sorted(results, key=_sort_key)
+
     ranked = []
     for i, r in enumerate(sorted_res):
         tiebreak_used = None
         if i > 0 and sorted_res[i-1].final_score == r.final_score:
-            if sorted_res[i-1].msc_academic == r.msc_academic:
-                tiebreak_used = "journal_score"
-            else:
+            prev = sorted_res[i-1]
+            if configured_field and getattr(prev, configured_field, None) != getattr(r, configured_field, None):
+                tiebreak_used = configured_field
+            elif prev.msc_academic != r.msc_academic:
                 tiebreak_used = "msc_academic"
-        
+            else:
+                tiebreak_used = "journal_score"
+
         ranked.append(RankedResult(
             rank=i+1,
             applicant_id=r.applicant_id,
@@ -77,6 +98,7 @@ def rank(results: List[ScoringResult], session_id: str) -> RankingReport:
             msc_academic=r.msc_academic,
             journal_score=r.journal_score,
             conf_score=r.conf_score,
+            research_score=r.research_score,
             bsc_gpa_norm=r.bsc_gpa_norm,
             msc_gpa_norm=r.msc_gpa_norm,
             bsc_qs_score=r.bsc_qs_score,

@@ -8,7 +8,10 @@ from sqlalchemy import select
 
 from backend.app.db.database import get_db
 from backend.app.db.models import Applicant, ExtractedMetrics, Publication, RankingConfig as DBRankingConfig
-from backend.app.db.repositories.scoring_repo import save_ranking_and_update_applicants, get_latest_ranking, list_ranking_history
+from backend.app.db.repositories.scoring_repo import (
+    save_ranking_and_update_applicants, get_latest_ranking, list_ranking_history, log_action,
+)
+from backend.app.api.v1.auth import check_evaluator
 from src.scoring.engine import compute_scores_batch, RankingConfig as EngineConfig
 from src.scoring.normalizer import normalise_candidate
 from src.scoring.ranker import rank
@@ -16,31 +19,41 @@ from src.scoring.ranker import rank
 router = APIRouter(tags=["Ranking"])
 
 # Verrou pour éviter les race conditions
+# NOTE: this is a plain in-process set — it only protects against concurrent
+# requests within a single worker process. Running the API with more than
+# one worker (e.g. `uvicorn --workers N`, or multiple replicas) reopens the
+# race it's meant to prevent; a real fix needs a shared lock (Redis SETNX,
+# same pattern already used in src/pipeline/screening_pipeline.py).
 _calculating_sessions: set = set()
 
 
 @router.post("/ranking")
 async def compute_ranking(
-    session_id: uuid.UUID, 
-    config_id: uuid.UUID, 
-    db: AsyncSession = Depends(get_db)
+    session_id: uuid.UUID,
+    config_id: uuid.UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user=Depends(check_evaluator),
 ):
     """Calcule le classement des candidats pour une session donnée."""
-    
+
     session_key = str(session_id)
     if session_key in _calculating_sessions:
         raise HTTPException(409, "Ranking calculation already in progress for this session")
-    
+
     config_res = await db.execute(select(DBRankingConfig).where(DBRankingConfig.id == config_id))
     db_c = config_res.scalar_one_or_none()
     if not db_c:
         raise HTTPException(404, "Ranking config not found")
-    
-    engine_cfg = EngineConfig.from_db_weights(db_c.weights)
+
+    try:
+        engine_cfg = EngineConfig.from_db_weights(db_c.weights)
+        engine_cfg.validate()
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid ranking configuration: {e}")
 
     res = await db.execute(
         select(Applicant).where(
-            Applicant.session_id == session_id, 
+            Applicant.session_id == session_id,
             Applicant.status == 'processed'
         )
     )
@@ -49,7 +62,7 @@ async def compute_ranking(
         raise HTTPException(400, "No processed applicants found for this session")
 
     _calculating_sessions.add(session_key)
-    
+
     try:
         engine_input = []
         for app in applicants:
@@ -61,7 +74,7 @@ async def compute_ranking(
                 engine_input.append((normalise_candidate(m, list(db_p)), str(app.id), app.full_name))
 
         scoring_results = compute_scores_batch(engine_input, engine_cfg)
-        report = rank(scoring_results, session_id=str(session_id))
+        report = rank(scoring_results, session_id=str(session_id), tiebreak_field=db_c.tiebreak_field)
 
         ranked_dicts = [{
             "rank": r.rank,
@@ -72,6 +85,7 @@ async def compute_ranking(
             "msc_academic": r.msc_academic,
             "journal_score": r.journal_score,
             "conf_score": r.conf_score,
+            "research_score": r.research_score,
             "needs_review": r.needs_review,
             "missing_fields": r.missing_fields,
             "tiebreak_used": r.tiebreak_used,
@@ -83,15 +97,29 @@ async def compute_ranking(
         } for r in report.ranked]
 
         ranking_log = await save_ranking_and_update_applicants(db, session_id, config_id, ranked_dicts)
+        await log_action(
+            db, action_type="ranking_computed", session_id=session_id,
+            user_id=current_user.get("id"), entity_type="ranking_result", entity_id=ranking_log.id,
+            new_state={"config_id": str(config_id), "total": report.total_candidates},
+        )
         await db.commit()
-        
+
         return {
-            "ranking_id": str(ranking_log.id), 
+            "ranking_id": str(ranking_log.id),
             "total": report.total_candidates,
             "generated_at": report.generated_at,
             "score_stats": report.score_stats,
             "needs_review_count": report.needs_review_count
         }
+    except HTTPException:
+        await db.rollback()
+        raise
+    except ValueError as e:
+        await db.rollback()
+        raise HTTPException(status_code=400, detail=f"Invalid ranking configuration: {e}")
+    except Exception as e:
+        await db.rollback()
+        raise HTTPException(status_code=500, detail=f"Ranking computation failed: {e}")
     finally:
         _calculating_sessions.discard(session_key)
 
@@ -99,7 +127,8 @@ async def compute_ranking(
 @router.get("/ranking/latest")
 async def get_latest_ranking_endpoint(
     session_id: uuid.UUID = Query(..., description="Session ID"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user=Depends(check_evaluator),
 ):
     """Récupère le dernier classement calculé pour une session."""
     latest_ranking = await get_latest_ranking(db, session_id)
@@ -119,8 +148,9 @@ async def get_latest_ranking_endpoint(
 
 @router.get("/ranking/{session_id}/export")
 async def export_ranking_excel(
-    session_id: uuid.UUID, 
-    db: AsyncSession = Depends(get_db)
+    session_id: uuid.UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user=Depends(check_evaluator),
 ):
     """Génère le rapport Excel officiel pour le comité d'admission."""
     latest_res = await get_latest_ranking(db, session_id)
@@ -185,7 +215,8 @@ async def export_ranking_excel(
 async def get_ranking_history(
     session_id: uuid.UUID = Query(..., description="Session ID"),
     limit: int = Query(10, description="Number of historical runs to retrieve"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user=Depends(check_evaluator),
 ):
     """Récupère l'historique des classements pour une session."""
     history = await list_ranking_history(db, session_id)

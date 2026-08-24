@@ -10,7 +10,6 @@ FIX 2: asyncio.run() inside retry_pending_cvs also needs a fresh engine,
 """
 
 import asyncio
-import logging
 import os
 
 from celery import Celery
@@ -97,8 +96,19 @@ def retry_pending_cvs():
                 result = await db.execute(
                     text("""
                         SELECT id FROM applicants
-                        WHERE status IN ('pending', 'error')
-                          AND retry_count < 5
+                        WHERE retry_count < 5
+                          AND (
+                            status IN ('pending', 'error')
+                            OR (
+                              -- Récupère les jobs bloqués en "processing"
+                              -- si le worker est mort sans mettre à jour le statut.
+                              -- NULL last_attempt_at (row never timestamped) must
+                              -- also match — `NULL < anything` is never TRUE in SQL,
+                              -- so without the IS NULL branch these rows are stuck forever.
+                              status = 'processing'
+                              AND (last_attempt_at IS NULL OR last_attempt_at < NOW() - INTERVAL '30 minutes')
+                            )
+                          )
                         ORDER BY retry_count ASC, created_at ASC
                     """)
                 )
