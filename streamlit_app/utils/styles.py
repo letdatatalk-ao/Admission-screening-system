@@ -8,7 +8,34 @@ for brand continuity; everything else is the neutral Classical palette.
 Source: Claude Design project "Frontend Enhancement Planning",
 Screening Redesign.dc.html (option 1b).
 """
+import base64
+import functools
+import os
 import streamlit as st
+
+_ASSETS_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
+
+
+@functools.lru_cache(maxsize=4)
+def _logo_data_uri(filename: str) -> str:
+    """Base64-encode a local asset once per process so it can sit inline in
+    the raw HTML brand blocks (consistent with how the rest of this module
+    builds the sidebar/title plate) instead of needing a separate st.image
+    call that breaks the flex layout."""
+    path = os.path.join(_ASSETS_DIR, filename)
+    with open(path, "rb") as fh:
+        encoded = base64.b64encode(fh.read()).decode("ascii")
+    return f"data:image/png;base64,{encoded}"
+
+
+def ku_logo_data_uri(on_navy: bool = False) -> str:
+    """Khalifa University logo as a data: URI.
+    on_navy=True returns the light-recoloured variant for the navy sidebar;
+    on_navy=False returns the original black-wordmark version for light
+    backgrounds (sign-in title plate, etc.).
+    Source: Wikimedia Commons, CC BY-SA 4.0, originally published by ku.ac.ae.
+    """
+    return _logo_data_uri("ku_logo_on_navy.png" if on_navy else "ku_logo.png")
 
 _KU_CSS = """
 <style>
@@ -30,12 +57,23 @@ _KU_CSS = """
 }
 
 /* ── Hide default Streamlit chrome ────────────────────── */
-#MainMenu { visibility: hidden; }
-footer    { visibility: hidden; }
-header    { visibility: hidden; }
+/* display:none, not visibility:hidden — Streamlit's own toolbar buttons
+   (Deploy, etc.) set visibility:visible on themselves, which overrides an
+   inherited visibility:hidden on the header and leaves them clickable.
+   [data-testid="stHeader"] (not just the bare `header` element selector)
+   with !important — Streamlit's own rule sets display:flex on that exact
+   attribute selector, which otherwise outranks a plain element selector. */
+#MainMenu { display: none; }
+footer    { display: none; }
+header, [data-testid="stHeader"] { display: none !important; }
 
 /* ── Page background ──────────────────────────────────── */
+/* html/body default to Streamlit's own dark theme background and show
+   through as black margins wherever .stApp doesn't cover 100% of the
+   viewport (e.g. window wider/taller than the rendered content). */
+html, body { background: var(--color-bg) !important; }
 .stApp { background: var(--color-bg); font-family: var(--font-body); }
+[data-testid="stAppViewContainer"], [data-testid="stMain"] { background: var(--color-bg); }
 .stApp, .stApp p, .stApp label, .stApp span, .stApp div { color: var(--color-text); }
 
 /* ── Sidebar — KU navy rail ───────────────────────────── */
@@ -220,6 +258,14 @@ p, label, .stMarkdown { color: var(--color-text); font-family: var(--font-body);
     border-radius: 4px !important;
     box-shadow: none !important;
 }
+/* Multiselect chips (e.g. the dashboard's status filter) — Streamlit
+   paints these with its red theme colour by default. */
+[data-baseweb="tag"] {
+    background: var(--color-accent) !important;
+    border-radius: 3px !important;
+}
+[data-baseweb="tag"] span { color: #ffffff !important; }
+
 /* BaseWeb's inner input wrapper carries its own hardcoded dark fill,
    one level inside the RootElement checked above. */
 [data-baseweb="base-input"] {
@@ -402,12 +448,10 @@ def sidebar_nav(current_page: str = "") -> None:
     """
     with st.sidebar:
         # ── Brand header ───────────────────────────────────────────────────
-        st.markdown("""
+        st.markdown(f"""
 <div style="padding:1.5rem 1.25rem 1.1rem;border-bottom:1px solid var(--navy-border);margin-bottom:0.4rem;">
-    <div class="kicker" style="color:rgba(211,216,228,.5);">
-        Khalifa University
-    </div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:#ffffff;line-height:1.2;margin-top:0.3rem;">
+    <img src="{ku_logo_data_uri(on_navy=True)}" alt="Khalifa University" style="height:26px;display:block;margin-bottom:0.7rem;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:#ffffff;line-height:1.2;">
         Admissions Screening
     </div>
     <div style="width:26px;height:1px;background:#e1ad66;margin-top:0.7rem;"></div>

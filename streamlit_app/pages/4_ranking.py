@@ -182,12 +182,15 @@ if ranking_data and ranking_data.get("scores_snapshot"):
         column_config=col_cfg,
     )
 
-    # Score breakdown expander
+    # Score breakdown expander — one colour per series is required once there's
+    # more than one column, or Streamlit raises StreamlitColorLengthError.
     with st.expander("Score breakdown by component"):
-        chart_df = df[["applicant_name"] + [c for c in
+        breakdown_cols = [c for c in
             ["bsc_academic", "msc_academic", "journal_score", "conf_score", "research_score"]
-            if c in df.columns]].set_index("applicant_name")
-        st.bar_chart(chart_df, color="#b68235")
+            if c in df.columns]
+        chart_df = df[["applicant_name"] + breakdown_cols].set_index("applicant_name")
+        palette = ["#b68235", "#8a9ab5", "#c8a028", "#7d5411", "#3b5998"][:len(breakdown_cols)]
+        st.bar_chart(chart_df, color=palette)
 
     # Summary statistics — figure ledger, same treatment as the dashboard
     with st.expander("Effect of this configuration"):

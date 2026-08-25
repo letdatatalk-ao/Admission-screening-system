@@ -88,8 +88,11 @@ with col_left:
         else app_data["transcript_document_id"]
     )
     if doc_id:
+        # /files/{id} requires evaluator auth, but a plain <iframe src> can't
+        # attach an Authorization header — pass the JWT as a query param
+        # instead (the backend accepts either; see check_evaluator_header_or_query).
         st.markdown(
-            f'<iframe src="{EXTERNAL_API_BASE_URL}/files/{doc_id}" '
+            f'<iframe src="{EXTERNAL_API_BASE_URL}/files/{doc_id}?token={st.session_state.token}" '
             'width="100%" height="860px" '
             'style="border:1px solid var(--color-divider);border-radius:4px;"></iframe>',
             unsafe_allow_html=True,

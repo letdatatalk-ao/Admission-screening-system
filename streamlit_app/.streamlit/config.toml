@@ -1,0 +1,17 @@
+# Streamlit's native theme — drives colours for widgets that render on a
+# <canvas> (st.dataframe's grid, st.bar_chart/vega-lite charts) and other
+# internals that CSS cannot reach. Without this, those widgets silently fall
+# back to Streamlit's own dark-with-red-accent default regardless of any CSS
+# injected in utils/styles.py, which is why the ranking results table and the
+# score-breakdown chart kept rendering dark. Values mirror the Classical
+# design tokens in utils/styles.py — keep the two in sync if either changes.
+[theme]
+base = "light"
+primaryColor = "#b68235"
+backgroundColor = "#f3f2f2"
+secondaryBackgroundColor = "#eae9e9"
+textColor = "#201f1d"
+font = "serif"
+
+[client]
+toolbarMode = "minimal"

@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.api_client import login_user
-from utils.styles import apply_theme, sidebar_nav
+from utils.styles import apply_theme, sidebar_nav, ku_logo_data_uri
 
 st.set_page_config(
     page_title="KU Admission Screening",
@@ -44,15 +44,12 @@ if "token" not in st.session_state:
     col_plate, col_form = st.columns([1.15, 1], gap="large")
 
     with col_plate:
-        st.markdown("""
+        st.markdown(f"""
 <div class="title-plate">
-    <div class="kicker">Khalifa University &middot; Office of Graduate Admissions</div>
+    <img src="{ku_logo_data_uri()}" alt="Khalifa University" style="height:38px;display:block;margin-bottom:1.1rem;">
+    <div class="kicker">Office of Graduate Admissions</div>
     <h1>Postgraduate<br>Admissions<br>Screening</h1>
     <div class="title-rule"></div>
-    <p class="title-lede">An AI-assisted evaluation system for PhD and MSc applications. Uploaded
-    curricula vitae and transcripts are read, cross-checked against QS, Scopus and CORE, and
-    scored against the weights the admissions committee has set for the cycle. Every extracted
-    figure remains open to human correction, and every correction is recorded.</p>
     <div class="title-stats">
         <div><div class="stat-label">Current cycle</div><div class="stat-value">Fall 2026</div></div>
         <div><div class="stat-label">Scoring</div><div class="stat-value">Configurable weights</div></div>
