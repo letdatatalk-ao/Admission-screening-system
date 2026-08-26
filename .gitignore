@@ -2,8 +2,3 @@ venv/
 __pycache__/ 
 *.pyc 
 .env 
-storage/raw/*.pdf 
-storage/raw/*.docx 
-
-.env
-_orphaned_storage_trash/
