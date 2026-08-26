@@ -12,6 +12,7 @@ Built for Khalifa University's admissions screening ("KU Admission Screening —
 - [Repository layout](#repository-layout)
 - [Data model](#data-model)
 - [Extraction pipeline](#extraction-pipeline)
+- [Evaluation results](#evaluation-results)
 - [Scoring & ranking](#scoring--ranking)
 - [API reference](#api-reference)
 - [Frontend (Streamlit)](#frontend-streamlit)
@@ -19,6 +20,8 @@ Built for Khalifa University's admissions screening ("KU Admission Screening —
 - [Configuration reference](#configuration-reference)
 - [Observability](#observability)
 - [Security notes](#security-notes)
+- [Testing & quality assurance](#testing--quality-assurance)
+- [Known limitations](#known-limitations)
 
 ## Screenshots
 
@@ -113,7 +116,7 @@ Core tables (`backend/app/db/models.py`), all PostgreSQL with UUID primary keys:
 - **`evaluation_sessions`** — an admissions cycle (e.g. "Fall 2026"), tied to a `qs_year`.
 - **`applicants`** — one per candidate, linked to a session, status (`pending` → `processing` → `processed`/`failed`), retry tracking, `needs_human_review` flag, last computed score/rank.
 - **`documents`** — uploaded files (CV/transcript), storage path, SHA-256 hash (dedup detection), OCR quality score.
-- **`extracted_metrics`** — one row per applicant: BSc/MSc/PhD university + QS rank + GPA (raw and normalised to a 4.0 scale) + field/country/year, GRE/IELTS/TOEFL scores, work experience, research interests, awards, extraction confidence and review-reason detail (JSONB).
+- **`extracted_metrics`** — one row per applicant: BSc/MSc/PhD university + QS rank + GPA (raw value + original scale, plus a normalised 0–1 fraction for cross-university comparison) + field/country/year, GRE/IELTS/TOEFL scores, work experience, research interests, awards, extraction confidence and review-reason detail (JSONB).
 - **`venues`** + **`publications`** — deduplicated publication venues (journal/conference) with Scopus percentile/quartile or CORE ranking, and each applicant's publications with author position, contribution score, DOI, extraction source.
 - **`ranking_configs`** — named, per-session sets of composite weights (JSONB) + optional tiebreak field.
 - **`ranking_results`** — a computed ranking run: full scored snapshot (JSONB) for audit/reproducibility.
@@ -141,13 +144,46 @@ Core tables (`backend/app/db/models.py`), all PostgreSQL with UUID primary keys:
    - Duplicate-file detection via SHA-256 hash comparison across applicants.
    - **DOI verification** against CrossRef for any publication DOIs found.
 7. **University ranking lookup** — fuzzy-matches BSc/MSc/PhD university names against QS World Rankings (`data/qs_rankings_2025.csv`); unranked universities are flagged for manual committee review rather than penalised outright.
-8. **GPA normalisation** to a common 4.0 scale, country-aware (`src/scoring/normalizer.py`).
+8. **GPA normalisation** — raw GPA + its original scale (e.g. `8.5/10`) converted to a common 4.0-point reference, country-aware (German-style inverted scales handled explicitly), then stored as a 0–1 fraction (`src/scoring/normalizer.py`).
 9. **Confidence scoring** — a weighted composite (`_compute_confidence`) over university/GPA/MSc presence/publications/identity completeness; scores < 0.6 trigger `needs_human_review`.
 10. **Publication enrichment** — venue matched against Scopus (journals) or CORE (conferences) rankings; per-publication **contribution score** computed from author position/total authors/corresponding-author status (first author = 1.0, last+corresponding = 0.85, last = 0.75, middle authors decay).
 11. **Supervisor matching** — Jaccard similarity between the applicant's research interests and each accepting supervisor's research areas; top 5 matches persisted.
 12. **Persistence** — writes `extracted_metrics`, `publications`, applicant identity fields, resets retry count; on any exception, increments `retry_count` and stores the error for the next retry.
 
 Prometheus metrics (`src/monitoring/metrics.py`) track pipeline run outcomes, duration, OCR quality, confidence distribution, review reasons, DOI verification results, and LLM fallback events throughout.
+
+## Evaluation results
+
+Measured with `tests/evaluate_accuracy.py` against **all 23 real CV+transcript pairs** in `Archive/`, compared field-by-field to hand-labelled ground truth in `data/ground_truth.csv`. Raw per-candidate output: `data/eval_results_final.json`.
+
+| | |
+|---|---|
+| Successful extractions | **23 / 23** (zero pipeline errors) |
+| **Overall mean accuracy** | **91.9%** — target ≥90% ✅ **PASSED** |
+
+Per-field accuracy (pooled across every candidate where that field had a ground-truth value to check against):
+
+| Field | Accuracy | Evaluable samples |
+|---|---|---|
+| BSc university | 100.0% | 14 |
+| BSc GPA | 100.0% | 7 |
+| BSc QS rank | 92.3% | 13 |
+| MSc university | 89.5% | 19 |
+| MSc GPA | 94.1% | 17 |
+| MSc QS rank | 94.1% | 17 |
+| Conference — identification | 50.0% | 2 |
+| Conference — first-author flag | 100.0% | 2 |
+
+The two lowest-scoring candidates are informative rather than random noise:
+
+- **Saba Kareem** holds two Master's degrees. The schema has a single `msc_uni` field, so only one of the two is captured — this is the known dual-degree limitation (see [Known limitations](#known-limitations)), not an extraction failure.
+- **Zakaria Nacir**'s transcript lists per-course grades with no single cumulative GPA printed anywhere on the document — there is no GPA for the model (or a human reviewer) to extract, verified against the source PDF.
+
+Re-run the evaluation any time with:
+
+```bash
+python -m tests.evaluate_accuracy --run --output data/eval_results_final.json
+```
 
 ## Scoring & ranking
 
@@ -280,3 +316,27 @@ Environment variables (`.env`, consumed by `docker-compose.yml`):
 - CORS uses an explicit origin allow-list (never `*` combined with credentials).
 - `LLM_PRIVACY_MODE=true` (default) keeps all applicant data on-premise (Ollama only) — disable deliberately to use cloud LLM providers.
 - All mutating actions are recorded in `audit_log`; manual field corrections are additionally recorded in `manual_overrides` with a reason.
+
+## Testing & quality assurance
+
+Beyond the extraction-accuracy evaluation above, the system went through several verification passes:
+
+**Full-stack correctness audit** — a systematic review of every backend endpoint and Streamlit page found 15 defects; 13 were fixed directly (missing JWT auth on almost every endpoint, a dead `needs_review` check, a `0.0 or 1.0` falsy-zero bug in the scoring normaliser, an unwired ranking tiebreak field, missing `try/except` around ranking computation, and others), and 2 are tracked as accepted, documented trade-offs (see [Known limitations](#known-limitations)).
+
+**End-to-end page walkthrough** — every page was clicked through against the live app (real login, real data), not just read as code, which surfaced four further bugs invisible from static review, all fixed:
+
+| Bug | Root cause |
+|---|---|
+| Normalised GPA displayed as e.g. `3.56` instead of `0.89` | The extraction pipeline stored the GPA on a 0–4.0 scale into a database column documented and consumed everywhere else as a 0–1 fraction — the dashboard's progress bar and the Compare page's radar chart both rendered nonsense as a result. |
+| Sidebar navigation became permanently unreachable below ~768px window width | An earlier CSS fix hid Streamlit's whole header to remove the Deploy button, not realising the *only* control to reopen a collapsed sidebar lives inside that same header element. |
+| Dashboard KPI labels truncated to e.g. `"PROC…"` | CSS Grid items default to `min-width: auto` (their content's intrinsic width) — with 7 KPI columns side by side, longer labels like "Processing" had no room to wrap and were clipped instead. |
+| Audit Trail showed the literal text `"nan"` on every batch-upload row | Pandas represents a SQL `NULL` as `float('nan')`, which is truthy in Python — `row.get(...) or default` never caught it. |
+
+**Production extraction outage, diagnosed and fixed** — the primary Groq model had been decommissioned upstream, silently failing every extraction (0/23 successful). Root-caused, replaced, and given proper fallback/fail-fast behaviour instead of returning an empty result on failure; verified by re-running the full 23-candidate evaluation (0/23 → 23/23 successful).
+
+## Known limitations
+
+- **Candidates with two Master's degrees** — `extracted_metrics` has a single `msc_uni`/`msc_gpa`/etc. field set. The extraction prompt is instructed to pick the most relevant degree (by research relevance, recency, then university rank) rather than concatenate both, but the second degree is not retained anywhere. A schema change (a `degrees` child table, one row per degree) would remove this limitation but was out of scope for this pass.
+- **Ranking recomputation lock is in-process, not distributed** — `POST /ranking` guards against a session being ranked twice concurrently using an in-memory lock. This is safe with the current single Celery worker; scaling to multiple workers would need the lock moved to Redis (the pattern already used for per-applicant pipeline locking).
+- **N+1 query patterns** — a few list endpoints (e.g. applicant listing with metrics) issue one query per row rather than a single joined query. Fine at current data volumes (tens of applicants); worth revisiting before a much larger admissions cycle.
+- **Standard Streamlit alert colours** — `st.info`/`st.success`/`st.warning`/`st.error` boxes use Streamlit's own default blue/green/amber/red rather than the custom Classical palette used everywhere else. Purely cosmetic.
