@@ -242,7 +242,7 @@ class MetricsPatchRequest(BaseModel):
     bsc_qs_rank: Optional[int] = Field(default=None, ge=0, le=2000)
     bsc_gpa_raw: Optional[float] = Field(default=None, ge=0.0, le=100.0)
     bsc_gpa_scale: Optional[float] = Field(default=None, gt=0.0, le=100.0)
-    bsc_gpa_normalised: Optional[float] = Field(default=None, ge=0.0, le=4.0)
+    bsc_gpa_normalised: Optional[float] = Field(default=None, ge=0.0, le=1.0)
     bsc_field: Optional[str] = None
     bsc_country: Optional[str] = None
     bsc_year: Optional[int] = Field(default=None, ge=1950, le=2030)
@@ -251,7 +251,7 @@ class MetricsPatchRequest(BaseModel):
     msc_qs_rank: Optional[int] = Field(default=None, ge=0, le=2000)
     msc_gpa_raw: Optional[float] = Field(default=None, ge=0.0, le=100.0)
     msc_gpa_scale: Optional[float] = Field(default=None, gt=0.0, le=100.0)
-    msc_gpa_normalised: Optional[float] = Field(default=None, ge=0.0, le=4.0)
+    msc_gpa_normalised: Optional[float] = Field(default=None, ge=0.0, le=1.0)
     msc_absent: Optional[bool] = None
     msc_field: Optional[str] = None
     msc_country: Optional[str] = None

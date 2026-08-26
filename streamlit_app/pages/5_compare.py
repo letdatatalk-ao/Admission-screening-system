@@ -58,8 +58,8 @@ if not selected:
 # ── Radar chart ────────────────────────────────────────────────────────────────
 fig = go.Figure()
 
-# KU brand palette
-palette = ["#1a2744", "#c8a028", "#4a7ab5"]
+# Classical design tokens (utils/styles.py) — accent gold, opacity-varied per series
+palette = ["#b68235", "#7d5411", "#8a9ab5"]
 categories = ["BSc GPA", "MSc GPA", "Publications", "AI Confidence"]
 
 for i, app_id in enumerate(selected):
@@ -91,19 +91,19 @@ for i, app_id in enumerate(selected):
 
 fig.update_layout(
     polar=dict(
-        radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(size=10)),
-        angularaxis=dict(tickfont=dict(size=12, color="#2c3a52")),
-        bgcolor="#f9fafc",
+        radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(size=10, color="#201f1d")),
+        angularaxis=dict(tickfont=dict(size=12, color="#201f1d")),
+        bgcolor="#f3f2f2",
     ),
     showlegend=True,
-    legend=dict(orientation="h", y=-0.15, font=dict(size=12)),
-    paper_bgcolor="#ffffff",
-    plot_bgcolor="#ffffff",
+    legend=dict(orientation="h", y=-0.15, font=dict(size=12, family="Lora, serif")),
+    paper_bgcolor="#f3f2f2",
+    plot_bgcolor="#f3f2f2",
     margin=dict(t=40, b=60, l=60, r=60),
-    font=dict(family="Inter, Segoe UI, system-ui", color="#2c3a52"),
+    font=dict(family="Lora, serif", color="#201f1d"),
     title=dict(
         text="Performance Radar",
-        font=dict(size=14, color="#1a2744", weight="bold"),
+        font=dict(size=18, family="Cormorant Garamond, serif", color="#201f1d"),
         x=0.5,
     ),
 )

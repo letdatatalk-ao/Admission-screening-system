@@ -106,8 +106,17 @@ for date, day_df in df_view.groupby("date", sort=False):
     )
     for _, row in day_df.iterrows():
         t = row["occurred_dt"].strftime("%H:%M:%S")
-        user = row.get("user_id") or "system"
-        target = f'{row.get("entity_type") or ""} · {str(row.get("entity_id") or "")[:8]}'
+        user = row.get("user_id")
+        user = "system" if user is None or pd.isna(user) else user
+        # A NULL entity_type/entity_id comes back from pandas as float('nan'),
+        # which is truthy — `row.get(...) or ""` never catches it and the
+        # literal text "nan" was rendering in the register (e.g. every batch
+        # upload row showed "nan · <id>" instead of just the id).
+        entity_type = row.get("entity_type")
+        entity_type = "" if pd.isna(entity_type) else entity_type
+        entity_id = row.get("entity_id")
+        entity_id = "" if pd.isna(entity_id) else str(entity_id)[:8]
+        target = f'{entity_type} · {entity_id}' if entity_type else entity_id
 
         diff_html = ""
         old_state = row.get("old_state") or {}

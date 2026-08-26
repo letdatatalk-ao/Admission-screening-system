@@ -57,15 +57,21 @@ _KU_CSS = """
 }
 
 /* ── Hide default Streamlit chrome ────────────────────── */
-/* display:none, not visibility:hidden — Streamlit's own toolbar buttons
-   (Deploy, etc.) set visibility:visible on themselves, which overrides an
-   inherited visibility:hidden on the header and leaves them clickable.
-   [data-testid="stHeader"] (not just the bare `header` element selector)
-   with !important — Streamlit's own rule sets display:flex on that exact
-   attribute selector, which otherwise outranks a plain element selector. */
+/* client.toolbarMode=minimal (config.toml) already strips Deploy/menu/status
+   from the header, leaving only the sidebar-expand chevron — which is the
+   ONLY way back into navigation once the sidebar auto-collapses below
+   ~768px. An earlier `header, [data-testid="stHeader"] { display:none }`
+   rule hid that chevron along with the toolbar (stExpandSidebarButton is a
+   descendant of stHeader, not a sibling), stranding narrow-viewport users
+   on whatever page they were on with no way to reach the sidebar. Style the
+   header down to an invisible bar instead of removing it. */
 #MainMenu { display: none; }
 footer    { display: none; }
-header, [data-testid="stHeader"] { display: none !important; }
+header, [data-testid="stHeader"] {
+    background: transparent !important;
+    box-shadow: none !important;
+    height: 2.75rem !important;
+}
 
 /* ── Page background ──────────────────────────────────── */
 /* html/body default to Streamlit's own dark theme background and show
@@ -193,6 +199,20 @@ p, label, .stMarkdown { color: var(--color-text); font-family: var(--font-body);
     letter-spacing: 0.16em;
     font-weight: 500;
     font-family: var(--font-body) !important;
+}
+/* Streamlit's own stMetricLabel rule truncates to a fixed width with an
+   ellipsis — at 7 KPI columns side by side, "Processing"/"Need Review" never
+   had room and rendered as "PROC…"/"NEED …". Let the label wrap instead. */
+[data-testid="stMetricLabel"] {
+    min-width: 0 !important;
+}
+[data-testid="stMetricLabel"] > div,
+[data-testid="stMetricLabel"] p {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.35 !important;
 }
 
 /* ── Buttons — stroke, not fill ────────────────────────── */

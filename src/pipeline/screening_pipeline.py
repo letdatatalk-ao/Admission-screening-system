@@ -690,7 +690,11 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
             "bsc_qs_rank":        bsc_rank,
             "bsc_gpa_raw":        to_float(validated.bsc_gpa.raw_value),
             "bsc_gpa_scale":      to_float(validated.bsc_gpa.scale, 4.0),
-            "bsc_gpa_normalised": bsc_gpa_norm,
+            # bsc_gpa_norm is on a 0-4.0 scale (normalise_gpa_to_4); the DB
+            # column is documented/typed as a 0-1 fraction (Numeric(4,3),
+            # see backend/app/db/models.py) and the dashboard renders it as
+            # a 0-1 progress-bar width — divide down before storing.
+            "bsc_gpa_normalised": round(bsc_gpa_norm / 4.0, 4) if bsc_gpa_norm is not None else None,
             "bsc_field":          (validated.bsc_field or "")[:200] or None,
             "bsc_country":        (validated.bsc_country or "")[:100] or None,
             "bsc_year":           validated.bsc_year,
@@ -733,7 +737,7 @@ async def run_pipeline_logic(applicant_id: str) -> bool:
                 "msc_qs_rank":        msc_rank,
                 "msc_gpa_raw":        to_float(validated.msc_gpa.raw_value) if validated.msc_gpa else None,
                 "msc_gpa_scale":      to_float(validated.msc_gpa.scale, 4.0) if validated.msc_gpa else None,
-                "msc_gpa_normalised": msc_gpa_norm,
+                "msc_gpa_normalised": round(msc_gpa_norm / 4.0, 4) if msc_gpa_norm is not None else None,
                 "msc_field":          (validated.msc_field or "")[:200] or None,
                 "msc_country":        (validated.msc_country or "")[:100] or None,
                 "msc_year":           validated.msc_year,

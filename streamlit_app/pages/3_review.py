@@ -306,7 +306,7 @@ with col_right:
             col1, col2, col3 = st.columns(3)
             bsc_gpa_raw        = col1.number_input("Raw GPA",         value=float(metrics.get("bsc_gpa_raw") or 0.0))
             bsc_gpa_scale      = col2.number_input("Scale",           value=float(metrics.get("bsc_gpa_scale") or 4.0))
-            bsc_gpa_normalised = col3.number_input("Normalised /4.0", value=float(metrics.get("bsc_gpa_normalised") or 0.0), step=0.01)
+            bsc_gpa_normalised = col3.number_input("Normalised (0-1)", value=float(metrics.get("bsc_gpa_normalised") or 0.0), min_value=0.0, max_value=1.0, step=0.01)
 
         with tab_msc:
             msc_absent = st.checkbox("MSc degree absent", value=metrics.get("msc_absent", False))
@@ -322,7 +322,7 @@ with col_right:
                 col1, col2, col3 = st.columns(3)
                 msc_gpa_raw        = col1.number_input("Raw GPA",         value=float(metrics.get("msc_gpa_raw") or 0.0), key="msc_gpa_raw_in")
                 msc_gpa_scale      = col2.number_input("Scale",           value=float(metrics.get("msc_gpa_scale") or 4.0), key="msc_scale_in")
-                msc_gpa_normalised = col3.number_input("Normalised /4.0", value=float(metrics.get("msc_gpa_normalised") or 0.0), step=0.01, key="msc_norm_in")
+                msc_gpa_normalised = col3.number_input("Normalised (0-1)", value=float(metrics.get("msc_gpa_normalised") or 0.0), min_value=0.0, max_value=1.0, step=0.01, key="msc_norm_in")
 
         with tab_phd:
             phd_uni_name = st.text_input("PhD University (if any)", value=metrics.get("phd_uni_name") or "")
