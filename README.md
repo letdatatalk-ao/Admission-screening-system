@@ -16,20 +16,21 @@ For reviewing the running instance:
 
 This is a local demo account for evaluation only — change it before any real deployment (`docker compose exec backend python -m backend.app.create_admin`, or update the `users` table directly).
 
-## A note on LLM API limits
+## LLM providers & API limits
 
-The extraction pipeline runs on **Groq**, selected via `GROQ_API_KEY`/`GROQ_API_KEYS` and `LLM_PROVIDER=groq` in `.env`. The key used for this project's testing/demo is a **free-tier key**, which caps how many tokens can be processed **per day** (TPD) — once that cap is hit, extraction for new candidates stalls until Groq resets the quota at midnight UTC.
+`src/ai/llm_factory.py` builds a `FallbackOrchestrator` from whichever providers have credentials set in `.env`, tried in priority order — the next provider is only tried when the current one raises (exhausted quota, unreachable, etc.), so a single provider outage never stalls the whole pipeline:
 
-The code already handles this as gracefully as a free tier allows: `src/ai/groq_service.py` supports **multiple comma-separated keys** in `GROQ_API_KEYS`, rotating to the next key and putting an exhausted one on a 24h cooldown rather than failing outright. But on one key (or a handful), a batch of many candidates back-to-back can still exhaust the daily quota.
+1. **Qwen** (`qwen3.6-35b-a3b`, via Scaleway's Generative APIs — `src/ai/qwen_service.py`) — primary. No daily-token ceiling the way Groq's free tier has, but it is a *reasoning* model: it writes a hidden reasoning trace before the actual JSON answer, which costs real tokens and latency — in testing, a full extraction (2 calls) took **~65-115 seconds per candidate**, noticeably slower than Groq.
+2. **Groq** (`src/ai/groq_service.py`) — secondary. Much faster (typically single-digit seconds per call), but the key used for this project's testing/demo is a **free-tier key**, capped on tokens-per-day (TPD). The code rotates across multiple comma-separated `GROQ_API_KEYS` and puts an exhausted key on a 24h cooldown rather than failing outright — but on one key (or a handful), a busy batch can still exhaust the daily quota. A paid Groq key removes that ceiling with zero code changes.
+3. **Anthropic** (`src/ai/anthropic_fallback.py`) — tertiary. Wired in and ready, but `ANTHROPIC_API_KEY` isn't currently set in `.env`, so it's inactive until a key is added.
+4. **Ollama** (on-premise, `src/ai/llm_service.py`) — last resort, and the *only* provider used when `LLM_PRIVACY_MODE=true` (all three cloud providers above are disabled in that mode).
 
-**A paid Groq API key removes this ceiling** and is the recommended setup for anything beyond light testing — a real admissions cycle, live demos, or batch-processing many candidates in one sitting. No code changes are needed: generate the key from a billed Groq account and drop it into `GROQ_API_KEY` (or `GROQ_API_KEYS`) in `.env`, then restart the backend/Celery containers.
-
-*(`src/ai/anthropic_fallback.py` exists in the codebase as a second cloud-provider option but is not currently wired into the pipeline — `src/ai/llm_factory.py` only switches between `groq` and `ollama` via `LLM_PROVIDER`. Connecting it as an automatic fallback when Groq's daily quota is hit would be a natural next step, but is not active today.)*
+**Net effect for anything beyond light testing** (a real admissions cycle, a live demo, batch-processing many candidates back to back): a paid Groq key is still the fastest fix for Groq's free-tier ceiling, but Qwen's ceiling-free quota makes it a reasonable primary even before that — the trade-off is per-candidate latency, not availability.
 
 ## Contents
 
 - [Demo access](#demo-access)
-- [A note on LLM API limits](#a-note-on-llm-api-limits)
+- [LLM providers & API limits](#llm-providers--api-limits)
 - [Screenshots](#screenshots)
 - [Architecture](#architecture)
 - [Tech stack](#tech-stack)
@@ -77,8 +78,8 @@ The code already handles this as gracefully as a free tier allows: `src/ai/groq_
                           ┌───────────────────────────────┼───────────────────────┐
                           ▼                                ▼                       ▼
                  Docling / PyMuPDF /                 LLM extraction         QS rank, Scopus,
-                 python-docx / Tesseract /            (Groq or Ollama,      CORE, DOI lookups
-                 VLM OCR (ingestion)                  via LLM_PROVIDER)     (data/*.csv, network)
+                 python-docx / Tesseract /            (Qwen → Groq →        CORE, DOI lookups
+                 VLM OCR (ingestion)                  Anthropic → Ollama)   (data/*.csv, network)
 ```
 
 - **Celery + Redis** decouple document ingestion/LLM extraction (slow, I/O and API-bound) from the request/response cycle. `celery_beat` runs scheduled jobs.
@@ -94,7 +95,7 @@ The code already handles this as gracefully as a free tier allows: `src/ai/groq_
 | Task queue | Celery 5 + Redis (broker/result backend + locking) |
 | Frontend | Streamlit (multi-page app) |
 | Document parsing | Docling (preferred), PyMuPDF, `python-docx`, Tesseract OCR, VLM vision OCR (Groq) |
-| LLM extraction | Groq (cloud, default) or Ollama (on-prem), switched via `LLM_PROVIDER` |
+| LLM extraction | Qwen (Scaleway) → Groq → Anthropic → Ollama fallback chain (`FallbackOrchestrator`) |
 | Data enrichment | QS World University Rankings, Scimago/Scopus journal percentiles, CORE conference rankings (CSV files in `data/`), CrossRef DOI verification |
 | Monitoring | `prometheus-client`, `/metrics` endpoint, Grafana-style alert rules (`monitoring/alerts.yml`) |
 | DB | PostgreSQL 16 |
@@ -113,8 +114,8 @@ backend/app/            FastAPI app
 src/                     Core domain logic, imported by both backend and Celery workers
   ingestion/                PDF/DOCX readers, Docling wrapper, VLM OCR, storage, validator
   preprocessing/            cleaner, segmenter (CV → education/publications chunks), sanitizer (lang detect)
-  ai/                       llm_factory (Groq/Ollama provider switch), groq_service,
-                            llm_service (Ollama), anthropic_fallback (unwired), ocr
+  ai/                       llm_factory (FallbackOrchestrator: Qwen→Groq→Anthropic→Ollama),
+                            qwen_service, groq_service, anthropic_fallback, llm_service (Ollama), ocr
   extractors/                university_extractor (QS lookup), publication_extractor (Scopus/CORE
                             enrichment), gpa_extractor, doi_verifier
   models/                   Pydantic extraction schemas (ExtractedCandidate), applicant_metrics
@@ -161,7 +162,7 @@ Core tables (`backend/app/db/models.py`), all PostgreSQL with UUID primary keys:
    - All storage paths are validated against `STORAGE_ROOT` to block path traversal.
 3. **Cleaning & segmentation** — `DocumentCleaner` normalises text, `DocumentSegmenter` splits the CV into education/publications sections to keep LLM prompts focused.
 4. **Language detection** on the CV (multilingual prompt support).
-5. **LLM extraction** — `get_llm_orchestrator()` (`src/ai/llm_factory.py`) selects Groq or Ollama per `LLM_PROVIDER`. On Groq, `GroqOrchestrator.extract_parallel()` rotates across multiple `GROQ_API_KEYS` and puts a key on a 24h cooldown when it hits its daily token quota, rather than failing the whole batch. Output validated against the `ExtractedCandidate` Pydantic schema.
+5. **LLM extraction** — `get_llm_orchestrator()` (`src/ai/llm_factory.py`) builds a `FallbackOrchestrator` over whichever providers have credentials configured (Qwen → Groq → Anthropic → Ollama, in that order); a `RuntimeError` or a capacity-type error (quota/rate-limit/503/529) from one provider falls through to the next rather than failing the applicant outright. See [LLM providers & API limits](#llm-providers--api-limits). Output validated against the `ExtractedCandidate` Pydantic schema.
 6. **Cross-validation & quality checks**:
    - Regex-based GPA cross-check between the LLM-extracted GPA and patterns found directly in the transcript text; flags `gpa_mismatch` if they diverge by >10%.
    - **Misfile detection** — checks whether the extracted candidate name actually appears in the transcript header; caps confidence at 0.3 and flags `possible_misfile` if not.
@@ -315,11 +316,11 @@ Environment variables (`.env`, consumed by `docker-compose.yml`):
 | `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_HOST`, `DB_PORT`, `DATABASE_URL` | PostgreSQL connection |
 | `JWT_SECRET`, `JWT_EXPIRE_HOURS` | Auth token signing/expiry |
 | `REDIS_URL` | Celery broker/result backend + pipeline locking |
-| `GROQ_API_KEY` / `GROQ_API_KEYS` | Groq LLM provider — used when `LLM_PROVIDER=groq`; supports multiple comma-separated keys, auto-rotated on daily quota exhaustion (see [A note on LLM API limits](#a-note-on-llm-api-limits)) |
-| `LLM_PROVIDER` | `"groq"` (cloud) or `"ollama"` (default, on-prem) — selects which orchestrator `src/ai/llm_factory.py` returns for the main CV/transcript extraction |
-| `OLLAMA_URL` | On-premise LLM endpoint, used when `LLM_PROVIDER=ollama` (the default) |
-| `LLM_PRIVACY_MODE` | Narrower than the name suggests: when `true` (default), only disables the Groq **vision-OCR upgrade** for poor-quality scanned pages (`src/ingestion/vlm_ocr.py`) — falls back to Tesseract-only OCR for those pages. It does not affect which provider `LLM_PROVIDER` selects for the main extraction. |
-| `ANTHROPIC_API_KEY` | Read only by `src/ai/anthropic_fallback.py`, a second cloud-provider module that exists but **is not called from anywhere else in the codebase** — setting it today has no effect until `src/ai/llm_factory.py` is extended to route to it. |
+| `SCALEWAY_API_KEY` / `SCALEWAY_BASE_URL` / `QWEN_MODEL` | Qwen LLM provider (primary) — Scaleway Generative APIs, OpenAI-compatible endpoint. Both `SCALEWAY_API_KEY` and `SCALEWAY_BASE_URL` must be set for `src/ai/llm_factory.py` to register it. |
+| `GROQ_API_KEY` / `GROQ_API_KEYS` | Groq LLM provider (secondary) — supports multiple comma-separated keys, auto-rotated on daily quota exhaustion (see [LLM providers & API limits](#llm-providers--api-limits)) |
+| `ANTHROPIC_API_KEY` | Anthropic LLM provider (tertiary) — read by `src/ai/anthropic_fallback.py`; not currently set in `.env`, so this provider stays inactive until a key is added |
+| `OLLAMA_URL` | On-premise LLM endpoint (last resort; sole provider when `LLM_PRIVACY_MODE=true`) |
+| `LLM_PRIVACY_MODE` | When `true` (default), disables **all three** cloud providers above (Qwen, Groq, Anthropic) — every document is processed on-premise via Ollama only. Set `false` to enable whichever cloud providers have credentials configured. |
 | `STORAGE_PATH` / `STORAGE_ROOT` | Root directory for uploaded documents; also the path-traversal allow-list boundary |
 | `CORS_ORIGINS` | Comma-separated allowed origins for the API (defaults to localhost:8501/3000) |
 
@@ -338,7 +339,7 @@ Environment variables (`.env`, consumed by `docker-compose.yml`):
 - JWT auth with role-based guards (`check_admin`, `check_evaluator`); passwords hashed with bcrypt.
 - Rate limiting via `slowapi` (e.g. 10/min on login, 30/min on upload).
 - CORS uses an explicit origin allow-list (never `*` combined with credentials).
-- The main CV/transcript extraction provider is chosen with `LLM_PROVIDER` (`ollama` for fully on-premise, `groq` for cloud) — `LLM_PRIVACY_MODE` only gates the separate Groq vision-OCR upgrade path for scanned images (see [Configuration reference](#configuration-reference)), not the primary extraction pipeline.
+- `LLM_PRIVACY_MODE=true` (default) restricts extraction to on-premise Ollama only, disabling Qwen, Groq and Anthropic entirely — set `false` deliberately to send applicant data to a cloud LLM provider (see [LLM providers & API limits](#llm-providers--api-limits)).
 - All mutating actions are recorded in `audit_log`; manual field corrections are additionally recorded in `manual_overrides` with a reason.
 
 ## Testing & quality assurance
