@@ -21,6 +21,13 @@ import re
 import sys
 from pathlib import Path
 
+# Force UTF-8 output — the summary prints a unicode checkmark that crashes
+# under Windows' default cp1252 console encoding.
+if sys.stdout.encoding != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if sys.stderr.encoding != "utf-8":
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -165,10 +172,17 @@ def read_document(path: Path) -> str:
 # Single applicant extraction
 # ─────────────────────────────────────────────────────────────────────────────
 
-async def extract_one(aid: str, cv_path: Path, tr_path: Path, dfs: dict) -> dict:
+def _build_orchestrator(provider: str):
+    if provider == "qwen":
+        from src.ai.qwen_service import QwenOrchestrator
+        return QwenOrchestrator()
+    from src.ai.groq_service import GroqOrchestrator
+    return GroqOrchestrator()
+
+
+async def extract_one(aid: str, cv_path: Path, tr_path: Path, dfs: dict, provider: str = "groq") -> dict:
     from src.preprocessing.cleaner import DocumentCleaner
     from src.preprocessing.segmenter import DocumentSegmenter
-    from src.ai.groq_service import GroqOrchestrator
     from src.extractors.university_extractor import lookup_qs_rank
     from src.extractors.publication_extractor import enrich_publication
     from src.scoring.normalizer import normalise_gpa_to_4
@@ -196,7 +210,7 @@ async def extract_one(aid: str, cv_path: Path, tr_path: Path, dfs: dict) -> dict
 
     logger.info(f"  [{aid}] CV={len(cv_text):,}ch  TR={len(academic_text):,}ch")
 
-    orchestrator = GroqOrchestrator()
+    orchestrator = _build_orchestrator(provider)
     try:
         raw = await orchestrator.extract_parallel(
             cv_text=cv_text,
@@ -316,10 +330,10 @@ def _log_result(aid: str, r: dict) -> None:
 # Main
 # ─────────────────────────────────────────────────────────────────────────────
 
-async def run_all(pairs: list, dfs: dict) -> list:
+async def run_all(pairs: list, dfs: dict, provider: str = "groq") -> list:
     results = []
     for cv_path, tr_path, aid in pairs:
-        result = await extract_one(aid, cv_path, tr_path, dfs)
+        result = await extract_one(aid, cv_path, tr_path, dfs, provider=provider)
         results.append(result)
     return results
 
@@ -371,18 +385,26 @@ def main() -> None:
                         help="Process at most N applicants")
     parser.add_argument("--output", metavar="FILE",
                         help="Save JSON results to this file")
+    parser.add_argument("--provider", choices=["groq", "qwen"], default="groq",
+                        help="LLM provider to test against (default: groq)")
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args()
 
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    api_key = os.getenv("GROQ_API_KEY")
-    if not api_key:
-        print("❌ GROQ_API_KEY not set.\n"
-              "   Export it:  export GROQ_API_KEY=gsk_...\n"
-              "   Or add it to .env in project root.")
-        sys.exit(1)
+    if args.provider == "qwen":
+        if not (os.getenv("SCALEWAY_API_KEY") and os.getenv("SCALEWAY_BASE_URL")):
+            print("❌ SCALEWAY_API_KEY / SCALEWAY_BASE_URL not set.\n"
+                  "   Add them to .env in project root.")
+            sys.exit(1)
+    else:
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            print("❌ GROQ_API_KEY not set.\n"
+                  "   Export it:  export GROQ_API_KEY=gsk_...\n"
+                  "   Or add it to .env in project root.")
+            sys.exit(1)
 
     logger.info(f"Loading reference CSVs from {DATA_DIR}")
     dfs = load_csvs()
@@ -392,9 +414,9 @@ def main() -> None:
         logger.error(f"No applicant files found in {ARCHIVE_DIR}")
         sys.exit(1)
 
-    logger.info(f"Found {len(pairs)} applicant(s) to process\n")
+    logger.info(f"Found {len(pairs)} applicant(s) to process (provider={args.provider})\n")
 
-    results = asyncio.run(run_all(pairs, dfs))
+    results = asyncio.run(run_all(pairs, dfs, provider=args.provider))
     print_summary(results)
 
     if args.output:
