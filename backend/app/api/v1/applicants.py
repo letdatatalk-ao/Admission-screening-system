@@ -11,7 +11,7 @@ from backend.app.db.repositories.applicant_repo import (
     get_applicant, get_extracted_metrics, list_applicants
 )
 from backend.app.db.repositories.publication_repo import list_publications, get_publication, update_publication, delete_publication
-from backend.app.db.repositories.scoring_repo import log_action
+from backend.app.db.repositories.scoring_repo import log_action, save_manual_override
 from backend.app.api.v1.schemas import (
     ApplicantRead, ApplicantDetail,
     MetricsPatchRequest, PublicationUpdateRequest, PublicationCreateRequest,
@@ -258,6 +258,7 @@ async def update_metrics(
     if not db_metrics:
         db_metrics = ExtractedMetrics(applicant_id=applicant_id)
         db.add(db_metrics)
+        await db.flush()  # populate db_metrics.id for the override records below
 
     metrics_fields = {
         "bsc_uni_name", "bsc_qs_rank", "bsc_gpa_raw", "bsc_gpa_scale", "bsc_gpa_normalised",
@@ -296,6 +297,36 @@ async def update_metrics(
             old_state={**old_state, "reason": review_reason},
             new_state={**new_state, "reason": review_reason},
         )
+        # Per-field record in manual_overrides, in addition to the single
+        # audit_log entry above — save_manual_override()'s own docstring
+        # says it's meant to be called from exactly this Review-page save
+        # action, but nothing here ever actually called it.
+        for field in identity_fields:
+            if field in payload:
+                await save_manual_override(
+                    db,
+                    applicant_id=applicant_id,
+                    table_name="applicants",
+                    record_id=applicant_id,
+                    field_name=field,
+                    old_value=None if old_state.get(field) is None else str(old_state[field]),
+                    new_value=str(new_state[field]),
+                    overridden_by=current_user.get("id"),
+                    reason=review_reason,
+                )
+        for key in metrics_fields:
+            if key in new_state:
+                await save_manual_override(
+                    db,
+                    applicant_id=applicant_id,
+                    table_name="extracted_metrics",
+                    record_id=db_metrics.id,
+                    field_name=key,
+                    old_value=None if old_state.get(key) is None else str(old_state[key]),
+                    new_value=str(new_state[key]),
+                    overridden_by=current_user.get("id"),
+                    reason=review_reason,
+                )
 
     try:
         await db.commit()

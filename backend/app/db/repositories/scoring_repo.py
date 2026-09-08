@@ -7,6 +7,8 @@ Tables : ranking_results, manual_overrides, audit_log.
 
 from __future__ import annotations
 
+import datetime
+import decimal
 import uuid
 from typing import Optional
 
@@ -190,6 +192,30 @@ async def list_overrides(
 # AuditLog
 # ---------------------------------------------------------------------------
 
+def _json_safe(value):
+    """
+    Recursively convert values pulled straight off SQLAlchemy ORM attributes
+    (Decimal from Numeric columns, datetime/date, UUID) into JSON-native
+    types. old_state/new_state snapshots are built with getattr() on live
+    model instances, so callers routinely hand log_action a Decimal (e.g.
+    bsc_gpa_normalised, global_confidence) — the JSONB column's json.dumps
+    has no idea how to encode that and raises TypeError, which previously
+    surfaced as a 500 on every correction touching a numeric field, with
+    the underlying DB write already flushed but the audit entry lost.
+    """
+    if isinstance(value, decimal.Decimal):
+        return float(value)
+    if isinstance(value, (datetime.datetime, datetime.date)):
+        return value.isoformat()
+    if isinstance(value, uuid.UUID):
+        return str(value)
+    if isinstance(value, dict):
+        return {k: _json_safe(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(v) for v in value]
+    return value
+
+
 async def log_action(
     db:           AsyncSession,
     action_type:  str,
@@ -214,6 +240,8 @@ async def log_action(
 
     Appelé depuis FastAPI après chaque action significative.
     """
+    old_state = _json_safe(old_state) if old_state is not None else None
+    new_state = _json_safe(new_state) if new_state is not None else None
     entry = AuditLog(
         session_id=session_id,
         user_id=user_id,
