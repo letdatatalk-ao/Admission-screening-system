@@ -56,4 +56,13 @@ async def get_file(
         raise HTTPException(status_code=404, detail="Document not found")
     if not os.path.isfile(doc.storage_path):
         raise HTTPException(status_code=404, detail="Document file missing from storage")
-    return FileResponse(doc.storage_path, filename=doc.original_filename)
+    # content_disposition_type="inline" — this endpoint is embedded directly in
+    # an <iframe src="..."> on the Review page (see docstring above). FileResponse
+    # defaults to "attachment", which makes the browser treat the response as a
+    # download and abort the iframe navigation instead of rendering it, leaving
+    # the document viewer blank.
+    return FileResponse(
+        doc.storage_path,
+        filename=doc.original_filename,
+        content_disposition_type="inline",
+    )
