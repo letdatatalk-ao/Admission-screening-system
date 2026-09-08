@@ -17,9 +17,28 @@ st.markdown("""
     display:flex;align-items:center;gap:0.9rem;
 }
 .pmark { display:inline-block;width:9px;height:9px;flex:none; }
-.pmark-processing { border-radius:50%;border:1.5px solid var(--color-accent);background:var(--color-accent); }
+.pmark-processing { border-radius:50%;border:1.5px solid var(--color-accent);background:var(--color-accent);
+    animation:dot-pulse 1.4s ease-in-out infinite; }
 .pmark-pending    { border-radius:50%;border:1.5px solid rgba(32,31,29,.45); }
 .pmark-error      { border:1.5px solid var(--color-text);transform:rotate(45deg); }
+/* Ring animation vocabulary — used by the Live Pipeline Monitor's progress ring */
+@keyframes dot-pulse {
+    0%, 100% { transform:scale(1); box-shadow:0 0 0 0 rgba(182,130,53,.55); }
+    50%      { transform:scale(1.35); box-shadow:0 0 0 4px rgba(182,130,53,0); }
+}
+@keyframes ring-glow {
+    0%, 100% { filter:drop-shadow(0 0 2px rgba(182,130,53,.35)); }
+    50%      { filter:drop-shadow(0 0 8px rgba(182,130,53,.7)); }
+}
+@keyframes ring-pop {
+    from { opacity:0; transform:scale(.85); }
+    to   { opacity:1; transform:scale(1); }
+}
+@keyframes ring-spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+@keyframes track-breathe {
+    0%, 100% { stroke-opacity:1; }
+    50%      { stroke-opacity:.45; }
+}
 /* Extraction card */
 .ext-section {
     border-left:1px solid var(--color-divider);
@@ -168,24 +187,58 @@ else:
     r, circumference = 54, 2 * 3.14159265 * 54
     offset = circumference * (1 - pct)
 
+    # The page fully re-renders on every 5s refresh, so a plain CSS
+    # `transition` never has an old value to animate *from* — it would just
+    # snap. Stashing the previously-drawn offset in session_state gives the
+    # SVG's native <animate> (SMIL) a real start point, so the ring visibly
+    # sweeps from where it last was to where it is now, every single poll.
+    ring_key = f"_pipeline_ring_prev_{session_id}"
+    prev_offset = st.session_state.get(ring_key, circumference)
+    st.session_state[ring_key] = offset
+
+    # Two read states for the ring's centre: an orbiting comet while the AI
+    # is actively extracting (n_running > 0), a slower breathing track while
+    # everything is merely queued — so the motion itself reports pipeline
+    # state, not just decoration.
+    is_extracting = n_running > 0
+    comet_dur = "1.8s" if is_extracting else "4s"
+    comet_html = (
+        f'<circle r="3.4" fill="var(--color-accent)" opacity="{1 if is_extracting else 0.5}">'
+        f'<animateMotion dur="{comet_dur}" repeatCount="indefinite" '
+        f'path="M 65,{65-r} A {r},{r} 0 1,1 64.99,{65-r}"/></circle>'
+    ) if (is_extracting or n_pending > 0) else ""
+
     col_ring, col_stats = st.columns([1, 2.2])
     with col_ring:
         st.markdown(
             f"""
             <div style="display:flex;flex-direction:column;align-items:center;padding:0.4rem 0 0;">
               <div style="position:relative;width:150px;height:150px;">
-                <svg width="150" height="150" viewBox="0 0 130 130" style="transform:rotate(-90deg);position:absolute;top:0;left:0;">
-                  <circle cx="65" cy="65" r="{r}" fill="none" stroke="var(--color-divider)" stroke-width="8"/>
-                  <circle cx="65" cy="65" r="{r}" fill="none" stroke="var(--color-accent)" stroke-width="8"
-                          stroke-linecap="butt" stroke-dasharray="{circumference:.1f}"
-                          stroke-dashoffset="{offset:.1f}"
-                          style="transition:stroke-dashoffset 0.6s ease;"/>
+                <svg width="150" height="150" viewBox="0 0 130 130" style="position:absolute;top:0;left:0;">
+                  <defs>
+                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#c8a028"/>
+                      <stop offset="100%" stop-color="#8a5a12"/>
+                    </linearGradient>
+                  </defs>
+                  <g style="transform:rotate(-90deg);transform-origin:65px 65px;">
+                    <circle cx="65" cy="65" r="{r}" fill="none" stroke="var(--color-divider)" stroke-width="8"
+                            style="{'animation:track-breathe 2.6s ease-in-out infinite;' if is_extracting else ''}"/>
+                    <circle cx="65" cy="65" r="{r}" fill="none" stroke="url(#ringGrad)" stroke-width="8"
+                            stroke-linecap="round" stroke-dasharray="{circumference:.1f}"
+                            stroke-dashoffset="{offset:.1f}"
+                            style="animation:ring-pop .4s ease-out, {'ring-glow 2.2s ease-in-out infinite .4s' if is_extracting else 'none'};">
+                      <animate attributeName="stroke-dashoffset" from="{prev_offset:.1f}" to="{offset:.1f}"
+                               dur="1s" fill="freeze" calcMode="spline" keySplines="0.22 0.9 0.32 1"/>
+                    </circle>{comet_html}
+                  </g>
                 </svg>
                 <div style="position:absolute;top:0;left:0;width:100%;height:100%;
-                            display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                            display:flex;flex-direction:column;align-items:center;justify-content:center;
+                            animation:ring-pop .5s ease-out;">
                   <div style="font-family:'Cormorant Garamond',serif;font-size:2.3rem;line-height:1;">{pct*100:.0f}%</div>
                   <div style="font-size:0.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(32,31,29,.45);margin-top:2px;">
-                    extracted
+                    {"extracting" if is_extracting else "extracted"}
                   </div>
                 </div>
               </div>
@@ -266,6 +319,7 @@ else:
 # inheriting a stale start time from whatever finished before it.
 if active_df.empty:
     st.session_state.pop(f"_pipeline_watch_{session_id}", None)
+    st.session_state.pop(f"_pipeline_ring_prev_{session_id}", None)
 
 st.markdown("---")
 
