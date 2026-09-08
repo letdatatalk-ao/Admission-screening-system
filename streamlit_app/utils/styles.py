@@ -224,6 +224,18 @@ p, label, .stMarkdown { color: var(--color-text); font-family: var(--font-body);
     overflow-wrap: break-word !important;
     line-height: 1.35 !important;
 }
+/* Same fix, applied to the value itself — a wider figure like "1.3/min"
+   or "12m 04s" hit the identical truncation once there are 4+ metric
+   columns in a row and the pane is narrow. */
+[data-testid="stMetricValue"] {
+    min-width: 0 !important;
+}
+[data-testid="stMetricValue"] > div {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    overflow-wrap: break-word !important;
+}
 
 /* ── Buttons — stroke, not fill ────────────────────────── */
 .stButton > button, .stFormSubmitButton > button, .stDownloadButton > button {

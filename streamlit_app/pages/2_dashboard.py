@@ -143,12 +143,86 @@ if active_df.empty and n_proc == total:
 elif active_df.empty:
     st.info("No candidates currently in the pipeline.")
 else:
-    # Auto-refresh banner
-    countdown_slot = st.empty()
-    countdown_slot.info(
-        f"**{n_active} candidate(s) in pipeline** — page will auto-refresh in 5 seconds. "
-        f"Processing: {n_running} &nbsp;|&nbsp; Pending: {n_pending} &nbsp;|&nbsp; Errors: {n_error}"
+    # ── Watch-window tracking for throughput ────────────────────────────────
+    # There's no started_at/completed_at on the applicant record to compute a
+    # real elapsed/throughput figure from, so this times the window this
+    # browser tab has actually been watching an active pipeline — reset
+    # whenever the session changes or the pipeline goes idle-then-active
+    # again, so the number reflects "this run", not a stale prior one.
+    watch_key = f"_pipeline_watch_{session_id}"
+    now = time.time()
+    watch = st.session_state.get(watch_key)
+    if watch is None:
+        watch = {"start_ts": now, "start_proc": n_proc}
+        st.session_state[watch_key] = watch
+    elapsed_s = max(now - watch["start_ts"], 0.01)
+    completed_in_window = max(n_proc - watch["start_proc"], 0)
+    rate_per_min = completed_in_window / (elapsed_s / 60.0) if elapsed_s >= 15 else None
+
+    def _fmt_elapsed(s: float) -> str:
+        m, s = divmod(int(s), 60)
+        return f"{m}m {s:02d}s" if m else f"{s}s"
+
+    # ── Hero row: circular progress ring + live stat tiles ──────────────────
+    pct = (n_proc / total) if total else 0.0
+    r, circumference = 54, 2 * 3.14159265 * 54
+    offset = circumference * (1 - pct)
+
+    col_ring, col_stats = st.columns([1, 2.2])
+    with col_ring:
+        st.markdown(
+            f"""
+            <div style="display:flex;flex-direction:column;align-items:center;padding:0.4rem 0 0;">
+              <div style="position:relative;width:150px;height:150px;">
+                <svg width="150" height="150" viewBox="0 0 130 130" style="transform:rotate(-90deg);position:absolute;top:0;left:0;">
+                  <circle cx="65" cy="65" r="{r}" fill="none" stroke="var(--color-divider)" stroke-width="8"/>
+                  <circle cx="65" cy="65" r="{r}" fill="none" stroke="var(--color-accent)" stroke-width="8"
+                          stroke-linecap="butt" stroke-dasharray="{circumference:.1f}"
+                          stroke-dashoffset="{offset:.1f}"
+                          style="transition:stroke-dashoffset 0.6s ease;"/>
+                </svg>
+                <div style="position:absolute;top:0;left:0;width:100%;height:100%;
+                            display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:2.3rem;line-height:1;">{pct*100:.0f}%</div>
+                  <div style="font-size:0.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(32,31,29,.45);margin-top:2px;">
+                    extracted
+                  </div>
+                </div>
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with col_stats:
+        s1, s2, s3, s4 = st.columns(4)
+        s1.metric("In progress", n_running)
+        s2.metric("Queued", n_pending)
+        s3.metric("Watching", _fmt_elapsed(elapsed_s))
+        s4.metric("Pace", f"{rate_per_min:.1f}/min" if rate_per_min is not None else "—")
+
+        # Status-mix bar — same segmented-hairline language as the Ranking
+        # Engine's weight breakdown, so the two "how full is this bucket"
+        # visuals in the app read as one system rather than two styles.
+        mix = [("Processing", n_running, 1.0), ("Queued", n_pending, 0.55), ("Retrying", n_error, 0.3)]
+        mix_total = sum(w for _, w, _ in mix) or 1
+        bar = '<div style="display:flex;height:5px;margin:10px 0 4px;border-radius:2px;overflow:hidden;">'
+        labels = '<div style="display:flex;">'
+        for label, w, opacity in mix:
+            if w > 0:
+                seg_pct = w / mix_total * 100
+                bar += (f'<div style="width:{seg_pct:.2f}%;background:var(--color-accent);'
+                         f'opacity:{opacity};" title="{label}: {w}"></div>')
+                labels += (f'<div style="width:{seg_pct:.2f}%;font-size:9.5px;padding-top:4px;'
+                           f'color:rgba(32,31,29,.5);overflow:hidden;white-space:nowrap;">'
+                           f'{label if seg_pct >= 12 else ""}</div>')
+        bar += "</div>"; labels += "</div>"
+        st.markdown(bar + labels, unsafe_allow_html=True)
+
+    st.caption(
+        f"{n_active} candidate(s) in the pipeline · page auto-refreshes every 5 seconds"
     )
+
+    st.markdown("<div style='height:0.4rem;'></div>", unsafe_allow_html=True)
 
     # Per-candidate status rows — state read as italic text, not colour-coded chips
     for _, row in active_df.iterrows():
@@ -186,6 +260,12 @@ else:
     # Auto-refresh after 5 s
     time.sleep(5)
     st.rerun()
+
+# Watch window is scoped to "this pipeline run" — clear it once nothing is
+# active so the next upload starts a fresh elapsed/pace count instead of
+# inheriting a stale start time from whatever finished before it.
+if active_df.empty:
+    st.session_state.pop(f"_pipeline_watch_{session_id}", None)
 
 st.markdown("---")
 
