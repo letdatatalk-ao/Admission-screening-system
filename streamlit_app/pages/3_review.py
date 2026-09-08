@@ -10,9 +10,9 @@ from utils.api_client import (
     add_publication,
     EXTERNAL_API_BASE_URL,
 )
-from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
+from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth, ku_favicon_path
 
-st.set_page_config(page_title="Review & Validate — KU Screening", page_icon="✅", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Review & Validate — KU Screening", page_icon=ku_favicon_path(), layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 sidebar_nav(current_page="pages/3_review.py")
 require_auth()
@@ -37,18 +37,33 @@ if not processed:
     st.info("No candidates have been processed by the AI pipeline yet.")
     st.stop()
 
-# Auto-select first candidate needing review
+# Candidate picker — flagged candidates sorted first and marked in the
+# label itself, so the queue is visible while browsing, not just on the
+# one auto-selected on page load.
 review_flagged = [a for a in processed if a.get("needs_human_review")]
-default_idx = 0
-app_map = {f"{a['full_name']} ({a['application_ref']})": a["id"] for a in processed}
+
+only_flagged = st.sidebar.checkbox(
+    "Needs review only",
+    value=False,
+    help="Show only candidates the pipeline flagged for human review",
+)
+candidate_pool = review_flagged if only_flagged else processed
+candidate_pool = sorted(candidate_pool, key=lambda a: not a.get("needs_human_review"))
+
+if not candidate_pool:
+    st.sidebar.success("No candidates need review.")
+    st.stop()
+
+
+def _label(a: dict) -> str:
+    marker = "[Needs review] " if a.get("needs_human_review") else ""
+    return f"{marker}{a['full_name']} ({a['application_ref']})"
+
+
+app_map = {_label(a): a["id"] for a in candidate_pool}
 app_keys = list(app_map.keys())
 
-if review_flagged:
-    first_review_name = f"{review_flagged[0]['full_name']} ({review_flagged[0]['application_ref']})"
-    if first_review_name in app_keys:
-        default_idx = app_keys.index(first_review_name)
-
-selected_name = st.sidebar.selectbox("Candidate", app_keys, index=default_idx)
+selected_name = st.sidebar.selectbox("Candidate", app_keys, index=0)
 applicant_id = app_map[selected_name]
 
 if review_flagged:

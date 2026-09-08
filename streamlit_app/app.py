@@ -1,10 +1,10 @@
 import streamlit as st
 from utils.api_client import login_user
-from utils.styles import apply_theme, sidebar_nav, ku_logo_data_uri
+from utils.styles import apply_theme, sidebar_nav, ku_logo_data_uri, ku_favicon_path
 
 st.set_page_config(
     page_title="KU Admission Screening",
-    page_icon="🎓",
+    page_icon=ku_favicon_path(),
     layout="wide",
     initial_sidebar_state="expanded",
 )

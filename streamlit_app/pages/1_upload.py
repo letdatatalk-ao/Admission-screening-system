@@ -3,9 +3,9 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 from utils.api_client import upload_paired_documents, get_sessions, create_session
-from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
+from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth, ku_favicon_path
 
-st.set_page_config(page_title="Document Upload — KU Screening", page_icon="📤", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Document Upload — KU Screening", page_icon=ku_favicon_path(), layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 sidebar_nav(current_page="pages/1_upload.py")
 require_auth()

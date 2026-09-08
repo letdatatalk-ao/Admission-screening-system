@@ -37,6 +37,16 @@ def ku_logo_data_uri(on_navy: bool = False) -> str:
     """
     return _logo_data_uri("ku_logo_on_navy.png" if on_navy else "ku_logo.png")
 
+
+def ku_favicon_path() -> str:
+    """
+    Absolute path to the square KU icon mark (just the blue swirl, no
+    wordmark) for st.set_page_config(page_icon=...) — every page previously
+    used an emoji there (📤, 🏆, ⚖️, ...), which doesn't belong on a
+    university admissions system's browser tab.
+    """
+    return os.path.join(_ASSETS_DIR, "ku_icon.png")
+
 _KU_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;600&display=swap');

@@ -7,15 +7,62 @@ from utils.api_client import (
     trigger_ranking_computation,
     get_latest_ranking_results,
 )
-from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
+from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth, ku_favicon_path
 
-st.set_page_config(page_title="Ranking Engine — KU Screening", page_icon="🏆", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Ranking Engine — KU Screening", page_icon=ku_favicon_path(), layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 sidebar_nav(current_page="pages/4_ranking.py")
 require_auth()
 
 st.title("Weighted Shortlist")
 institution_header("Ranking & Scoring")
+
+with st.expander("How is this score calculated?"):
+    st.markdown(
+        '<div style="font-family:\'Lora\',serif;font-size:0.84rem;line-height:1.75;'
+        'color:rgba(32,31,29,.78);max-width:78ch;">'
+
+        '<p><b>The final score</b> is a weighted sum of five component scores, each already '
+        'on a 0–100 scale, combined using the percentages set by the sliders below:</p>'
+        '<p style="font-family:\'Cormorant Garamond\',serif;font-size:1.05rem;margin:0.6rem 0 1.1rem;">'
+        'Final&nbsp;=&nbsp;Bachelor×w<sub>Bsc</sub>&nbsp;+&nbsp;Master×w<sub>Msc</sub>&nbsp;+&nbsp;'
+        'Journals×w<sub>Jour</sub>&nbsp;+&nbsp;Conferences×w<sub>Conf</sub>&nbsp;+&nbsp;'
+        'Research×w<sub>Res</sub></p>'
+
+        '<p><b>Bachelor / Master academic score</b> — 60% GPA + 40% QS university rank:</p>'
+        '<ul style="margin-top:-0.3rem;">'
+        '<li>GPA is normalised to a 0–1 fraction of the scale it was reported on '
+        '(e.g. 3.5/4.0 → 0.875), country-aware — German-style inverted scales '
+        '(1.0 = best) are converted the right way round before normalising.</li>'
+        '<li>QS rank converts to points on a straight line: rank&nbsp;#1 → 100&nbsp;pts, '
+        'rank&nbsp;#1500 → 0&nbsp;pts. A university absent from the QS list scores a '
+        'neutral 40&nbsp;pts rather than being penalised outright, and the candidate is '
+        'flagged for the committee to verify manually.</li>'
+        '<li>Academic score = GPA fraction × 60 + (QS points ⁄ 100) × 40.</li>'
+        '</ul>'
+
+        '<p><b>Journal / Conference publications</b> — each publication is scored by venue '
+        'quality (Scopus percentile for journals, CORE score for conferences) × the '
+        'candidate\'s contribution share (1st author = full credit, decreasing for later '
+        'positions). Scores are sorted best-first and summed with diminishing returns — '
+        'the i-th publication counts at 85%<sup>i</sup> of its own score — then scaled ×50 '
+        'and capped at 100, so a handful of strong papers matters far more than a long '
+        'list of minor ones.</p>'
+
+        '<p><b>Research profile</b> — up to 70&nbsp;pts for holding a PhD, plus up to '
+        '30&nbsp;pts for professional work experience (scaling linearly up to 5 years). '
+        'Publications are not counted again here — they already have their own weight above.</p>'
+
+        '<p style="color:rgba(32,31,29,.55);font-size:0.78rem;margin-top:0.9rem;">'
+        'Every constant above (the 60/40 academic split, the QS neutral score, the '
+        'publication decay rate, the PhD/experience points) lives in '
+        '<code>config/scoring_weights.yaml</code> and can be tuned without a code change. '
+        'Only the five weights below — how much each component counts toward the final '
+        '100 — are configured here, per ranking run.</p>'
+
+        '</div>',
+        unsafe_allow_html=True,
+    )
 
 sessions = get_sessions(st.session_state.token)
 if not sessions:

@@ -1,13 +1,13 @@
 import requests
 import os
 import streamlit as st
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Optional, Tuple
 
 # URL pour la communication entre conteneurs Docker (Interne)
 API_BASE_URL = os.getenv("API_BASE_URL", "http://backend:8000/api/v1")
 
 # URL pour le navigateur de l'utilisateur (Externe - utilisé pour l'Iframe PDF et les téléchargements)
-EXTERNAL_API_BASE_URL = "http://localhost:8000/api/v1"
+EXTERNAL_API_BASE_URL = os.getenv("EXTERNAL_API_BASE_URL", "http://localhost:8000/api/v1")
 
 # --- 1. AUTHENTIFICATION ---
 
@@ -33,6 +33,18 @@ def get_sessions(token: str) -> List[Dict]:
         return response.json() if response.status_code == 200 else []
     except:
         return []
+
+
+def create_session(name: str, academic_year: str, qs_year: int, token: str) -> Tuple[int, Dict]:
+    """Crée une nouvelle session d'admission."""
+    url = f"{API_BASE_URL}/sessions"
+    headers = {"Authorization": f"Bearer {token}"}
+    payload = {"name": name, "academic_year": academic_year, "qs_year": qs_year}
+    try:
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
+        return response.status_code, response.json()
+    except Exception as e:
+        return 503, {"detail": str(e)}
 
 
 # --- 3. UPLOAD ET INGESTION ---

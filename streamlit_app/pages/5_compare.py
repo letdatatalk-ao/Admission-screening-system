@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from utils.api_client import get_applicants, get_sessions, get_applicant_detail
-from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth
+from utils.styles import apply_theme, institution_header, sidebar_nav, require_auth, ku_favicon_path
 
 
 def to_float(value, default=0.0):
@@ -14,7 +14,7 @@ def to_float(value, default=0.0):
         return default
 
 
-st.set_page_config(page_title="Compare Candidates — KU Screening", page_icon="⚖️", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Compare Candidates — KU Screening", page_icon=ku_favicon_path(), layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 sidebar_nav(current_page="pages/5_compare.py")
 require_auth()
